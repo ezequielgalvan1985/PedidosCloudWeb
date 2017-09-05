@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Marcas list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Imagen</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for marca in marcas %}
+            <tr>
+                <td><a href="{{ path('marcas_show', { 'id': marca.id }) }}">{{ marca.id }}</a></td>
+                <td>{{ marca.nombre }}</td>
+                <td>{{ marca.descripcion }}</td>
+                <td>{{ marca.imagen }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('marcas_show', { 'id': marca.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('marcas_edit', { 'id': marca.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('marcas_new') }}">Create a new marca</a>
+        </li>
+    </ul>
+{% endblock %}
