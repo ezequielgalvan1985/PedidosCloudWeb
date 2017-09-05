@@ -13,4 +13,15 @@ DESARROLLAR:
 
 ajustar tipo de campos
 realizar validaciones
-realizar login, register
+formato css login
+formato css register
+register, ajustar logica registrar empresa y asociar mutuamente
+marca, cargar imagen
+categoria, cargar imagen
+productos, cargar imagen
+crud hojaruta
+crud hojarutadetalle
+crud pedido
+crud pedidodetalle
+ajustar logica de alta en todos los modelos,empresa_id = a user login
+

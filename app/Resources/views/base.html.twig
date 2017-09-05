@@ -71,13 +71,11 @@
   </div>
 </nav>
         <div class="container">
-            {% block body %}
-                
-             {% block fos_user_content %}{% endblock fos_user_content %}
-            {% endblock %}
-              
-           
-        
+            <div class="col-xs-12"
+                {% block body %}
+                     {% block fos_user_content %}{% endblock fos_user_content %}
+                {% endblock %}
+            </div>
         </div>
         {% block javascripts %}{% endblock %}
     </body>
