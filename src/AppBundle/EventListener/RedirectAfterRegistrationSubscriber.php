@@ -9,6 +9,8 @@ namespace AppBundle\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FormEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
 {
@@ -18,9 +20,9 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
         $this->router = $router;
     }
     
-    public function onRegistrationSuccess(FormEvent $form){
-        $url = $this->router->generate('homepage');
-        $respose = new RedirectResponse($url);
+    public function onRegistrationSuccess(FormEvent $event){
+        $url = $this->router->generate('marcas_index');
+        $response = new RedirectResponse($url);
         $event->setResponse($response);
     }
     
@@ -30,5 +32,6 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
             FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSuccess'
         ];
     }
+    
 
 }
