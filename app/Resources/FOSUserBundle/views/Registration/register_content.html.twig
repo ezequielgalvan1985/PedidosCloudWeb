@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
-<h1>Registrar Cuenta </h1>
+    <h1>Registrar Cuenta </h1>
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     
     {{ form_row(form.email) }}

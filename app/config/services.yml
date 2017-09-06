@@ -34,9 +34,9 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
     
-    app.redirect_after_registration_subscriber:
-        class: AppBundle\EventListener\RedirectAfterRegistrationSubscriber
-        autowire: true
+    #app.redirect_after_registration_subscriber:
+    #    class: AppBundle\EventListener\RedirectAfterRegistrationSubscriber
+    #    autowire: true
         
         
         

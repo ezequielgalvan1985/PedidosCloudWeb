@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Empresa;
-
 class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
@@ -44,26 +43,24 @@ class RegistrationController extends BaseController
                 /*****************************************************
                  * Add new functionality (e.g. log the registration) *
                  *****************************************************/
-                //Agregar logica, crear una empresa, con el user_id actual
-                //luego actualizar el usuario con el entidad_id de la empresa
                 $this->container->get('logger')->info(
                     sprintf("New user registration: %s", $user)
                 );
                 
+                /*
+                $empresa = new Empresa();
+                $empresa->setNombre("nombre");
+                $empresa->setEmail("email");
+                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($empresa);
+                $em->flush();
+                */
+
                 if (null === $response = $event->getResponse()) {
                     $url = $this->generateUrl('fos_user_registration_confirmed');
                     $response = new RedirectResponse($url);
                 }
-                $empresa = new Empresa();
-                $empresa->setEmail($user->getEmail());
-                $empresa->setDireccion('prueba direccion');
-                $empresa->setUserId($user->getId());
-                $empresa->setNombre('nombre prueba');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($empresa);
-                $em->flush();
-                
-                
 
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
 
