@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hojarutadetalle</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hojarutadetalle.id }}</td>
+            </tr>
+            <tr>
+                <th>Hora</th>
+                <td>{{ hojarutadetalle.hora }}</td>
+            </tr>
+            <tr>
+                <th>Notas</th>
+                <td>{{ hojarutadetalle.notas }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('hojarutadetalle_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('hojarutadetalle_edit', { 'id': hojarutadetalle.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -62,7 +62,24 @@ class Cliente
      * @ORM\Column(name="direccion", type="string", length=255, nullable=true)
      */
     private $direccion;
-
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     */
+    private $empresa;
+    
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+    
+    public function setEmpresa($empresa)
+    {
+        $this->empresa = $empresa;
+        return $this;
+    }
 
     /**
      * Get id

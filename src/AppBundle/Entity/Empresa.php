@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Empresa
  *
@@ -62,7 +62,36 @@ class Empresa
      * @ORM\Column(name="direccion", type="string", length=255, nullable=true)
      */
     private $direccion;
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+    
+    
+    
+    /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="user")
+    */
+    private $users;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * Get id

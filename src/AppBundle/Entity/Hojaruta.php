@@ -4,14 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-
 /**
- * Marca
+ * Hojaruta
  *
- * @ORM\Table(name="marca")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MarcaRepository")
+ * @ORM\Table(name="hojaruta")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\HojarutaRepository")
  */
-class Marca
+class Hojaruta
 {
     /**
      * @var int
@@ -23,36 +22,36 @@ class Marca
     private $id;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="nombre", type="string", length=255)
+     * @ORM\Column(name="dia_id", type="integer")
      */
-    private $nombre;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
-     */
-    private $descripcion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="imagen", type="string", length=255, nullable=true)
-     */
-    private $imagen;
+    private $diaId;
 
     
-    
+
     /**
-    * @ORM\OneToMany(targetEntity="Producto", mappedBy="marca")
+     * @var string
+     *
+     * @ORM\Column(name="titulo", type="string", length=255, nullable=true)
+     */
+    private $titulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notas", type="string", length=255, nullable=true)
+     */
+    private $notas;
+
+    /**
+    * @ORM\OneToMany(targetEntity="Hojarutadetalle", mappedBy="hojaruta")
     */
-    private $productos;
+    private $hojarutadetalles;
 
     public function __construct()
     {
-        $this->productos = new ArrayCollection();
+        $this->hojarutadetalles = new ArrayCollection();
     }
     
     
@@ -74,8 +73,6 @@ class Marca
         return $this;
     }
     
-    
-    
     /**
      * Get id
      *
@@ -87,75 +84,76 @@ class Marca
     }
 
     /**
-     * Set nombre
+     * Set diaId
      *
-     * @param string $nombre
+     * @param integer $diaId
      *
-     * @return Marca
+     * @return Hojaruta
      */
-    public function setNombre($nombre)
+    public function setDiaId($diaId)
     {
-        $this->nombre = $nombre;
+        $this->diaId = $diaId;
 
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get diaId
      *
-     * @return string
+     * @return int
      */
-    public function getNombre()
+    public function getDiaId()
     {
-        return $this->nombre;
+        return $this->diaId;
     }
 
+    
     /**
-     * Set descripcion
+     * Set titulo
      *
-     * @param string $descripcion
+     * @param string $titulo
      *
-     * @return Marca
+     * @return Hojaruta
      */
-    public function setDescripcion($descripcion)
+    public function setTitulo($titulo)
     {
-        $this->descripcion = $descripcion;
+        $this->titulo = $titulo;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get titulo
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getTitulo()
     {
-        return $this->descripcion;
+        return $this->titulo;
     }
 
     /**
-     * Set imagen
+     * Set notas
      *
-     * @param string $imagen
+     * @param string $notas
      *
-     * @return Marca
+     * @return Hojaruta
      */
-    public function setImagen($imagen)
+    public function setNotas($notas)
     {
-        $this->imagen = $imagen;
+        $this->notas = $notas;
 
         return $this;
     }
 
     /**
-     * Get imagen
+     * Get notas
      *
      * @return string
      */
-    public function getImagen()
+    public function getNotas()
     {
-        return $this->imagen;
+        return $this->notas;
     }
 }
 
