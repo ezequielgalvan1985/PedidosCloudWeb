@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hojarutadetalles list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Hora</th>
+                <th>Notas</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hojarutadetalle in hojarutadetalles %}
+            <tr>
+                <td><a href="{{ path('hojarutadetalle_show', { 'id': hojarutadetalle.id }) }}">{{ hojarutadetalle.id }}</a></td>
+                <td>{{ hojarutadetalle.hora }}</td>
+                <td>{{ hojarutadetalle.notas }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('hojarutadetalle_show', { 'id': hojarutadetalle.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('hojarutadetalle_edit', { 'id': hojarutadetalle.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('hojarutadetalle_new') }}">Create a new hojarutadetalle</a>
+        </li>
+    </ul>
+{% endblock %}

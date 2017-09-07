@@ -49,6 +49,22 @@ class Producto
      */
     private $imagen;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     */
+    private $empresa;
+    
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+    
+    public function setEmpresa($empresa)
+    {
+        $this->empresa = $empresa;
+        return $this;
+    }
     
      /**
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="productos")
