@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pedidodetalles list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cantidad</th>
+                <th>Preciounitario</th>
+                <th>Monto</th>
+                <th>Estadoid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pedidodetalle in pedidodetalles %}
+            <tr>
+                <td><a href="{{ path('pedidodetalle_show', { 'id': pedidodetalle.id }) }}">{{ pedidodetalle.id }}</a></td>
+                <td>{{ pedidodetalle.cantidad }}</td>
+                <td>{{ pedidodetalle.preciounitario }}</td>
+                <td>{{ pedidodetalle.monto }}</td>
+                <td>{{ pedidodetalle.estadoId }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('pedidodetalle_show', { 'id': pedidodetalle.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('pedidodetalle_edit', { 'id': pedidodetalle.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pedidodetalle_new') }}">Create a new pedidodetalle</a>
+        </li>
+    </ul>
+{% endblock %}
