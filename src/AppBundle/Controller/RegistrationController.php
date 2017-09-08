@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use AppBundle\Entity\Empresa;
+
 class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
@@ -56,12 +57,7 @@ class RegistrationController extends BaseController
                  * Add new functionality (e.g. log the registration) *
                  *****************************************************/
 
-                $this->container->get('logger')->info(
-                    sprintf("New user registration: %s", $user)
-                );
-                
-          
-
+               
                 $empresa = new Empresa();
                 $empresa->setUser($user);
                 $empresa->setEmail($user->getEmail());
@@ -71,6 +67,8 @@ class RegistrationController extends BaseController
                 $em->persist($empresa);
                 $em->flush();
                 
+                
+                $user->setRoles(array('ROLE_EMPRESA'));
                 $user->setEmpresa($empresa);
                 $em->persist($user);
                 $em->flush();

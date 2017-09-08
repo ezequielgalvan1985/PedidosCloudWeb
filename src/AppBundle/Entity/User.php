@@ -52,5 +52,18 @@ class User extends BaseUser
      */
     protected $groups;
     
-     
+    
+    protected $roles = array();
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+
+        // allows for chaining
+        return $this;
+    }
 }
