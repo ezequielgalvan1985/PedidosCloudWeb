@@ -42,12 +42,7 @@ class Empresa
      */
     private $razonsocial;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_id", type="integer")
-     */
-    private $userId;
+    
 
     /**
      * @var string
@@ -63,23 +58,6 @@ class Empresa
      */
     private $direccion;
     
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
-    
-    public function getUser()
-    {
-        return $this->user;
-    }
-    
-    public function setUser($user)
-    {
-        $this->user = $user;
-        return $this;
-    }
     
     
     

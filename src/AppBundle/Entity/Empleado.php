@@ -55,28 +55,24 @@ class Empleado
      * @ORM\Column(name="ndoc", type="string", length=50, nullable=true)
      */
     private $ndoc;
-
-
+    
     /**
-     * Get id
+     * @var string
      *
-     * @return int
+     * @ORM\Column(name="type", type="string", length=50, nullable=true)
      */
-    public function getId()
+    private $type;
+
+   
+    public function getType()
     {
         return $this->id;
     }
 
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Empleado
-     */
-    public function setNombre($nombre)
+    
+    public function setType($type)
     {
-        $this->nombre = $nombre;
+        $this->type = $type;
 
         return $this;
     }

@@ -44,10 +44,32 @@ class EmpleadoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            //validar email en empleado y user
+            $userManager = $this->get('fos_user.user_manager');
+            $email_exist = $userManager->findUserByEmail($email);
+            if($email_exist){
+               // mensaje de error
+                
+            }
+            //Crea empleado
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($empleado);
             $em->flush();
 
+            //Crear usuario
+            $user = $userManager->createUser();
+            $user->setUsername($empleado->getNombre() + $empleado->getApellido() + $empleado->getId() );
+            $user->setEmail($email);
+            $user->setEmailCanonical($email);
+            $user->setLocked(0); // don't lock the user
+            $user->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
+            // this method will encrypt the password with the default settings :)
+            $user->setPlainPassword($password);
+            $userManager->updateUser($user);
+            
+            
             return $this->redirectToRoute('empleado_show', array('id' => $empleado->getId()));
         }
 
