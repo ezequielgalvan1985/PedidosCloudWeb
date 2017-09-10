@@ -66,4 +66,26 @@ class User extends BaseUser
         // allows for chaining
         return $this;
     }
+    
+    
+    
+     /**
+     * 
+     * 
+     */
+    protected $enabled;
+    
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+    
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+    
+    
+    
 }

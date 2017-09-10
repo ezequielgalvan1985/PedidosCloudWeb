@@ -38,41 +38,91 @@ class Empleado
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono", type="string", length=50, nullable=true)
+     * @ORM\Column(name="ndoc", type="string", length=20, nullable=true)
      */
-    private $telefono;
+    private $ndoc;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string", length=255, nullable=true)
+     * @ORM\Column(name="direccion", type="string", length=50, nullable=true)
      */
     private $direccion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ndoc", type="string", length=50, nullable=true)
+     * @ORM\Column(name="telefono", type="string", length=50, nullable=true)
      */
-    private $ndoc;
+    private $telefono;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tipo", type="string", length=30,nullable=true)
+     */
+    private $tipo;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="email", type="string", length=50,nullable=true)
+     */
+    private $email;
+
     
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=50, nullable=true)
+     * @ORM\Column(name="username", type="string", length=100,nullable=true)
      */
-    private $type;
+    private $username;
+    
+    /**
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return Empleado
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
 
-   
-    public function getType()
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    
-    public function setType($type)
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Empleado
+     */
+    public function setNombre($nombre)
     {
-        $this->type = $type;
+        $this->nombre = $nombre;
 
         return $this;
     }
@@ -112,27 +162,27 @@ class Empleado
     }
 
     /**
-     * Set telefono
+     * Set ndoc
      *
-     * @param string $telefono
+     * @param string $ndoc
      *
      * @return Empleado
      */
-    public function setTelefono($telefono)
+    public function setNdoc($ndoc)
     {
-        $this->telefono = $telefono;
+        $this->ndoc = $ndoc;
 
         return $this;
     }
 
     /**
-     * Get telefono
+     * Get ndoc
      *
      * @return string
      */
-    public function getTelefono()
+    public function getNdoc()
     {
-        return $this->telefono;
+        return $this->ndoc;
     }
 
     /**
@@ -160,27 +210,66 @@ class Empleado
     }
 
     /**
-     * Set ndoc
+     * Set telefono
      *
-     * @param string $ndoc
+     * @param string $telefono
      *
      * @return Empleado
      */
-    public function setNdoc($ndoc)
+    public function setTelefono($telefono)
     {
-        $this->ndoc = $ndoc;
+        $this->telefono = $telefono;
 
         return $this;
     }
 
     /**
-     * Get ndoc
+     * Get telefono
      *
      * @return string
      */
-    public function getNdoc()
+    public function getTelefono()
     {
-        return $this->ndoc;
+        return $this->telefono;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param integer $tipo
+     *
+     * @return Empleado
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return int
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+    
+    
+   
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
 

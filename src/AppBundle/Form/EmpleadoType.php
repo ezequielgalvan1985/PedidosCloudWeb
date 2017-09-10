@@ -5,6 +5,10 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\GlobalValue;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class EmpleadoType extends AbstractType
 {
@@ -13,7 +17,20 @@ class EmpleadoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('apellido')->add('telefono')->add('direccion')->add('ndoc');
+        $builder->add('nombre')->add('apellido')
+                ->add('email', EmailType::class )
+                ->add('username', TextType::class,array('disabled'=> 'true'))
+                ->add('ndoc')->add('direccion')
+                ->add('telefono')
+                
+                ->add('tipo',ChoiceType::class, array(
+                        'choices' => array(
+                            GlobalValue::ROLE_VENDEDOR_DISPLAY=> GlobalValue::ROLE_VENDEDOR,
+                            GlobalValue::ROLE_CARGADATOS_DISPLAY => GlobalValue::ROLE_CARGADATOS,
+                            GlobalValue::ROLE_DEPOSITO_DISPLAY=> GlobalValue::ROLE_DEPOSITO
+                            )
+                        )
+                    );;
     }
     
     /**

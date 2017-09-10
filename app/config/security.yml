@@ -4,9 +4,7 @@ security:
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+   
 
     providers:
         fos_userbundle:
@@ -30,8 +28,9 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
     role_hierarchy:
-        ROLE_DATAENTRY:
-        ROLE_VENDEDOR:
-        ROLE_EMPRESA:
-        ROLE_ADMIN:       [ROLE_USER,ROLE_EMPRESA, ROLE_VENDEDOR, ROLE_DATAENTRY]
+        ROLE_DEPOSITO:
+        ROLE_CARGADATOS:
+        ROLE_VENDEDOR:    [ROLE_DEPOSITO]
+        ROLE_EMPRESA:     [ ROLE_VENDEDOR, ROLE_CARGADATOS, ROLE_DEPOSITO]
+        ROLE_ADMIN:       [ROLE_EMPRESA]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

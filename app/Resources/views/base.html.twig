@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       
-    {% if is_granted("ROLE_EMPRESA") %}    
+    {% if is_granted("ROLE_CARGADATOS") %}    
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Base de datos
@@ -40,7 +40,8 @@
           <a class="dropdown-item" href="{{ url('pedidodetalle_index') }}">Pedido Items</a>
         </div>
       </li>
-      
+       {% endif %}
+       {% if is_granted("ROLE_DEPOSITO") %}    
        <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Mi cuenta
@@ -48,14 +49,16 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{{ url('marcas_index') }}">Pedidos de hoy</a>
           <a class="dropdown-item" href="{{ url('empresa_index') }}">Listado de Pedidos</a>
+          {% if is_granted("ROLE_VENDEDOR") %}    
           <hr>
           <a class="dropdown-item" href="{{ url('pedido_index') }}">Hojas de ruta</a>
+          {% endif %}
         </div>
       </li>
-      
+      {% endif %}
       
      
-      {% endif %}
+      
       
        {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
         <li class="nav-item">
