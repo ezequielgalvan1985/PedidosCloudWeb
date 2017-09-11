@@ -22,14 +22,19 @@ class MarcaController extends Controller
      * @Route("/", name="marcas_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $marcas = $em->getRepository('AppBundle:Marca')->findAll();
+        $dql   = "SELECT m FROM AppBundle:Marca m";
+        $marcas = $em->createQuery($dql);
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($marcas, $request->query->getInt('page', 1),2);
+        
+        //$marcas = $em->getRepository('AppBundle:Marca')->findAll();
 
         return $this->render('marca/index.html.twig', array(
-            'marcas' => $marcas,
+            'pagination' => $pagination,
         ));
     }
 
@@ -47,9 +52,10 @@ class MarcaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($marca);
             $em->flush();
-
+            $this->addFlash('success', 'Guardado Correctamente');
             return $this->redirectToRoute('marcas_show', array('id' => $marca->getId()));
         }
 

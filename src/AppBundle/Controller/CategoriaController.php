@@ -53,6 +53,8 @@ class CategoriaController extends Controller
             // Update the 'brochure' property to store the PDF file name
             // instead of its contents
             $categoria->setImagen($fileName);
+            //Obtener Empresa
+            $categoria->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($categoria);

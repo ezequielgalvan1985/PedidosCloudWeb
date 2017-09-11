@@ -45,6 +45,7 @@ class ProductoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($producto);
             $em->flush();
 

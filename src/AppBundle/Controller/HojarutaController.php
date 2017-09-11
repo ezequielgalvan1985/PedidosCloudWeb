@@ -39,16 +39,19 @@ class HojarutaController extends Controller
      */
     public function newAction(Request $request)
     {
-        $hojarutum = new Hojarutum();
-        $form = $this->createForm('AppBundle\Form\HojarutaType', $hojarutum);
+        $hojaruta = new Hojaruta();
+        $form = $this->createForm('AppBundle\Form\HojarutaType', $hojaruta);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($hojarutum);
+            //Obtener Empresa
+            $hojaruta->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            
+            $em->persist($hojaruta);
             $em->flush();
 
-            return $this->redirectToRoute('hojaruta_show', array('id' => $hojarutum->getId()));
+            return $this->redirectToRoute('hojaruta_show', array('id' => $hojaruta->getId()));
         }
 
         return $this->render('hojaruta/new.html.twig', array(

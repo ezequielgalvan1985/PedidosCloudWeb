@@ -22,7 +22,6 @@ class EmpleadoType extends AbstractType
                 ->add('username', TextType::class,array('disabled'=> 'true'))
                 ->add('ndoc')->add('direccion')
                 ->add('telefono')
-                
                 ->add('tipo',ChoiceType::class, array(
                         'choices' => array(
                             GlobalValue::ROLE_VENDEDOR_DISPLAY=> GlobalValue::ROLE_VENDEDOR,

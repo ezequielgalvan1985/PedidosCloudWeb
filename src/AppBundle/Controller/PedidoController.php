@@ -45,7 +45,8 @@ class PedidoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($pedido);
+            $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            $em->persist($marca);
             $em->flush();
 
             return $this->redirectToRoute('pedido_show', array('id' => $pedido->getId()));

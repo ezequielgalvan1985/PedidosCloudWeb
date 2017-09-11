@@ -46,6 +46,9 @@ class ClienteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            //Obtener Empresa
+            $cliente->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            
             $em->persist($cliente);
             $em->flush();
 
