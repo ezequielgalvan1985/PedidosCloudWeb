@@ -83,19 +83,19 @@
       <ul class="nav navbar-nav navbar-right">
         
            
-            {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
-            <li class="nav-item">
-             <a class="nav-link" href="{{ path('fos_user_security_login') }}" id="navbarDropdownMenuLink"  >
-               Ingresar
-             </a>
-            </li>
-             <li class="nav-item">
-             <a class="nav-link" href="/register" id="navbarDropdownMenuLink" >
-               Registrarse
-             </a>
-            </li>
-           {%else%}
-        <li class="dropdown">
+    {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
+        <li class="nav-item">
+         <a class="nav-link" href="{{ path('fos_user_security_login') }}" id="navbarDropdownMenuLink"  >
+           Ingresar
+         </a>
+        </li>
+         <li class="nav-item">
+         <a class="nav-link" href="/register" id="navbarDropdownMenuLink" >
+           Registrarse
+         </a>
+        </li>
+       {%else%}
+          <li class="dropdown">
           <a href="#" class="dropdown-toggle" 
              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
 
@@ -109,7 +109,7 @@
               Salir
              </a>
             </li>
-           {% endif %}
+        {% endif %}
             
             
             
@@ -126,10 +126,10 @@
         
         
      
-      
-      
        
-        <div class="row">
+        
+        <div class="container">
+            <div class="row">
                <div class="col-xs-12"> 
                {% if app.session.flashBag.has('success') %}
                <div class="alert alert-success alert-dismissable">
@@ -149,7 +149,6 @@
                {% endif %}
                </div>
         </div>
-        <div class="container">
             <div class="col-xs-12">
                 
                 {% block body %}

@@ -22,14 +22,11 @@
                 <td>{{ marca.descripcion }}</td>
                 <td>{{ marca.imagen }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('marcas_show', { 'id': marca.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('marcas_edit', { 'id': marca.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    
+                            <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default">show</a>
+                       
+                            <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary">edit</a>
+                        
                 </td>
             </tr>
         {% endfor %}
@@ -38,9 +35,9 @@
     <div class="navigation">
         {{ knp_pagination_render(pagination) }}
     </div>
-    <ul>
-        <li>
-            <a href="{{ path('marcas_new') }}">Create a new marca</a>
-        </li>
-    </ul>
+    
+        
+            <a href="{{ path('marcas_new') }}" class="btn btn-flat btn-primary">Nuevo</a>
+        
+    
 {% endblock %}

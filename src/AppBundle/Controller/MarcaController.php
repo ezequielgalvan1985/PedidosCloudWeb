@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Event\GetResponseUserEvent;
-
+use Symfony\Component\Security\Core\User\User;
 /**
  * Marca controller.
  *
@@ -24,15 +24,16 @@ class MarcaController extends Controller
      */
     public function indexAction(Request $request)
     {
+        
         $em = $this->getDoctrine()->getManager();
-        $dql   = "SELECT m FROM AppBundle:Marca m";
-        $marcas = $em->createQuery($dql);
-        
+        $repository = $this->getDoctrine()->getRepository(Marca::class);
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        $marcas = $repository->findByEmpresa($empresa);
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($marcas, $request->query->getInt('page', 1),2);
+        $pagination = $paginator->paginate($marcas, $request->query->getInt('page', 1),10);
         
-        //$marcas = $em->getRepository('AppBundle:Marca')->findAll();
-
         return $this->render('marca/index.html.twig', array(
             'pagination' => $pagination,
         ));

@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Hojaruta;
+use Symfony\Component\Security\Core\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Hojarutum controller.
@@ -15,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class HojarutaController extends Controller
 {
     /**
-     * Lists all hojarutum entities.
+     * Lists all hojaruta entities.
      *
      * @Route("/", name="hojaruta_index")
      * @Method("GET")
@@ -32,7 +34,7 @@ class HojarutaController extends Controller
     }
 
     /**
-     * Creates a new hojarutum entity.
+     * Creates a new hojaruta entity.
      *
      * @Route("/new", name="hojaruta_new")
      * @Method({"GET", "POST"})
@@ -46,7 +48,11 @@ class HojarutaController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa
-            $hojaruta->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+            
+            $empresa = $currentuser->getEmpresa();
+           
+            $hojaruta->setEmpresa($empresa);
             
             $em->persist($hojaruta);
             $em->flush();
@@ -55,66 +61,66 @@ class HojarutaController extends Controller
         }
 
         return $this->render('hojaruta/new.html.twig', array(
-            'hojarutum' => $hojarutum,
+            'hojaruta' => $hojaruta,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a hojarutum entity.
+     * Finds and displays a hojaruta entity.
      *
      * @Route("/{id}", name="hojaruta_show")
      * @Method("GET")
      */
-    public function showAction(Hojaruta $hojarutum)
+    public function showAction(Hojaruta $hojaruta)
     {
-        $deleteForm = $this->createDeleteForm($hojarutum);
+        $deleteForm = $this->createDeleteForm($hojaruta);
 
         return $this->render('hojaruta/show.html.twig', array(
-            'hojarutum' => $hojarutum,
+            'hojaruta' => $hojaruta,
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing hojarutum entity.
+     * Displays a form to edit an existing hojaruta entity.
      *
      * @Route("/{id}/edit", name="hojaruta_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Hojaruta $hojarutum)
+    public function editAction(Request $request, Hojaruta $hojaruta)
     {
-        $deleteForm = $this->createDeleteForm($hojarutum);
-        $editForm = $this->createForm('AppBundle\Form\HojarutaType', $hojarutum);
+        $deleteForm = $this->createDeleteForm($hojaruta);
+        $editForm = $this->createForm('AppBundle\Form\HojarutaType', $hojaruta);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('hojaruta_edit', array('id' => $hojarutum->getId()));
+            return $this->redirectToRoute('hojaruta_edit', array('id' => $hojaruta->getId()));
         }
 
         return $this->render('hojaruta/edit.html.twig', array(
-            'hojarutum' => $hojarutum,
+            'hojaruta' => $hojaruta,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Deletes a hojarutum entity.
+     * Deletes a hojaruta entity.
      *
      * @Route("/{id}", name="hojaruta_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, Hojaruta $hojarutum)
+    public function deleteAction(Request $request, Hojaruta $hojaruta)
     {
-        $form = $this->createDeleteForm($hojarutum);
+        $form = $this->createDeleteForm($hojaruta);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($hojarutum);
+            $em->remove($hojaruta);
             $em->flush();
         }
 
@@ -122,16 +128,16 @@ class HojarutaController extends Controller
     }
 
     /**
-     * Creates a form to delete a hojarutum entity.
+     * Creates a form to delete a hojaruta entity.
      *
-     * @param Hojaruta $hojarutum The hojarutum entity
+     * @param Hojaruta $hojaruta The hojaruta entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(Hojaruta $hojarutum)
+    private function createDeleteForm(Hojaruta $hojaruta)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('hojaruta_delete', array('id' => $hojarutum->getId())))
+            ->setAction($this->generateUrl('hojaruta_delete', array('id' => $hojaruta->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;

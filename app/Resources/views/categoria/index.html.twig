@@ -6,7 +6,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <strong>Total: </strong>{{ pagination.getTotalItemCount }}
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
                 <th>Imagen</th>
@@ -14,27 +15,27 @@
             </tr>
         </thead>
         <tbody>
-        {% for categorium in categorias %}
+        {% for item in pagination %}
             <tr>
-                <td><a href="{{ path('categoria_show', { 'id': categorium.id }) }}">{{ categorium.id }}</a></td>
-                <td>{{ categorium.nombre }}</td>
-                <td>{{ categorium.descripcion }}</td>
-                <td>{{ categorium.imagen }}</td>
+                <td><a href="{{ path('categoria_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td>{{ item.imagen }}</td>
                 <td>
                    
-                    <a href="{{ path('categoria_show', { 'id': categorium.id }) }}" class="btn btn-default">show</a>
+                    <a href="{{ path('categoria_show', { 'id': item.id }) }}" class="btn btn-default">show</a>
                        
-                    <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('categoria_edit', { 'id': item.id }) }}" class="btn btn-primary">edit</a>
                        
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('categoria_new') }}">Create a new categorium</a>
-        </li>
-    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <a href="{{ path('categoria_new') }}" class="btn btn-primary">Nuevo</a>
+        
+    
 {% endblock %}

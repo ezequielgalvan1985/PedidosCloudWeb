@@ -64,6 +64,7 @@ class Categoria
     
     
     
+    
     /**
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")

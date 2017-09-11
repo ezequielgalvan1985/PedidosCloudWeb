@@ -59,7 +59,7 @@ class RegistrationController extends BaseController
 
                
                 $empresa = new Empresa();
-                $empresa->setUser($user);
+                //$empresa->setUser($user);
                 $empresa->setEmail($user->getEmail());
                 $empresa->setDireccion('prueba direccion');
                 $empresa->setNombre('nombre prueba');

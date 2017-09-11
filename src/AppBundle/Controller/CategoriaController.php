@@ -20,14 +20,18 @@ class CategoriaController extends Controller
      * @Route("/", name="categoria_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $categorias = $em->getRepository('AppBundle:Categoria')->findAll();
+        $repository = $this->getDoctrine()->getRepository(Categoria::class);
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        $categorias = $repository->findByEmpresa($empresa);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),10);
 
         return $this->render('categoria/index.html.twig', array(
-            'categorias' => $categorias,
+            'pagination' => $pagination,
         ));
     }
 
