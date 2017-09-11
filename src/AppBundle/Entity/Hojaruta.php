@@ -56,7 +56,7 @@ class Hojaruta
     
     
     
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
@@ -70,6 +70,23 @@ class Hojaruta
     public function setEmpresa($empresa)
     {
         $this->empresa = $empresa;
+        return $this;
+    }
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    public function setUser($user)
+    {
+        $this->user = $user;
         return $this;
     }
     

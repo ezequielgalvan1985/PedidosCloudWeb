@@ -51,11 +51,9 @@ class EmpleadoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
             //Obtener Empresa
             $currentuser = $this->get('security.token_storage')->getToken()->getUser();
             $empresa = $currentuser->getEmpresa();
-            
              //Crea empleado
             $username = $empleado->getNombre() . $empleado->getApellido() . $empleado->getId() ;
             $empleado->setUsername($username);

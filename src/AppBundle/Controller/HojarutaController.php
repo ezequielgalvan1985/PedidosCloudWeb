@@ -3,12 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Hojaruta;
-use Symfony\Component\Security\Core\User\User;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Security\Core\User\User;
 /**
  * Hojarutum controller.
  *
@@ -22,14 +22,18 @@ class HojarutaController extends Controller
      * @Route("/", name="hojaruta_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $hojarutas = $em->getRepository('AppBundle:Hojaruta')->findAll();
+        $repository = $this->getDoctrine()->getRepository(Hojaruta::class);
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        $registros = $repository->findByEmpresa($empresa);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
 
         return $this->render('hojaruta/index.html.twig', array(
-            'hojarutas' => $hojarutas,
+              'pagination' => $pagination,
         ));
     }
 
@@ -49,9 +53,7 @@ class HojarutaController extends Controller
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa
             $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-            
             $empresa = $currentuser->getEmpresa();
-           
             $hojaruta->setEmpresa($empresa);
             
             $em->persist($hojaruta);

@@ -21,5 +21,17 @@ class GlobalValue{
     const ROLE_CARGADATOS_DISPLAY = 'Carga de Datos';
     const ROLE_DEPOSITO_DISPLAY = 'Deposito';
     
-   
+    const LUNES_DISPLAY = 'Lunes';
+    const MARTES_DISPLAY = 'Martes';
+    const MIERCOLES_DISPLAY = 'Miercoles';
+    const JUEVES_DISPLAY = 'Jueves';
+    const VIERNES_DISPLAY = 'Viernes';
+    const SABADOS_DISPLAY = 'Sabados';
+    
+    const LUNES_ID = 1;
+    const MARTES_ID = 2;
+    const MIERCOLES_ID = 3;
+    const JUEVES_ID = 4;
+    const VIERNES_ID = 5;
+    const SABADOS_ID = 6;
 }

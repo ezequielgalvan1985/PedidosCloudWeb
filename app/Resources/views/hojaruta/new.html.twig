@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Hojarutum creation</h1>
+    <h1>Alta Hoja de Ruta</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" value="Guardar" class="btn btn-default" />
     {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('hojaruta_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('hojarutadetalle_new')}}" class="btn btn-primary" > Guardar y Agregar Clientes</a>
+    <a href="{{ path('hojaruta_index') }}" class="btn btn-default" >Volver</a>
+       
 {% endblock %}

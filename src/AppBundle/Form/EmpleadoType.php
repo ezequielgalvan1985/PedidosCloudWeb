@@ -29,7 +29,7 @@ class EmpleadoType extends AbstractType
                             GlobalValue::ROLE_DEPOSITO_DISPLAY=> GlobalValue::ROLE_DEPOSITO
                             )
                         )
-                    );;
+                    );
     }
     
     /**

@@ -12,6 +12,14 @@ class ProductoType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    protected $empresa;
+    public function getEmpresa(){
+        return $this->empresa;
+    }
+    public function setEmpresa($empresa){
+        $this->empresa = $empresa;
+    }
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nombre')

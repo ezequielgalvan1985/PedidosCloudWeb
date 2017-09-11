@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
     <h1>Hojarutum</h1>
 
@@ -7,19 +7,19 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ hojarutum.id }}</td>
+                <td>{{ hojaruta.id }}</td>
             </tr>
             <tr>
                 <th>Diaid</th>
-                <td>{{ hojarutum.diaId }}</td>
+                <td>{{ hojaruta.diaId }}</td>
             </tr>
             <tr>
                 <th>Titulo</th>
-                <td>{{ hojarutum.titulo }}</td>
+                <td>{{ hojaruta.titulo }}</td>
             </tr>
             <tr>
                 <th>Notas</th>
-                <td>{{ hojarutum.notas }}</td>
+                <td>{{ hojaruta.notas }}</td>
             </tr>
         </tbody>
     </table>
@@ -29,7 +29,7 @@
             <a href="{{ path('hojaruta_index') }}">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('hojaruta_edit', { 'id': hojarutum.id }) }}">Edit</a>
+            <a href="{{ path('hojaruta_edit', { 'id': hojaruta.id }) }}">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
