@@ -32,10 +32,11 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
+      {% if is_granted("ROLE_CARGADATOS") %}   
+        <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Base de Datos <span class="caret"></span></a>
-          {% if is_granted("ROLE_CARGADATOS") %}   
+          
           <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Marcas</a></li>
                 <li><a class="dropdown-item" href="{{ url('categoria_index') }}">Categorias</a></li>
@@ -55,15 +56,17 @@
                 <li><a class="dropdown-item" href="{{ url('pedidodetalle_index') }}">Pedido Items</a></li>
                
           </ul>
-          {% endif %}
+          
         </li>
       </ul>
-         <ul class="nav navbar-nav">
+        {% endif %}
+        {% if is_granted("ROLE_DEPOSITO") %}     
+        <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" 
              role="button" aria-haspopup="true" aria-expanded="false">Pedidos
               <span class="caret"></span></a>
-         {% if is_granted("ROLE_DEPOSITO") %}     
+         
           <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Pedidos de hoy</a> </li>
                 <li><a class="dropdown-item" href="{{ url('empresa_index') }}">Listado de Pedidos</a></li>
@@ -73,17 +76,14 @@
                 {% endif %}  
                
           </ul>
-          {% endif %}
+        
         </li>
       </ul>
-        
+    {% endif %}
       <ul class="nav navbar-nav navbar-right">
         
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" 
-                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  Mi Cuenta ({{ app.user.username|trans({'%username%': app.user.username}, 'FOSUserBundle') }})<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
+           
+            {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
             <li class="nav-item">
              <a class="nav-link" href="{{ path('fos_user_security_login') }}" id="navbarDropdownMenuLink"  >
                Ingresar
@@ -95,6 +95,12 @@
              </a>
             </li>
            {%else%}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" 
+             data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
+
+              Mi Cuenta ({{ app.user.username|trans({'%username%': app.user.username}, 'FOSUserBundle') }})<span class="caret"></span></a>
+          <ul class="dropdown-menu">
             <li class="nav-item">
             
             </li>
