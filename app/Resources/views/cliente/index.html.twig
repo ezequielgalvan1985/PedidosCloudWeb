@@ -3,10 +3,11 @@
 {% block body %}
     <h1>Clientes list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <strong>Total: </strong>{{ pagination.getTotalItemCount }}
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Ndoc</th>
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for cliente in clientes %}
+        {% for cliente in pagination %}
             <tr>
                 <td><a href="{{ path('cliente_show', { 'id': cliente.id }) }}">{{ cliente.id }}</a></td>
                 <td>{{ cliente.nombre }}</td>
@@ -27,23 +28,19 @@
                 <td>{{ cliente.email }}</td>
                 <td>{{ cliente.direccion }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('cliente_show', { 'id': cliente.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                   
+                            <a href="{{ path('cliente_show', { 'id': cliente.id }) }}" class="btn btn-default">Ver</a>
+                       
+                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}" class="btn btn-primary" >Editar</a>
+                       
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('cliente_new') }}">Create a new cliente</a>
-        </li>
-    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+            <a href="{{ path('cliente_new') }}" class="btn btn-primary">Nuevo</a>
+    
 {% endblock %}

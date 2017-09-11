@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Empleados list</h1>
+    <h3>Empleados</h3>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <strong>Total: </strong>{{ pagination.getTotalItemCount }}
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Ndoc</th>
@@ -17,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for empleado in empleados %}
+        {% for empleado in pagination %}
             <tr>
                 <td><a href="{{ path('empleado_show', { 'id': empleado.id }) }}">{{ empleado.id }}</a></td>
                 <td>{{ empleado.nombre }}</td>
@@ -27,23 +28,20 @@
                 <td>{{ empleado.telefono }}</td>
                 <td>{{ empleado.tipo }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('empleado_show', { 'id': empleado.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('empleado_edit', { 'id': empleado.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                   
+                            <a href="{{ path('empleado_show', { 'id': empleado.id }) }}" class="btn btn-default">Ver</a>
+                       
+                            <a href="{{ path('empleado_edit', { 'id': empleado.id }) }}" class="btn btn-primary" >Editar</a>
+                       
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('empleado_new') }}">Create a new empleado</a>
-        </li>
-    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+  
+    <a href="{{ path('empleado_new') }}">Create a new empleado</a>
+        
 {% endblock %}

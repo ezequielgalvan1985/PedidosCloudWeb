@@ -21,14 +21,17 @@ class ProductoController extends Controller
      * @Route("/", name="producto_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $productos = $em->getRepository('AppBundle:Producto')->findAll();
-
+        $repository = $this->getDoctrine()->getRepository(Producto::class);
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        $productos = $repository->findByEmpresa($empresa);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($productos, $request->query->getInt('page', 1),10);
         return $this->render('producto/index.html.twig', array(
-            'productos' => $productos,
+            'pagination' => $pagination,
         ));
     }
 

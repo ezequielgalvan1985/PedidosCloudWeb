@@ -23,14 +23,17 @@ class EmpleadoController extends Controller
      * @Route("/", name="empleado_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $empleados = $em->getRepository('AppBundle:Empleado')->findAll();
-
+        $repository = $this->getDoctrine()->getRepository(Empleado::class);
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        $registros = $repository->findByEmpresa($empresa);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
         return $this->render('empleado/index.html.twig', array(
-            'empleados' => $empleados,
+            'pagination' => $pagination,
         ));
     }
 
@@ -48,17 +51,15 @@ class EmpleadoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($empleado);
-            $em->flush();
             
             //Obtener Empresa
             $currentuser = $this->get('security.token_storage')->getToken()->getUser();
             $empresa = $currentuser->getEmpresa();
             
              //Crea empleado
-            $em = $this->getDoctrine()->getManager();
             $username = $empleado->getNombre() . $empleado->getApellido() . $empleado->getId() ;
             $empleado->setUsername($username);
+            $empleado->setEmpresa($empresa);
             $em->persist($empleado);
             $em->flush();
             

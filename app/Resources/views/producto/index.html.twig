@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Productos list</h1>
+    <h3>Productos </h3>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <strong>Total: </strong>{{ pagination.getTotalItemCount }}
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
                 <th>Precio</th>
@@ -15,31 +16,28 @@
             </tr>
         </thead>
         <tbody>
-        {% for producto in productos %}
+         {% for item in pagination %}
             <tr>
-                <td><a href="{{ path('producto_show', { 'id': producto.id }) }}">{{ producto.id }}</a></td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.descripcion }}</td>
-                <td>{{ producto.precio }}</td>
-                <td>{{ producto.imagen }}</td>
+                <td><a href="{{ path('producto_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.descripcion }}</td>
+                <td>{{ item.precio }}</td>
+                <td>{{ item.imagen }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('producto_show', { 'id': producto.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('producto_edit', { 'id': producto.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    
+                    <a href="{{ path('producto_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
+
+                    <a href="{{ path('producto_edit', { 'id': item.id }) }}" class="btn btn-primary" >Editar</a>
+                        
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('producto_new') }}">Create a new producto</a>
-        </li>
-    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+   
+    <a href="{{ path('producto_new') }}" class="btn btn-primary">Nuevo</a>
+       
 {% endblock %}
