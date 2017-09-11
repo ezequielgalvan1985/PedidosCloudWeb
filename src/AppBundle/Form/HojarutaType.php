@@ -31,7 +31,7 @@ class HojarutaType extends AbstractType
                         'class' => 'AppBundle:User',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('u')
-                        ->orderBy('u.username', 'ASC');},
+                                    ->where('u.username', 'ASC');},
                         'choice_label' => 'username',
                     ))
                 ->add('titulo')
