@@ -58,8 +58,8 @@ class HojarutaController extends Controller
             
             $em->persist($hojaruta);
             $em->flush();
-
-            return $this->redirectToRoute('hojaruta_show', array('id' => $hojaruta->getId()));
+            //redirigir a alta de detalle de hoja de ruta
+            return $this->redirectToRoute('hojarutadetalle_add', array('id' => $hojaruta->getId()));
         }
 
         return $this->render('hojaruta/new.html.twig', array(

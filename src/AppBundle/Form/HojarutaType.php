@@ -6,8 +6,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\GlobalValue;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+
 
 class HojarutaType extends AbstractType
 {
@@ -27,15 +31,9 @@ class HojarutaType extends AbstractType
                             )
                         )
                     )
-                ->add('user', EntityType::class, array(
-                        'class' => 'AppBundle:User',
-                        'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('u')
-                                    ->where('u.username', 'ASC');},
-                        'choice_label' => 'username',
-                    ))
+                
                 ->add('titulo')
-                ->add('notas');
+                ->add('notas', TextareaType::class);
     }
     
     /**

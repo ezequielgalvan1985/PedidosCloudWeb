@@ -35,7 +35,7 @@ class HojarutadetalleController extends Controller
     /**
      * Creates a new hojarutadetalle entity.
      *
-     * @Route("/new", name="hojarutadetalle_new")
+     * @Route("/new/{hojaruta_id}", name="hojarutadetalle_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -43,7 +43,7 @@ class HojarutadetalleController extends Controller
         $hojarutadetalle = new Hojarutadetalle();
         $form = $this->createForm('AppBundle\Form\HojarutadetalleType', $hojarutadetalle);
         $form->handleRequest($request);
-
+        //Leer datos de la hoja de ruta
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($hojarutadetalle);
@@ -53,7 +53,8 @@ class HojarutadetalleController extends Controller
         }
 
         return $this->render('hojarutadetalle/new.html.twig', array(
-            'hojarutadetalle' => $hojarutadetalle,
+            'hojarutadetalles' => $hojarutadetalles,
+            'hojaruta' => $hojaruta,
             'form' => $form->createView(),
         ));
     }
