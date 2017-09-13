@@ -272,6 +272,11 @@ class Empleado
         return $this->email;
     }
     
+    public function getTextoCombo()
+    {
+        return $this->nombre . ' '. $this->apellido . ' ' . $this->ndoc;
+    }
+    
     
     /**
      * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")

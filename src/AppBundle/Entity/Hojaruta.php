@@ -54,6 +54,9 @@ class Hojaruta
         $this->hojarutadetalles = new ArrayCollection();
     }
     
+    public function getHojarutadetalles(){
+        return $this->hojarutadetalles;
+    }
     
     
      /**
@@ -74,19 +77,19 @@ class Hojaruta
     }
     
      /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="empleados")
+     * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
      */
-    private $user;
+    private $empleado;
     
-    public function getUser()
+    public function getEmpleado()
     {
-        return $this->user;
+        return $this->empleado;
     }
     
-    public function setUser($user)
+    public function setEmpleado($empleado)
     {
-        $this->user = $user;
+        $this->empleado = $empleado;
         return $this;
     }
     

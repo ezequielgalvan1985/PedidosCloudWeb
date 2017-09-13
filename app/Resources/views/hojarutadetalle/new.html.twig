@@ -4,16 +4,53 @@
     
     <h3>Datos de Hoja de ruta</h3>
     
-    <h3>Detalle:</h3>
-
+     <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <table class="table">
+                <tr><th>ID:</th><td>{{hojaruta.id}}</td></tr>
+                <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
+            </table>
+        </div>
+     </div>
+          
+    
+   
     {{ form_start(form) }}
         {{ form_widget(form) }}
+        {{ form_row(form.hojaruta, {'value': hojaruta.id} ) }}
+        
         <input type="submit" value="Create" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('hojarutadetalle_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('hojarutadetalle_index') }}">Back to the list</a>
+       
+    <h3>Detalle:</h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <table class="table">
+                <thead>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Hora</th>
+                    <th>Notas</th>
+                </thead>
+                <tbody>
+                    
+                    {% for item in hojarutadetalles %}
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.cliente.TextoCombo}}</td>
+                        <td>{{item.hora }}</td>
+                        <td>{{item.notas }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+                
+            
+            </table>
+        </div>
+     </div>
+            
+            
 {% endblock %}

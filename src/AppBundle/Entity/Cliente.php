@@ -234,5 +234,8 @@ class Cliente
     {
         return $this->direccion;
     }
+    public function getTextoCombo(){
+         return $this->nombre . ' '. $this->apellido . ' ' . $this->ndoc;
+    }
 }
 

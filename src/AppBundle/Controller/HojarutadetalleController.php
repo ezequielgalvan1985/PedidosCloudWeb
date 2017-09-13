@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Hojarutadetalle;
+use AppBundle\Entity\Hojaruta;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -24,9 +25,7 @@ class HojarutadetalleController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $hojarutadetalles = $em->getRepository('AppBundle:Hojarutadetalle')->findAll();
-
         return $this->render('hojarutadetalle/index.html.twig', array(
             'hojarutadetalles' => $hojarutadetalles,
         ));
@@ -38,7 +37,7 @@ class HojarutadetalleController extends Controller
      * @Route("/new/{hojaruta_id}", name="hojarutadetalle_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $hojaruta_id)
     {
         $hojarutadetalle = new Hojarutadetalle();
         $form = $this->createForm('AppBundle\Form\HojarutadetalleType', $hojarutadetalle);
@@ -48,10 +47,14 @@ class HojarutadetalleController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($hojarutadetalle);
             $em->flush();
-
-            return $this->redirectToRoute('hojarutadetalle_show', array('id' => $hojarutadetalle->getId()));
         }
-
+        
+        //Obtener Hojaruta y Hojarutadetalles
+        $repository = $this->getDoctrine()->getRepository(Hojaruta::class);
+        $hojaruta = $repository->findOneById($hojaruta_id);
+        $hojarutadetalles = $hojaruta->getHojarutadetalles();
+        //Fin consulta de datos
+        
         return $this->render('hojarutadetalle/new.html.twig', array(
             'hojarutadetalles' => $hojarutadetalles,
             'hojaruta' => $hojaruta,

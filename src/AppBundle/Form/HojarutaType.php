@@ -31,7 +31,10 @@ class HojarutaType extends AbstractType
                             )
                         )
                     )
-                
+                ->add('empleado', EntityType::class, array(
+                        'class' => 'AppBundle:Empleado',
+                        'choice_label' => 'TextoCombo',
+                    ))
                 ->add('titulo')
                 ->add('notas', TextareaType::class);
     }
