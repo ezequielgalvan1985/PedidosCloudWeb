@@ -1,32 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    <h3>Datos de Hoja de ruta</h3>
-    
-     <div class="row">
-        <div class="col-xs-12 col-sm-6">
-            <table class="table">
-                <tr><th>ID:</th><td>{{hojaruta.id}}</td></tr>
-                <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
-            </table>
+    <div class="row">
+    <div class="col-xs-12 col-sm-8">
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Datos de Hoja de ruta</b></div>
+    <div class="panel-body">
+            
+                   <table class="table">
+                       <tr><th>ID:</th><td>{{hojaruta.id}}</td></tr>
+                       <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
+                       <tr><th>Usuario:</th><td>{{hojaruta.empleado.textocombo}}</td></tr>
+                   </table>
+               </div>
+            </div>
         </div>
-     </div>
+    </div>
           
+                   
+                   
+                   
+ <div class="row">
+    <div class="col-xs-12 col-sm-8">      
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Agregar Cliente:</b></div>
+    <div class="panel-body">
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input class="btn btn-primary" type="submit" value="Agregar Cliente" />
+        {{ form_end(form) }}
+    </div>
+  </div>
+</div>
+</div>
+
     
    
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_row(form.hojaruta, {'value': hojaruta.id} ) }}
-        
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <a href="{{ path('hojarutadetalle_index') }}">Back to the list</a>
-       
-    <h3>Detalle:</h3>
+    
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Listado de Clientes en la Hoja:</b></div>
+    <div class="panel-body">
     <div class="row">
-        <div class="col-xs-12 col-sm-6">
+        
             <table class="table">
                 <thead>
                     <th>ID</th>
@@ -42,15 +58,15 @@
                         <td>{{item.cliente.TextoCombo}}</td>
                         <td>{{item.hora }}</td>
                         <td>{{item.notas }}</td>
+                        <td><a href="" class="btn btn-xs btn-danger">Eliminar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
-                
-                
-            
             </table>
-        </div>
+        
      </div>
-            
+     </div>
+     </div>
+               
             
 {% endblock %}

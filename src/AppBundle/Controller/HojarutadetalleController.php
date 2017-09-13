@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 /**
  * Hojarutadetalle controller.
  *
@@ -39,21 +40,27 @@ class HojarutadetalleController extends Controller
      */
     public function newAction(Request $request, $hojaruta_id)
     {
-        $hojarutadetalle = new Hojarutadetalle();
-        $form = $this->createForm('AppBundle\Form\HojarutadetalleType', $hojarutadetalle);
-        $form->handleRequest($request);
-        //Leer datos de la hoja de ruta
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($hojarutadetalle);
-            $em->flush();
-        }
-        
-        //Obtener Hojaruta y Hojarutadetalles
+         //Obtener Hojaruta y Hojarutadetalles
         $repository = $this->getDoctrine()->getRepository(Hojaruta::class);
         $hojaruta = $repository->findOneById($hojaruta_id);
         $hojarutadetalles = $hojaruta->getHojarutadetalles();
         //Fin consulta de datos
+        
+        $hojarutadetalle = new Hojarutadetalle();
+        
+        $form = $this->createForm('AppBundle\Form\HojarutadetalleType', $hojarutadetalle);
+        
+        
+        $form->handleRequest($request);
+        //Leer datos de la hoja de ruta
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $hojarutadetalle->setHojaruta($hojaruta);
+            $em->persist($hojarutadetalle);
+            $em->flush();
+        }
+        
+       
         
         return $this->render('hojarutadetalle/new.html.twig', array(
             'hojarutadetalles' => $hojarutadetalles,

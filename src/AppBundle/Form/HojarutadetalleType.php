@@ -20,11 +20,8 @@ class HojarutadetalleType extends AbstractType
                 ->add('cliente', EntityType::class, array(
                         'class' => 'AppBundle:Cliente',
                         'choice_label' => 'textocombo',
-                    ))
-                ->add('hojaruta', EntityType::class, array(
-                        'class' => 'AppBundle:Cliente',
-                        'choice_label' => 'id',
                     ));
+                
         
     }
     

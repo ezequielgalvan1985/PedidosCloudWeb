@@ -22,14 +22,10 @@
                 <td>{{ hojarutum.titulo }}</td>
                 <td>{{ hojarutum.notas }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('hojaruta_show', { 'id': hojarutum.id }) }}"class="btn btn-default">Ver</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('hojaruta_edit', { 'id': hojarutum.id }) }}" class="btn btn-primary" >Editar</a>
-                        </li>
-                    </ul>
+                   
+                        <a href="{{ path('hojarutadetalle_new', { 'hojaruta_id': hojarutum.id }) }}"class="btn btn-default">Consultar</a>
+                        <a href="{{ path('hojaruta_delete', { 'id': hojarutum.id }) }}" class="btn btn-danger" >Eliminar</a>
+                    
                 </td>
             </tr>
         {% endfor %}
