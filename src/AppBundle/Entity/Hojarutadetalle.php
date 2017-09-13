@@ -24,7 +24,7 @@ class Hojarutadetalle
     /**
      * @var string
      *
-     * @ORM\Column(name="hora", type="string", length=10, nullable=true)
+     * @ORM\Column(name="hora", type="datetime", nullable=true)
      */
     private $hora;
 

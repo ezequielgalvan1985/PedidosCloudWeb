@@ -113,21 +113,19 @@ class HojarutadetalleController extends Controller
     /**
      * Deletes a hojarutadetalle entity.
      *
-     * @Route("/{id}", name="hojarutadetalle_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="hojarutadetalle_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Hojarutadetalle $hojarutadetalle)
     {
         $form = $this->createDeleteForm($hojarutadetalle);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($hojarutadetalle);
+        $em->flush();
+        $this->addFlash('notice','Eliminado Correctamente');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($hojarutadetalle);
-            $em->flush();
-        }
 
-        return $this->redirectToRoute('hojarutadetalle_index');
+        return $this->redirectToRoute('hojarutadetalle_new', array('hojaruta_id' => $hojarutadetalle->getHojaruta()->getId()));
     }
 
     /**

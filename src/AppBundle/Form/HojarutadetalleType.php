@@ -7,7 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 class HojarutadetalleType extends AbstractType
 {
     /**
@@ -15,12 +16,14 @@ class HojarutadetalleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('hora')
-                ->add('notas')
-                ->add('cliente', EntityType::class, array(
+        $builder->add('cliente', EntityType::class, array(
                         'class' => 'AppBundle:Cliente',
                         'choice_label' => 'textocombo',
-                    ));
+                    ))
+                ->add('hora',TimeType::class, array(
+                    'input'  => 'datetime',
+                    'widget' => 'choice'))
+                ->add('notas', TextareaType::class);
                 
         
     }

@@ -2,26 +2,23 @@
 
 {% block body %}
     <div class="row">
-    <div class="col-xs-12 col-sm-8">
+    <div class="col-xs-12 col-sm-6">
     <div class="panel panel-default">
     <div class="panel-heading"> <b>Datos de Hoja de ruta</b></div>
     <div class="panel-body">
             
                    <table class="table">
                        <tr><th>ID:</th><td>{{hojaruta.id}}</td></tr>
-                       <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
                        <tr><th>Usuario:</th><td>{{hojaruta.empleado.textocombo}}</td></tr>
+                       <tr><th>Notas:</th><td>{{hojaruta.titulo}}</td></tr>
+                       <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
+                       
                    </table>
                </div>
             </div>
         </div>
-    </div>
-          
-                   
-                   
-                   
- <div class="row">
-    <div class="col-xs-12 col-sm-8">      
+    
+    <div class="col-xs-12 col-sm-6">      
     <div class="panel panel-default">
     <div class="panel-heading"> <b>Agregar Cliente:</b></div>
     <div class="panel-body">
@@ -31,9 +28,9 @@
             <input class="btn btn-primary" type="submit" value="Agregar Cliente" />
         {{ form_end(form) }}
     </div>
-  </div>
-</div>
-</div>
+    </div>
+    </div>
+    </div>
 
     
    
@@ -56,9 +53,9 @@
                     <tr>
                         <td>{{item.id}}</td>
                         <td>{{item.cliente.TextoCombo}}</td>
-                        <td>{{item.hora }}</td>
+                        <td>{{item.hora|date('H:i') }}</td>
                         <td>{{item.notas }}</td>
-                        <td><a href="" class="btn btn-xs btn-danger">Eliminar</a></td>
+                        <td><a href="{{ path('hojarutadetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
