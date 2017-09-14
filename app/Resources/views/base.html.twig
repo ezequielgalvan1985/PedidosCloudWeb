@@ -66,8 +66,8 @@
               <span class="caret"></span></a>
          
           <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Pedidos de hoy</a> </li>
-                <li><a class="dropdown-item" href="{{ url('empresa_index') }}">Listado de Pedidos</a></li>
+                <li><a class="dropdown-item" href="{{ url('pedido_hoy') }}">Pedidos de hoy</a> </li>
+                <li><a class="dropdown-item" href="{{ url('pedido_index') }}">Listado de Pedidos</a></li>
                 {% if is_granted("ROLE_VENDEDOR") %}    
                  <hr>
                  <li><a class="dropdown-item" href="{{ url('pedido_index') }}">Hojas de ruta</a></li>

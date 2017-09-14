@@ -31,6 +31,24 @@ class PedidoController extends Controller
             'pedidos' => $pedidos,
         ));
     }
+    
+    /**
+     * Lists all pedido entities.
+     *
+     * @Route("/hoy", name="pedido_hoy")
+     * @Method("GET")
+     */
+    public function hoyAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        // Filtrar por Empresa y por fecha de hoy
+        $pedidos = $em->getRepository('AppBundle:Pedido')->findAll();
+
+        return $this->render('pedido/index.html.twig', array(
+            'pedidos' => $pedidos,
+        ));
+    }
+    
 
     /**
      * Creates a new pedido entity.
@@ -46,11 +64,12 @@ class PedidoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            $em->persist($marca);
+            $pedido->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            $em->persist($pedido);
             $em->flush();
 
-            return $this->redirectToRoute('pedido_show', array('id' => $pedido->getId()));
+            //return $this->redirectToRoute('pedido_show', array('id' => $pedido->getId()));
+            return $this->redirectToRoute('pedidodetalle_new', array('pedido_id' => $pedido->getId()));
         }
 
         return $this->render('pedido/new.html.twig', array(

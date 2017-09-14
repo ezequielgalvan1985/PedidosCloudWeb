@@ -113,7 +113,7 @@ class HojarutaController extends Controller
      * Deletes a hojaruta entity.
      *
      * @Route("/{id}", name="hojaruta_delete")
-     * @Method({"GET"})
+     * @Method({"GET","DELETE"})
      */
     public function deleteAction(Request $request, Hojaruta $hojaruta)
     {

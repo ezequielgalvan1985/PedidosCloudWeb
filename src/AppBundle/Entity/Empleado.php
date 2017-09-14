@@ -294,5 +294,26 @@ class Empleado
         $this->empresa = $empresa;
         return $this;
     }
+    
+    
+    
+     /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="user")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+    
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
 }
 

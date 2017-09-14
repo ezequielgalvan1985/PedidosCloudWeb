@@ -20,7 +20,7 @@ class HojarutadetalleType extends AbstractType
                         'class' => 'AppBundle:Cliente',
                         'choice_label' => 'textocombo',
                     ))
-                ->add('hora',TimeType::class, array(
+                ->add('hora', TimeType::class, array(
                     'input'  => 'datetime',
                     'widget' => 'choice'))
                 ->add('notas', TextareaType::class);

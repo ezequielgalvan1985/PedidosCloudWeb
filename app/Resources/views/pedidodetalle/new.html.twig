@@ -1,16 +1,69 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Pedidodetalle creation</h1>
+    <div class="row">
+    <div class="col-xs-12 col-sm-6">
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Datos de Hoja de ruta</b></div>
+    <div class="panel-body">
+            
+                   <table class="table">
+                       <tr><th>ID:</th><td>{{pedido.id}}</td></tr>
+                       <tr><th>Usuario:</th><td>{{pedido.empleado.textocombo}}</td></tr>
+                       <tr><th>Notas:</th><td>{{pedido.titulo}}</td></tr>
+                       <tr><th>Notas:</th><td>{{pedido.notas}}</td></tr>
+                       
+                   </table>
+               </div>
+            </div>
+        </div>
+    
+    <div class="col-xs-12 col-sm-6">      
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Agregar Cliente:</b></div>
+    <div class="panel-body">
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input class="btn btn-primary" type="submit" value="Agregar Cliente" />
+            <a href="{{ path('pedido_index')}}" class="btn btn-default">Volver al Listado</a>
+        {{ form_end(form) }}
+        
+    </div>
+    </div>
+    </div>
+    </div>
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('pedidodetalle_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    
+   
+    
+    <div class="panel panel-default">
+    <div class="panel-heading"> <b>Listado de Productos en Pedido:</b></div>
+    <div class="panel-body">
+    <div class="row">
+        
+            <table class="table">
+                <thead>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Hora</th>
+                    <th>Notas</th>
+                </thead>
+                <tbody>
+                    
+                    {% for item in pedidodetalles %}
+                    <tr>
+                        <td>{{item.id}}</td>
+                        <td>{{item.cliente.TextoCombo}}</td>
+                        <td>{{item.hora|date('H:i') }}</td>
+                        <td>{{item.notas }}</td>
+                        <td><a href="{{ path('pedidodetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+     </div>
+     </div>
+     </div>
 {% endblock %}
