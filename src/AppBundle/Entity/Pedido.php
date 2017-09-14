@@ -130,6 +130,14 @@ class Pedido
     {
         $this->pedidodetalles = new ArrayCollection();
     }
+    
+    public function getPedidodetalles(){
+        return $this->pedidodetalles;
+    }
+    
+    
+    
+    
     /**
      * Get id
      *
@@ -285,5 +293,9 @@ class Pedido
     {
         return $this->monto;
     }
+    
+    
+    
+    
 }
 

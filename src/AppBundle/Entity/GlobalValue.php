@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 class GlobalValue{
+    /*Roles*/
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_EMPRESA = 'ROLE_EMPRESA';
     const ROLE_VENDEDOR = 'ROLE_VENDEDOR';
@@ -21,6 +22,7 @@ class GlobalValue{
     const ROLE_CARGADATOS_DISPLAY = 'Carga de Datos';
     const ROLE_DEPOSITO_DISPLAY = 'Deposito';
     
+    /*DIAS de la Semana*/
     const LUNES_DISPLAY = 'Lunes';
     const MARTES_DISPLAY = 'Martes';
     const MIERCOLES_DISPLAY = 'Miercoles';
@@ -34,4 +36,16 @@ class GlobalValue{
     const JUEVES_ID = 4;
     const VIERNES_ID = 5;
     const SABADOS_ID = 6;
+    
+    /*Estado de pedido*/
+    const PENDIENTE = 1;
+    const ENTREGADO = 2;
+    const PAGADO = 3;
+    
+    const PENDIENTE_DISPLAY = 'Pendiente';
+    const ENTREGADO_DISPLAY = 'Entregado';
+    const PAGADO_DISPLAY = 'Pagado';
+    
+    
+    
 }

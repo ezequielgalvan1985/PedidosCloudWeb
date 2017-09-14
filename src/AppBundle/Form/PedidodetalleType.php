@@ -13,7 +13,7 @@ class PedidodetalleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('cantidad')->add('preciounitario')->add('monto')->add('estadoId')->add('pedido')->add('producto');
+        $builder->add('producto')->add('cantidad')->add('preciounitario')->add('monto');
     }
     
     /**

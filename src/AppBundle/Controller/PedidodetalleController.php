@@ -3,11 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Pedidodetalle;
+use AppBundle\Entity\Pedido;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Pedidodetalle controller.
@@ -36,17 +39,34 @@ class PedidodetalleController extends Controller
     /**
      * Creates a new pedidodetalle entity.
      *
-     * @Route("/new", name="pedidodetalle_new")
+     * @Route("/new/{pedido_id}", name="pedidodetalle_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $pedido_id)
     {
         $pedidodetalle = new Pedidodetalle();
+        //Obtener Hojaruta y Hojarutadetalles
+        $repository = $this->getDoctrine()->getRepository(Pedido::class);
+        $pedido = $repository->findOneById($pedido_id);
+        $pedidodetalles = $pedido->getPedidodetalles();
+        //Fin consulta de datos
+        
         $form = $this->createForm('AppBundle\Form\PedidodetalleType', $pedidodetalle);
+        $form->add('producto', EntityType::class, array(
+                        'class' => 'AppBundle:Producto',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'textocombo'
+                    ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $pedidodetalle->setPedido($pedido);
             $em->persist($pedidodetalle);
             $em->flush();
 
@@ -54,7 +74,8 @@ class PedidodetalleController extends Controller
         }
 
         return $this->render('pedidodetalle/new.html.twig', array(
-            'pedidodetalle' => $pedidodetalle,
+            'pedidodetalles' => $pedidodetalles,
+            'pedido'=>$pedido,
             'form' => $form->createView(),
         ));
     }

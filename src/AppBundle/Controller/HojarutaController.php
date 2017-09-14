@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 /**
  * Hojarutum controller.
  *
@@ -46,9 +49,20 @@ class HojarutaController extends Controller
     public function newAction(Request $request)
     {
         $hojaruta = new Hojaruta();
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
         $form = $this->createForm('AppBundle\Form\HojarutaType', $hojaruta);
+        $form->add('empleado', EntityType::class, array(
+                        'class' => 'AppBundle:Empleado',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'TextoCombo'));
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa

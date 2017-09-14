@@ -3,10 +3,15 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Pedido;
+use AppBundle\Entity\GlobalValue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\TextType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\User;
 /**
  * Pedido controller.
@@ -59,16 +64,38 @@ class PedidoController extends Controller
     public function newAction(Request $request)
     {
         $pedido = new Pedido();
+        /* Crea Formulario */
         $form = $this->createForm('AppBundle\Form\PedidoType', $pedido);
+        $form->add('empleado', EntityType::class, array(
+                        'class' => 'AppBundle:Empleado',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'TextoCombo'))
+                ->add('cliente', EntityType::class, array(
+                        'class' => 'AppBundle:Cliente',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'textocombo'
+                    ));
+                
+                        
         $form->handleRequest($request);
-
+        
+        /* Guardar datos */          
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $pedido->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+            $pedido->setEstadoId(GlobalValue::PENDIENTE);
             $em->persist($pedido);
             $em->flush();
-
-            //return $this->redirectToRoute('pedido_show', array('id' => $pedido->getId()));
             return $this->redirectToRoute('pedidodetalle_new', array('pedido_id' => $pedido->getId()));
         }
 

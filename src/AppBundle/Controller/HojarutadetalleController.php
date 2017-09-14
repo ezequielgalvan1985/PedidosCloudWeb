@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 /**
  * Hojarutadetalle controller.
@@ -47,9 +48,18 @@ class HojarutadetalleController extends Controller
         //Fin consulta de datos
         
         $hojarutadetalle = new Hojarutadetalle();
-        
+        //Crear formulario
         $form = $this->createForm('AppBundle\Form\HojarutadetalleType', $hojarutadetalle);
-        
+        $form->add('cliente', EntityType::class, array(
+                        'class' => 'AppBundle:Cliente',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'textocombo'
+                    ));
         
         $form->handleRequest($request);
         //Leer datos de la hoja de ruta
@@ -118,13 +128,10 @@ class HojarutadetalleController extends Controller
      */
     public function deleteAction(Request $request, Hojarutadetalle $hojarutadetalle)
     {
-        $form = $this->createDeleteForm($hojarutadetalle);
         $em = $this->getDoctrine()->getManager();
         $em->remove($hojarutadetalle);
         $em->flush();
         $this->addFlash('notice','Eliminado Correctamente');
-
-
         return $this->redirectToRoute('hojarutadetalle_new', array('hojaruta_id' => $hojarutadetalle->getHojaruta()->getId()));
     }
 

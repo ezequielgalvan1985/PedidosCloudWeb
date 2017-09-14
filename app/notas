@@ -26,14 +26,10 @@ crud pedidodetalle
 ajustar logica de alta en todos los modelos,empresa_id = a user login
 
 
-
- /* AQUI SE AGREGA LA LOGICA NECESARIA */
-                $empresa = new Empresa();
-                $empresa->setEmail($user->getEmail());
-                $empresa->setDireccion('prueba direccion');
-                $empresa->setUserId($user->getId());
-                $empresa->setNombre('nombre prueba');
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($empresa);
-                $em->flush();
-                /* AQUI SE AGREGA LA LOGICA NECESARIA */
+-----------------------------------------------
+* olvide mi contraseña
+* campos fecha valor default dia de HOY
+* Pedido nuevo detalle, 
+    filtrar clientes por empresa, 
+    estado no puede ser null
+    Pedido detalle formato de campos money y cantidad

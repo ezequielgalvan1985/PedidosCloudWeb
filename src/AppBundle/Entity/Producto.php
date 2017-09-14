@@ -212,5 +212,8 @@ class Producto
     {
         return $this->imagen;
     }
+    public function getTextoCombo(){
+         return $this->id . ' '. $this->nombre ;
+    }
 }
 
