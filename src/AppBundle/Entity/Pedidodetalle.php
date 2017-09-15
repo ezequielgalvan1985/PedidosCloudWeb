@@ -43,17 +43,6 @@ class Pedidodetalle
     private $monto;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="estado_id", type="integer")
-     */
-    private $estadoId;
-
-
-    
-    
-    
-    /**
     * @ORM\ManyToOne(targetEntity="Pedido", inversedBy="pedidodetalles")
     * @ORM\JoinColumn(name="pedido_id", referencedColumnName="id")
     */
@@ -177,28 +166,6 @@ class Pedidodetalle
         return $this->monto;
     }
 
-    /**
-     * Set estadoId
-     *
-     * @param integer $estadoId
-     *
-     * @return Pedidodetalle
-     */
-    public function setEstadoId($estadoId)
-    {
-        $this->estadoId = $estadoId;
-
-        return $this;
-    }
-
-    /**
-     * Get estadoId
-     *
-     * @return int
-     */
-    public function getEstadoId()
-    {
-        return $this->estadoId;
-    }
+    
 }
 

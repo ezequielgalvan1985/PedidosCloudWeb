@@ -70,7 +70,7 @@ class PedidodetalleController extends Controller
             $em->persist($pedidodetalle);
             $em->flush();
 
-            return $this->redirectToRoute('pedidodetalle_show', array('id' => $pedidodetalle->getId()));
+            return $this->redirectToRoute('pedidodetalle_new', array('pedido_id' => $pedido->getId()));
         }
 
         return $this->render('pedidodetalle/new.html.twig', array(
@@ -124,21 +124,16 @@ class PedidodetalleController extends Controller
     /**
      * Deletes a pedidodetalle entity.
      *
-     * @Route("/{id}", name="pedidodetalle_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="pedidodetalle_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Pedidodetalle $pedidodetalle)
     {
-        $form = $this->createDeleteForm($pedidodetalle);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($pedidodetalle);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($pedidodetalle);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('pedidodetalle_index');
+        return $this->redirectToRoute('pedidodetalle_new',array('pedido_id' => $pedidodetalle->getPedido()->getId()));
     }
 
     /**

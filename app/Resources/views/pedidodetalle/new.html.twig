@@ -45,18 +45,20 @@
             <table class="table">
                 <thead>
                     <th>ID</th>
-                    <th>Cliente</th>
-                    <th>Hora</th>
-                    <th>Notas</th>
+                    <th>Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Monto</th>
                 </thead>
                 <tbody>
                     
                     {% for item in pedidodetalles %}
                     <tr>
                         <td>{{item.id}}</td>
-                        <td>{{item.cliente.TextoCombo}}</td>
-                        <td>{{item.hora|date('H:i') }}</td>
-                        <td>{{item.notas }}</td>
+                        <td>{{item.producto.nombre}}</td>
+                        <td>{{item.preciounitario }}</td>
+                        <td>{{item.cantidad }}</td>
+                        <td>{{item.monto }}</td>
                         <td><a href="{{ path('pedidodetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
                     </tr>
                     {% endfor %}

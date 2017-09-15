@@ -27,14 +27,10 @@
                 <td>{{ pedido.impuestos }}</td>
                 <td>{{ pedido.monto }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('pedido_show', { 'id': pedido.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('pedido_edit', { 'id': pedido.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}">show</a>
+                    <a class="btn btn-default" href="{{ path('pedido_edit', { 'id': pedido.id }) }}">edit</a>
+                </td>
+                    
                 </td>
             </tr>
         {% endfor %}
