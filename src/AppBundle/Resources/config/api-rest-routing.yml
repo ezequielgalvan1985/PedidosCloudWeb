@@ -1,0 +1,4 @@
+api_clientes:
+    type: rest
+    resource: "@AppBundle/Controller/ClienteController.php"
+    name_prefix:  api_clientes_

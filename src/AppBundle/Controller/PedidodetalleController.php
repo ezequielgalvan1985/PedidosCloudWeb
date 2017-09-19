@@ -35,6 +35,8 @@ class PedidodetalleController extends Controller
             'pedidodetalles' => $pedidodetalles,
         ));
     }
+    
+    
 
     /**
      * Creates a new pedidodetalle entity.

@@ -3,11 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Marca;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Cliente controller.
  *
@@ -35,7 +38,34 @@ class ClienteController extends Controller
             'pagination' => $pagination,
         ));
     }
-
+    
+    
+    
+     public function getClientesAction()
+    {
+        $repository = $this->getDoctrine()->getRepository(Marca::class);
+        //Obtener empresa
+        //$currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        //$empresa = $currentuser->getEmpresa();
+        //$registros = $repository->findAll();
+        //$serializer = $this->container->get('serializer');
+        //$registros = $serializer->serialize($registros, 'json');
+        
+        $data = array("Usuarios" => array(
+        array(
+            "nombre"   => "Víctor",
+            "Apellido" => "Robles"
+        ),
+        array(
+            "nombre"   => "Antonio",
+            "Apellido" => "Martinez"
+        )));
+         
+        return $data;
+        
+        
+    }
+    
     /**
      * Creates a new cliente entity.
      *
