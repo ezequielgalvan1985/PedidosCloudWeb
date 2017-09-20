@@ -11,6 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+
 /**
  * Cliente controller.
  *
@@ -33,7 +38,7 @@ class ClienteController extends Controller
         $registros = $repository->findByEmpresa($empresa);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
-
+        
         return $this->render('cliente/index.html.twig', array(
             'pagination' => $pagination,
         ));
@@ -41,28 +46,34 @@ class ClienteController extends Controller
     
     
     
-     public function getClientesAction()
+    public function getClientesAction()
     {
-        $repository = $this->getDoctrine()->getRepository(Marca::class);
+        $repository = $this->getDoctrine()->getRepository(Cliente::class);
         //Obtener empresa
         //$currentuser = $this->get('security.token_storage')->getToken()->getUser();
         //$empresa = $currentuser->getEmpresa();
-        //$registros = $repository->findAll();
-        //$serializer = $this->container->get('serializer');
-        //$registros = $serializer->serialize($registros, 'json');
+        $registros = $repository->findAll();
+        /*
+        $result = $this->em->createQueryBuilder();
+        $app_code = $result->select('p')
+                ->from('AppBundle:Cliente', 'c')
+                ->where('c.empresa_id= :id')
+                ->setParameter('id', 10)
+                ->getQuery()
+                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+         * 
+         */
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+       
+       
+        $registros = $serializer->serialize($registros, 'json');
+        dump($registros);
         
-        $data = array("Usuarios" => array(
-        array(
-            "nombre"   => "Víctor",
-            "Apellido" => "Robles"
-        ),
-        array(
-            "nombre"   => "Antonio",
-            "Apellido" => "Martinez"
-        )));
-         
-        return $data;
         
+        
+        return $registros;
         
     }
     
