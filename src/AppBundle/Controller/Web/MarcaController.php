@@ -1,14 +1,13 @@
 <?php
+namespace AppBundle\Controller\Web;
 
-namespace AppBundle\Controller;
-
-use AppBundle\Entity\Marca;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use Symfony\Component\Security\Core\User\User;
+use AppBundle\Entity\Marca;
 /**
  * Marca controller.
  *

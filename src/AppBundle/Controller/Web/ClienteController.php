@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Web;
 
 use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Marca;
@@ -10,10 +10,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\FOSRestController;
+
+use FOS\RestBundle\View\View;
+
 
 
 /**
@@ -21,7 +25,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  *
  * @Route("cliente")
  */
-class ClienteController extends Controller
+class ClienteController extends FOSRestController
 {
     /**
      * Lists all cliente entities.
@@ -44,38 +48,18 @@ class ClienteController extends Controller
         ));
     }
     
-    
-    
-    public function getClientesAction()
+
+    public function getUsersAction()
     {
-        $repository = $this->getDoctrine()->getRepository(Cliente::class);
-        //Obtener empresa
-        //$currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        //$empresa = $currentuser->getEmpresa();
-        $registros = $repository->findAll();
-        /*
-        $result = $this->em->createQueryBuilder();
-        $app_code = $result->select('p')
-                ->from('AppBundle:Cliente', 'c')
-                ->where('c.empresa_id= :id')
-                ->setParameter('id', 10)
-                ->getQuery()
-                ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-         * 
-         */
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-       
-       
-        $registros = $serializer->serialize($registros, 'json');
-        dump($registros);
-        
-        
-        
-        return $registros;
-        
+        $data = $repository = $this->getDoctrine()->getRepository(Cliente::class);
+        $view = $this->view($data, 200)
+            ->setTemplate("AppBundle:Default:json.html.twig")
+            ->setTemplateVar('users')
+        ;
+
+        return $this->handleView($view);
     }
+
     
     /**
      * Creates a new cliente entity.

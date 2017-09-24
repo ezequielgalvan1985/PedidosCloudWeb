@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Web;
 
 use AppBundle\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

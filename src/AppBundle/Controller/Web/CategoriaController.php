@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Web;
 
 use AppBundle\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -153,29 +153,7 @@ class Empresa
         return $this->razonsocial;
     }
 
-    /**
-     * Set userId
-     *
-     * @param integer $userId
-     *
-     * @return Empresa
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
-     *
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
+   
 
     /**
      * Set telefono

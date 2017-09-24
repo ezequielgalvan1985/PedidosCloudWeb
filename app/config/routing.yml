@@ -1,12 +1,11 @@
-app:
-    resource: '@AppBundle/Controller/'
+app_web:
+    resource: '@AppBundle/Controller/Web'
     type: annotation
     
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
-app_bundle_api:
-    type:     rest
-    prefix:   /api
-    resource: "@AppBundle/Resources/config/api-rest-routing.yml"
+app_api:
+    type:     annotation
+    resource: "@AppBundle/Controller/Api"
 
