@@ -1,14 +1,8 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Marca;
+use AppBundle\Entity\Empleado;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,17 +17,20 @@ use \FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class MarcaController extends FOSRestController{
+class EmpleadoController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/marcas")
+    * @Rest\Get("/api/empleados")
     */
-    public function getMarcasAction(){
-        $result = $this->getDoctrine()->getRepository('AppBundle:Marca')->findAll();
+    public function getEmpleadosAction(){
+        $result = $this->getDoctrine()->getRepository('AppBundle:Empleado')->findAll();
         if ($result === null) {
           return new View("there are no users exist", Response::HTTP_NOT_FOUND);
         }
         return $result;
     }
+    
+    
+   
     
 }

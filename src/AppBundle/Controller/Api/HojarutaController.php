@@ -1,10 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 namespace AppBundle\Controller\Api;
 
@@ -23,13 +18,13 @@ use \FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class MarcaController extends FOSRestController{
+class HojarutaController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/marcas")
+    * @Rest\Get("/api/hojarutas")
     */
-    public function getMarcasAction(){
-        $result = $this->getDoctrine()->getRepository('AppBundle:Marca')->findAll();
+    public function getHojarutasAction(){
+        $result = $this->getDoctrine()->getRepository('AppBundle:Hojaruta')->findAll();
         if ($result === null) {
           return new View("there are no users exist", Response::HTTP_NOT_FOUND);
         }
