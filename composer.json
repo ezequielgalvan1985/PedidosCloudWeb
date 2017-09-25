@@ -19,6 +19,7 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/rest-bundle": "^2.2",
         "friendsofsymfony/user-bundle": "~2.0",
+        "guzzlehttp/guzzle": "~6.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer": "^1.8",
         "jms/serializer-bundle": "^2.1",

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
  */
-class User extends BaseUser
+class User extends BaseUser 
 {
     /**
      * @ORM\Id
@@ -86,6 +86,10 @@ class User extends BaseUser
         return $this;
     }
     
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $apiToken;
     
     
 }
