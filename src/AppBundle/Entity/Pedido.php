@@ -67,7 +67,7 @@ class Pedido
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="empleados")
+     * @ORM\ManyToOne(targetEntity="Empleado")
      * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
      */
     private $empleado;
@@ -84,7 +84,7 @@ class Pedido
     }
     
     /**
-     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="cliente")
+     * @ORM\ManyToOne(targetEntity="Cliente")
      * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
      */
     private $cliente;
@@ -105,7 +105,7 @@ class Pedido
     
     
      /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;

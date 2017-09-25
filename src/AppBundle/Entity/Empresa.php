@@ -61,15 +61,7 @@ class Empresa
     
     
     
-    /**
-    * @ORM\OneToMany(targetEntity="User", mappedBy="user")
-    */
-    private $users;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
+    
 
     /**
      * Get id
@@ -202,5 +194,18 @@ class Empresa
     {
         return $this->direccion;
     }
+    
+    
+     /**
+    * @ORM\OneToMany(targetEntity="User", mappedBy="empresa")
+    */
+    private $users;
+    
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+   
+    
 }
 

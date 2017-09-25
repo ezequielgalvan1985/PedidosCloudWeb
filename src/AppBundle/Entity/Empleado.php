@@ -279,7 +279,7 @@ class Empleado
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;
@@ -298,7 +298,7 @@ class Empleado
     
     
      /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="user")
+     * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

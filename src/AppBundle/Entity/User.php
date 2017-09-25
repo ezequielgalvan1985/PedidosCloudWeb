@@ -26,7 +26,7 @@ class User extends BaseUser
     }
     
     /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="users" )
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;

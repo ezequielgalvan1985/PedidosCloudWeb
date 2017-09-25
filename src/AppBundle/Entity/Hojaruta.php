@@ -60,7 +60,7 @@ class Hojaruta
     
     
      /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;
@@ -77,7 +77,7 @@ class Hojaruta
     }
     
      /**
-     * @ORM\ManyToOne(targetEntity="Empleado", inversedBy="empleados")
+     * @ORM\ManyToOne(targetEntity="Empleado")
      * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
      */
     private $empleado;

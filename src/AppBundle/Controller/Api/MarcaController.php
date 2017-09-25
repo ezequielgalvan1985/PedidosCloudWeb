@@ -8,7 +8,7 @@
 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Marca;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -23,19 +23,18 @@ use \FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class ClienteController extends FOSRestController{
+class MarcaController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/clientes")
+    * @Rest\Get("/api/marcas")
     */
-    public function getClientesAction(){
-        $result = $this->getDoctrine()->getRepository('AppBundle:Cliente')->findAll();
+    public function getMarcasAction(){
+        $result = $this->getDoctrine()->getRepository('AppBundle:Marca')->findAll();
         if ($result === null) {
           return new View("there are no users exist", Response::HTTP_NOT_FOUND);
         }
         return $result;
     }
-    
     
    
     

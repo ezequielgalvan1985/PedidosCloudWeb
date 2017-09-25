@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Web;
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

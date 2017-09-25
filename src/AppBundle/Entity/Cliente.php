@@ -65,7 +65,7 @@ class Cliente
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;

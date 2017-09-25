@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Controller\Web;
+namespace AppBundle\Controller;
 
 
 use FOS\UserBundle\Controller\RegistrationController as BaseController;

@@ -64,7 +64,7 @@ class Pedidodetalle
     
     
     /**
-    * @ORM\ManyToOne(targetEntity="Producto", inversedBy="producto")
+    * @ORM\ManyToOne(targetEntity="Producto")
     * @ORM\JoinColumn(name="producto_id", referencedColumnName="id")
     */
     private $producto;

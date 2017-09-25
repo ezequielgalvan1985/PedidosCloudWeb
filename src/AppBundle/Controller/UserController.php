@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace AppBundle\Controller\Web;
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,7 +23,7 @@ class UserController extends Controller
     * This method registers an user in the database manually.
     *
     * @return boolean User registered / not registered
-    **/
+   
    private function register($email,$username,$password){    
       $userManager = $this->get('fos_user.user_manager');
 
@@ -54,5 +54,5 @@ class UserController extends Controller
 
       return true;
    }
-    
+     **/
 }

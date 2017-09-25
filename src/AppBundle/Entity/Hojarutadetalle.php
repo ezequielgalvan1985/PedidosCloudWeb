@@ -37,7 +37,7 @@ class Hojarutadetalle
     
     
      /**
-     * @ORM\ManyToOne(targetEntity="Hojaruta", inversedBy="hojaruta")
+     * @ORM\ManyToOne(targetEntity="Hojaruta", inversedBy="hojarutadetalles")
      * @ORM\JoinColumn(name="hojaruta_id", referencedColumnName="id")
      */
     private $hojaruta;
@@ -59,7 +59,7 @@ class Hojarutadetalle
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Cliente", inversedBy="cliente")
+     * @ORM\ManyToOne(targetEntity="Cliente")
      * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
      */
     private $cliente;

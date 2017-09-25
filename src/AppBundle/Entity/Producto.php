@@ -50,7 +50,7 @@ class Producto
     private $imagen;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Empresa", inversedBy="empresas")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
      */
     private $empresa;
@@ -88,7 +88,7 @@ class Producto
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Marca", inversedBy="marcas")
+     * @ORM\ManyToOne(targetEntity="Marca", inversedBy="productos")
      * @ORM\JoinColumn(name="marca_id", referencedColumnName="id")
      */
     private $marca;

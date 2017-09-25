@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Web;
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Hojarutadetalle;
 use AppBundle\Entity\Hojaruta;
