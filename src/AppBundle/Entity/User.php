@@ -86,10 +86,6 @@ class User extends BaseUser
         return $this;
     }
     
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiToken;
-    
+      
     
 }
