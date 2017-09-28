@@ -36,4 +36,12 @@ class MarcaController extends FOSRestController{
         return $result;
     }
     
+    /**
+    * @Rest\Get("/api/check")
+    */
+    public function getCheckAction(){
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        
+        return $user;
+    }
 }

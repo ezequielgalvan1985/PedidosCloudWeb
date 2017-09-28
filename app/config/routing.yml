@@ -9,3 +9,5 @@ app_api:
     type:     annotation
     resource: "@AppBundle/Controller/Api"
 
+api_login_check:
+    path: /api/login_check
