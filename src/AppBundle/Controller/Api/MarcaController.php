@@ -26,10 +26,11 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class MarcaController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/marcas")
+    * @Rest\Get("/api/marcas/{empresa_id}")
     */
-    public function getMarcasAction(){
-        $result = $this->getDoctrine()->getRepository('AppBundle:Marca')->findAll();
+    public function getMarcasAction($empresa_id){
+        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
+        $result = $this->getDoctrine()->getRepository('AppBundle:Marca')->findByEmpresa($empresa);
         if ($result === null) {
           return new View("there are no users exist", Response::HTTP_NOT_FOUND);
         }

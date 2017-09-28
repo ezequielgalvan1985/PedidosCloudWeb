@@ -21,10 +21,11 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class HojarutaController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/hojarutas")
+    * @Rest\Get("/api/hojarutas/{empresa_id}")
     */
-    public function getHojarutasAction(){
-        $result = $this->getDoctrine()->getRepository('AppBundle:Hojaruta')->findAll();
+    public function getHojarutasAction($empresa_id){
+        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
+        $result = $this->getDoctrine()->getRepository('AppBundle:Hojaruta')->findByEmpresa($empresa);
         if ($result === null) {
           return new View("there are no users exist", Response::HTTP_NOT_FOUND);
         }
