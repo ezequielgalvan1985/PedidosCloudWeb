@@ -315,5 +315,7 @@ class Empleado
         $this->user = $user;
         return $this;
     }
+
+    
 }
 

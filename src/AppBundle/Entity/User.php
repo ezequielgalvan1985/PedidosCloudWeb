@@ -86,6 +86,80 @@ class User extends BaseUser
         return $this;
     }
     
-      
+    /**
+    * Get username
+    * @return  
+    */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+    
+    /**
+    * Set username
+    * @return $this
+    */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+    * Get email
+    * @return  
+    */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    /**
+    * Set email
+    * @return $this
+    */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+    * Get emailCanonical
+    * @return  
+    */
+    public function getEmailCanonical()
+    {
+        return $this->emailCanonical;
+    }
+    
+    /**
+    * Set emailCanonical
+    * @return $this
+    */
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->emailCanonical = $emailCanonical;
+        return $this;
+    }
+    
+    /**
+     * Get apitoken
+     * @return  
+     */
+     public function getApitoken()
+     {
+         return $this->apitoken;
+     }
+     
+     /**
+     * Set apitoken
+     * @return $this
+     */
+     public function setApitoken($apitoken)
+     {
+         $this->apitoken = $apitoken;
+         return $this;
+     }     
     
 }
