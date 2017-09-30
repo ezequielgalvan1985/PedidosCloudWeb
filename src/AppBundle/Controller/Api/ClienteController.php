@@ -26,16 +26,26 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 class ClienteController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/clientes/{id}")
+    * @Rest\Get("/api/clientes/{empresa_id}")
     */
-    public function getClientesAction($id){
-        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($id);
-        
+    public function getClientesAction($empresa_id){
+        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
+
         $result = $this->getDoctrine()->getRepository('AppBundle:Cliente')->findByEmpresa($empresa);
+
         if ($result === null) {
-          return new View("there are no users exist", Response::HTTP_NOT_FOUND);
+            $respuesta = array('code'=>'500',
+                           'message'=>'No se encontraron registros',
+                           'data'=>$result
+                        );
+        }else{
+            $respuesta = array('code'=>'200',
+                           'message'=>'ok',
+                           'data'=>$result
+                        );
+        
         }
-        return $result;
+        return $respuesta;
     }
     
     

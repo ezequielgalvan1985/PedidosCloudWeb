@@ -37,6 +37,9 @@ class EmpleadoController extends Controller
         ));
     }
 
+
+    
+
     /**
      * Creates a new empleado entity.
      *
@@ -70,6 +73,7 @@ class EmpleadoController extends Controller
             $user->setEmail($empleado->getEmail());
             $user->setEmailCanonical($empleado->getEmail());
             $user->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
+            //$user->setApitoken            
             // this method will encrypt the password with the default settings :)
             $password = 12345678;
             $user->setRoles(array($empleado->getTipo()));

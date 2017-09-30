@@ -87,9 +87,62 @@ class User extends BaseUser
     }
     
     /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiToken;
+    * Get username
+    * @return  
+    */
+    public function getUsername()
+    {
+        return $this->username;
+    }
     
+    /**
+    * Set username
+    * @return $this
+    */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+    * Get email
+    * @return  
+    */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    /**
+    * Set email
+    * @return $this
+    */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+    * Get emailCanonical
+    * @return  
+    */
+    public function getEmailCanonical()
+    {
+        return $this->emailCanonical;
+    }
+    
+    /**
+    * Set emailCanonical
+    * @return $this
+    */
+    public function setEmailCanonical($emailCanonical)
+    {
+        $this->emailCanonical = $emailCanonical;
+        return $this;
+    }
+    
+   
     
 }

@@ -1,8 +1,7 @@
-<?php
-
+<?php 
 namespace AppBundle\Controller\Api;
 
-use AppBundle\Entity\Empleado;
+use AppBundle\Entity\Categoria;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,14 +16,14 @@ use \FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 
-class EmpleadoController extends FOSRestController{
-    
-    /**
-    * @Rest\Get("/api/empleados/{empresa_id}")
+class ProductoController extends FOSRestController
+{
+   /**
+    * @Rest\Get("/api/productos/{empresa_id}")
     */
-    public function getEmpleadosAction($empresa_id){
+    public function getProductosAction($empresa_id){
         $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
-        $result = $this->getDoctrine()->getRepository('AppBundle:Empleado')->findByEmpresa($empresa);
+        $result = $this->getDoctrine()->getRepository('AppBundle:Producto')->findByEmpresa($empresa);
         if ($result === null) {
             $respuesta = array('code'=>'500',
                            'message'=>'No se encontraron registros',
@@ -39,8 +38,7 @@ class EmpleadoController extends FOSRestController{
         }
         return $respuesta;
     }
-    
-    
-   
-    
+
 }
+
+?>

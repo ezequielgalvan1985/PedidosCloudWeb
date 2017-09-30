@@ -18,7 +18,12 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
+<<<<<<< HEAD
 jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem' # ssh private key path
 jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
 jwt_key_pass_phrase:  ''                                         # ssh key pass phrase
 jwt_token_ttl:        3600
+=======
+
+   
+>>>>>>> fbf9f93032580b2ffb57ee6201abf355f1cef3bf
