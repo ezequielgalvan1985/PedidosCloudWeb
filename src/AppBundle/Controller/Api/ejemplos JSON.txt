@@ -1,0 +1,29 @@
+ejemplos JSON
+-------------------------------------------------------------------------------
+
+Pedidos POST
+{
+	"pedido":{
+		"pedido_id":"12",
+		"fecha":"123",
+		"user_id":"1",
+		"empresa_id":1,
+		"android_id":1,
+		"pedidodetalles":
+			[
+				{
+					"id": 6,
+					"android_id": 6,
+					"producto_id": 1,
+					"cantidad":1
+				},
+				{
+					"id": 2,
+					"android_id": 6,
+					"producto_id": 42,
+					"cantidad":1
+				}
+			]
+		}
+}
+----------------------------------------------
