@@ -40,9 +40,9 @@ class Pedido
     /**
      * @var int
      *
-     * @ORM\Column(name="idtmp", type="integer", nullable=true)
+     * @ORM\Column(name="android_id", type="integer", nullable=true)
      */
-    private $idtmp;
+    private $android_id;
 
     /**
      * @var string
@@ -199,27 +199,27 @@ class Pedido
     }
 
     /**
-     * Set idtmp
+     * Set android_id
      *
-     * @param integer $idtmp
+     * @param integer $android_id
      *
      * @return Pedido
      */
-    public function setIdtmp($idtmp)
+    public function setAndroid_id($android_id)
     {
-        $this->idtmp = $idtmp;
+        $this->android_id = $android_id;
 
         return $this;
     }
 
     /**
-     * Get idtmp
+     * Get android_id
      *
      * @return int
      */
-    public function getIdtmp()
+    public function getAndroid_id()
     {
-        return $this->idtmp;
+        return $this->android_id;
     }
 
     /**
@@ -294,6 +294,11 @@ class Pedido
         return $this->monto;
     }
     
+    
+    
+    
+    
+
     
     
     

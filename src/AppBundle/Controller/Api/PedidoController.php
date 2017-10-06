@@ -48,32 +48,53 @@ class PedidoController extends FOSRestController{
     }
 
     /**
-    * @Rest\Post("/api/pedido/add/{empresa_id}")
+    * @Rest\Post("/api/pedido/add/")
     */
-    public function postPedidosAction($empresa_id, Request $request){
-        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
-        
-        //Leer Pedido
-        $pedido = new Pedido();
-        $pedido->setEmpresa($empresa);
-
+    public function postPedidosAction(Request $request){
         //leer json
         $content = $request->getContent();
-        //parsear pedido
-        
-        $pedido->setUser()
-
+        $code = '200'; $message='OK';
         //parsear detalle
-        $result = json_decode($content, true);
-
+        $json = json_decode($content, true);
+        $em = $this->getDoctrine()->getManager();
+        //Leer Pedido
+        $empresa_id = $json['pedido']['empresa_id'];
+        $fecha = $json['pedido']['fecha'];
+        $empleado_id = $json['pedido']['empleado_id'];
+        
+        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
+        if(!$empresa){
+            $code = '500';
+            $message = 'no se encontro empresa';
+        }
+        $empleado = $this->getDoctrine()->getRepository('AppBundle:Empleado')->findById($empleado_id);
+        if(!$empleado){
+            $code = '500';
+            $message = 'no se encontro empleado';
+        }
+        $android_id = $json['pedido']['android_id'];
+        
+        $pedido = new Pedido();
+        $pedido->setEmpresa($empresa);
+        //validar fecha
+        $pedido->setFecha($fecha);
+        
+        //validar empleado
+        $pedido->setEmpleado($empleado);
+        $pedido->setAndroid_id($android_id);
+        
+        $em->persist($pedido);
+        $em->flush();
+        
+        
         if ($result == null) {
-            $respuesta = array('code'=>'500',
-                           'message'=>'No se encontraron registros',
-                           'data'=>$result
+            $respuesta = array('code'=>$code,
+                           'message'=>$message,
+                           'data'=>''
                         );
         }else{
-            $respuesta = array('code'=>'200',
-                           'message'=>'ok',
+            $respuesta = array('code'=>$code,
+                           'message'=>$message,
                            'data'=>$result
                         );
         
