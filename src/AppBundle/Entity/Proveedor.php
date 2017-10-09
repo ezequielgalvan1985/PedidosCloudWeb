@@ -49,12 +49,24 @@ class Proveedor
      */
     private $percepcion;
 
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="condicioniva", type="integer")
+     * @ORM\ManyToOne(targetEntity="Condicioniva")
+     * @ORM\JoinColumn(name="condicioniva_id", referencedColumnName="id")
      */
     private $condicioniva;
+    
+    public function getCondicioniva()
+    {
+        return $this->condicioniva;
+    }
+    
+    public function setCondicioniva($condicioniva)
+    {
+        $this->condicioniva = $condicioniva;
+        return $this;
+    }
+
 
     /**
      * @var string
@@ -191,29 +203,7 @@ class Proveedor
         return $this->percepcion;
     }
 
-    /**
-     * Set condicioniva
-     *
-     * @param integer $condicioniva
-     *
-     * @return Proveedor
-     */
-    public function setCondicioniva($condicioniva)
-    {
-        $this->condicioniva = $condicioniva;
-
-        return $this;
-    }
-
-    /**
-     * Get condicioniva
-     *
-     * @return int
-     */
-    public function getCondicioniva()
-    {
-        return $this->condicioniva;
-    }
+    
 
     /**
      * Set cuit

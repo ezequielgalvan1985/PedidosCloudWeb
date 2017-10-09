@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Movimientostock</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ movimientostock.id }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Cantidad</th>
+                <td>{{ movimientostock.cantidad }}</td>
+            </tr>
+            <tr>
+                <th>Nrocomprobante</th>
+                <td>{{ movimientostock.nrocomprobante }}</td>
+            </tr>
+            <tr>
+                <th>Tipomovimiento</th>
+                <td>{{ movimientostock.tipomovimiento }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('movimientostock_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

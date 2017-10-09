@@ -28,19 +28,44 @@ class Movimientostock
      */
     private $fecha;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="proveedor", type="integer")
-     */
-    private $proveedor;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="producto", type="string", length=10)
+     * @ORM\ManyToOne(targetEntity="Proveedor")
+     * @ORM\JoinColumn(name="proveedor_id", referencedColumnName="id")
+     */
+    private $proveedor;
+    
+    public function getProveedor()
+    {
+        return $this->proveedor;
+    }
+    
+    public function setProveedor($proveedor)
+    {
+        $this->proveedor = $proveedor;
+        return $this;
+    }
+
+
+
+
+   
+    /**
+     * @ORM\ManyToOne(targetEntity="Producto")
+     * @ORM\JoinColumn(name="producto_id", referencedColumnName="id")
      */
     private $producto;
+    
+    public function getProducto()
+    {
+        return $this->producto;
+    }
+    
+    public function setProducto($producto)
+    {
+        $this->producto = $producto;
+        return $this;
+    }
 
     /**
      * @var string
@@ -117,53 +142,7 @@ class Movimientostock
         return $this->fecha;
     }
 
-    /**
-     * Set proveedor
-     *
-     * @param integer $proveedor
-     *
-     * @return Movimientostock
-     */
-    public function setProveedor($proveedor)
-    {
-        $this->proveedor = $proveedor;
-
-        return $this;
-    }
-
-    /**
-     * Get proveedor
-     *
-     * @return int
-     */
-    public function getProveedor()
-    {
-        return $this->proveedor;
-    }
-
-    /**
-     * Set producto
-     *
-     * @param string $producto
-     *
-     * @return Movimientostock
-     */
-    public function setProducto($producto)
-    {
-        $this->producto = $producto;
-
-        return $this;
-    }
-
-    /**
-     * Get producto
-     *
-     * @return string
-     */
-    public function getProducto()
-    {
-        return $this->producto;
-    }
+    
 
     /**
      * Set cantidad

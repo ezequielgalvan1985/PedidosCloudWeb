@@ -1,3 +1,7 @@
+app_movimientostock:
+    resource: "@AppBundle/Controller/MovimientostockController.php"
+    type:     annotation
+
 app_condicioniva:
     resource: "@AppBundle/Controller/CondicionivaController.php"
     type:     annotation

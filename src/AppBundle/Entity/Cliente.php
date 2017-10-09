@@ -81,7 +81,22 @@ class Cliente
      */
     private $web;
     
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Condicioniva")
+     * @ORM\JoinColumn(name="condicioniva_id", referencedColumnName="id")
+     */
+    private $condicioniva;
+    
+    public function getCondicioniva()
+    {
+        return $this->condicioniva;
+    }
+    
+    public function setCondicioniva($condicioniva)
+    {
+        $this->condicioniva = $condicioniva;
+        return $this;
+    }
 
 
     /**

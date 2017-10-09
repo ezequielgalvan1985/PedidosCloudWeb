@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class ClienteType extends AbstractType
 {
@@ -15,6 +17,10 @@ class ClienteType extends AbstractType
     {
         $builder->add('razonsocial')
                 ->add('contacto')
+                ->add('condicioniva', EntityType::class, array(
+                        'class' => 'AppBundle:Condicioniva',
+                        'choice_label' => 'nombre',
+                    ))
                 ->add('tipodoc')
                 ->add('ndoc')
                 ->add('telefono')

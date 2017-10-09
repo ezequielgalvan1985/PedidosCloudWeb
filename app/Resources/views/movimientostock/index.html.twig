@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Movimientostocks list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Cantidad</th>
+                <th>Nrocomprobante</th>
+                <th>Tipomovimiento</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for movimientostock in movimientostocks %}
+            <tr>
+                <td><a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}">{{ movimientostock.id }}</a></td>
+                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ movimientostock.cantidad }}</td>
+                <td>{{ movimientostock.nrocomprobante }}</td>
+                <td>{{ movimientostock.tipomovimiento }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('movimientostock_new') }}">Create a new movimientostock</a>
+        </li>
+    </ul>
+{% endblock %}

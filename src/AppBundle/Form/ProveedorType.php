@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ProveedorType extends AbstractType
 {
@@ -13,7 +14,13 @@ class ProveedorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('razonsocial')->add('domicilio')->add('email')->add('percepcion')->add('condicioniva')->add('cuit')->add('ingbrutos')->add('codpostal')->add('cbu');
+        $builder->add('razonsocial')
+        ->add('domicilio')
+        ->add('condicioniva', EntityType::class, array(
+                        'class' => 'AppBundle:Condicioniva',
+                        'choice_label' => 'nombre',
+                    ))
+        ->add('email')->add('percepcion')->add('cuit')->add('ingbrutos')->add('codpostal')->add('cbu');
     }
     
     /**

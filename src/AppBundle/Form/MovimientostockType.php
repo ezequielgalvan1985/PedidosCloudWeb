@@ -5,22 +5,15 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-class ImpuestoType extends AbstractType
+
+class MovimientostockType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')
-        ->add('alicuota')
-        ->add('tipoiva')
-        ->add('condicioniva', EntityType::class, array(
-                        'class' => 'AppBundle:Condicioniva',
-                        'choice_label' => 'nombre',
-                    ))
-        ->add('codigoafip');
+        $builder->add('fecha')->add('cantidad')->add('nrocomprobante')->add('tipomovimiento')->add('proveedor')->add('producto')->add('empresa');
     }
     
     /**
@@ -29,7 +22,7 @@ class ImpuestoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Impuesto'
+            'data_class' => 'AppBundle\Entity\Movimientostock'
         ));
     }
 
@@ -38,7 +31,7 @@ class ImpuestoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_impuesto';
+        return 'appbundle_movimientostock';
     }
 
 

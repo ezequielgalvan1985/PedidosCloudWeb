@@ -43,11 +43,23 @@ class Impuesto
     private $tipoiva;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="condicion", type="integer")
+     * @ORM\ManyToOne(targetEntity="Condicioniva")
+     * @ORM\JoinColumn(name="condicioniva_id", referencedColumnName="id")
      */
-    private $condicion;
+    private $condicioniva;
+    
+    public function getCondicioniva()
+    {
+        return $this->condicioniva;
+    }
+    
+    public function setCondicioniva($condicioniva)
+    {
+        $this->condicioniva = $condicioniva;
+        return $this;
+    }
+
+
 
     /**
      * @var int
@@ -158,30 +170,7 @@ class Impuesto
         return $this->tipoiva;
     }
 
-    /**
-     * Set condicion
-     *
-     * @param integer $condicion
-     *
-     * @return Impuesto
-     */
-    public function setCondicion($condicion)
-    {
-        $this->condicion = $condicion;
-
-        return $this;
-    }
-
-    /**
-     * Get condicion
-     *
-     * @return int
-     */
-    public function getCondicion()
-    {
-        return $this->condicion;
-    }
-
+   
     /**
      * Set codigoafip
      *
