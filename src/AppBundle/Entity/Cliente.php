@@ -24,16 +24,25 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=50)
+     * @ORM\Column(name="razonsocial", type="string", length=50)
      */
-    private $nombre;
+    private $razonsocial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellido", type="string", length=50, nullable=true)
+     * @ORM\Column(name="contacto", type="string", length=50, nullable=true)
      */
-    private $apellido;
+    private $contacto;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipodoc", type="string", length=20, nullable=true)
+     */
+    private $tipodoc;
+    
 
     /**
      * @var string
@@ -41,6 +50,7 @@ class Cliente
      * @ORM\Column(name="ndoc", type="string", length=20, nullable=true)
      */
     private $ndoc;
+
 
     /**
      * @var string
@@ -63,6 +73,92 @@ class Cliente
      */
     private $direccion;
     
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="web", type="string", length=50, nullable=true)
+     */
+    private $web;
+    
+
+
+
+    /**
+    * Get contacto
+    * @return  
+    */
+    public function getContacto()
+    {
+        return $this->contacto;
+    }
+
+    /**
+    * Set contacto
+    * @return $this
+    */
+    public function setContacto($contacto)
+    {
+        $this->contacto = $contacto;
+        return $this;
+    }
+
+    /**
+    * Get razonsocial
+    * @return  
+    */
+    public function getRazonsocial()
+    {
+        return $this->razonsocial;
+    }
+    
+    /**
+    * Set razonsocial
+    * @return $this
+    */
+    public function setRazonsocial($razonsocial)
+    {
+        $this->razonsocial = $razonsocial;
+        return $this;
+    }
+    /**
+    * Get tipodoc
+    * @return  
+    */
+    public function getTipodoc()
+    {
+        return $this->tipodoc;
+    }
+    
+    /**
+    * Set tipodoc
+    * @return $this
+    */
+    public function setTipodoc($tipodoc)
+    {
+        $this->tipodoc = $tipodoc;
+        return $this;
+    }
+
+
+    /**
+    * Get web
+    * @return  
+    */
+    public function getWeb()
+    {
+        return $this->web;
+    }
+    
+    /**
+    * Set web
+    * @return $this
+    */
+    public function setWeb($web)
+    {
+        $this->web = $web;
+        return $this;
+    }
     
     /**
      * @ORM\ManyToOne(targetEntity="Empresa")
@@ -91,53 +187,9 @@ class Cliente
         return $this->id;
     }
 
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Cliente
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set apellido
-     *
-     * @param string $apellido
-     *
-     * @return Cliente
-     */
-    public function setApellido($apellido)
-    {
-        $this->apellido = $apellido;
-
-        return $this;
-    }
-
-    /**
-     * Get apellido
-     *
-     * @return string
-     */
-    public function getApellido()
-    {
-        return $this->apellido;
-    }
+   
+   
+   
 
     /**
      * Set ndoc
@@ -234,8 +286,9 @@ class Cliente
     {
         return $this->direccion;
     }
+    
     public function getTextoCombo(){
-         return $this->nombre . ' '. $this->apellido . ' ' . $this->ndoc;
+         return $this->contacto ;
     }
 }
 

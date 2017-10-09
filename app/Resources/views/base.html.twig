@@ -55,10 +55,13 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Base de Datos <span class="caret"></span></a>
           
           <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ url('cliente_index') }}">Clientes</a></li>
+
                 <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Marcas</a></li>
                 <li><a class="dropdown-item" href="{{ url('categoria_index') }}">Categorias</a></li>
                 <li><a class="dropdown-item" href="{{ url('producto_index') }}">Productos</a></li>
-                <li><a class="dropdown-item" href="{{ url('cliente_index') }}">Clientes</a></li>
+                
+                
                 
                 {% if is_granted("ROLE_EMPRESA") %} 
                   <li><a class="dropdown-item" href="{{ url('empleado_index') }}">Empleados</a></li>
@@ -67,8 +70,9 @@
                 <li><a class="dropdown-item" href="{{ url('empresa_index') }}">Empresa</a></li>
                 {% endif %}
                 <li role="separator" class="divider"></li>
-                <li><a class="dropdown-item" href="{{ url('hojaruta_index') }}">Hoja de Ruta</a></li>
-                <li><a class="dropdown-item" href="{{ url('pedido_index') }}">Pedidos</a></li>
+                
+                <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Tipo de Documento</a></li>
+                <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Entidad Iva</a></li>
                
           </ul>
           

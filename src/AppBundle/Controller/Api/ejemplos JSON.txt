@@ -26,4 +26,13 @@ Pedidos POST
 			]
 		}
 }
-----------------------------------------------
+---------------------------------------------------------------
+
+
+php bin/console generate:doctrine:crud AppBundle:Tipodocumento
+
+
+php bin/console generate:doctrine:entity AppBundle:Entidadiva
+php bin/console generate:doctrine:crud AppBundle:Entidadiva
+
+

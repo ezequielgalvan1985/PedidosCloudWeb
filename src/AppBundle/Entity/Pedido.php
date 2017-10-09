@@ -51,12 +51,7 @@ class Pedido
      */
     private $subtotal;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="impuestos", type="decimal", precision=7, scale=2, nullable=true)
-     */
-    private $impuestos;
+    
 
     /**
      * @var string
@@ -246,29 +241,7 @@ class Pedido
         return $this->subtotal;
     }
 
-    /**
-     * Set impuestos
-     *
-     * @param string $impuestos
-     *
-     * @return Pedido
-     */
-    public function setImpuestos($impuestos)
-    {
-        $this->impuestos = $impuestos;
-
-        return $this;
-    }
-
-    /**
-     * Get impuestos
-     *
-     * @return string
-     */
-    public function getImpuestos()
-    {
-        return $this->impuestos;
-    }
+   
 
     /**
      * Set monto
