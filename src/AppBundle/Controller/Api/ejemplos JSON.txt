@@ -35,4 +35,8 @@ php bin/console generate:doctrine:crud AppBundle:Tipodocumento
 php bin/console generate:doctrine:entity AppBundle:Entidadiva
 php bin/console generate:doctrine:crud AppBundle:Entidadiva
 
+php bin/console generate:doctrine:entity AppBundle:Proveedor
+php bin/console generate:doctrine:crud AppBundle:Proveedor
+
+
 

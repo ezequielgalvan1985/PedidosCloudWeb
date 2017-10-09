@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Impuestos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Alicuota</th>
+                <th>Tipoiva</th>
+                <th>Condicion</th>
+                <th>Codigoafip</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for impuesto in impuestos %}
+            <tr>
+                <td><a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}">{{ impuesto.id }}</a></td>
+                <td>{{ impuesto.nombre }}</td>
+                <td>{{ impuesto.alicuota }}</td>
+                <td>{{ impuesto.tipoiva }}</td>
+                <td>{{ impuesto.condicion }}</td>
+                <td>{{ impuesto.codigoafip }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('impuesto_new') }}">Create a new impuesto</a>
+        </li>
+    </ul>
+{% endblock %}

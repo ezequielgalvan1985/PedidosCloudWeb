@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Condicionivas list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Alicuota</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for condicioniva in condicionivas %}
+            <tr>
+                <td><a href="{{ path('condicioniva_show', { 'id': condicioniva.id }) }}">{{ condicioniva.id }}</a></td>
+                <td>{{ condicioniva.nombre }}</td>
+                <td>{{ condicioniva.alicuota }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('condicioniva_show', { 'id': condicioniva.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('condicioniva_edit', { 'id': condicioniva.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('condicioniva_new') }}">Create a new condicioniva</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -60,19 +60,21 @@
                 <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Marcas</a></li>
                 <li><a class="dropdown-item" href="{{ url('categoria_index') }}">Categorias</a></li>
                 <li><a class="dropdown-item" href="{{ url('producto_index') }}">Productos</a></li>
-                
+                <li><a class="dropdown-item" href="{{ url('proveedor_index') }}">Proveedores</a></li>
                 
                 
                 {% if is_granted("ROLE_EMPRESA") %} 
                   <li><a class="dropdown-item" href="{{ url('empleado_index') }}">Empleados</a></li>
+                  <li role="separator" class="divider"></li>
+                  
+                  <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Tipo de Documento</a></li>
+                  <li><a class="dropdown-item" href="{{ url('condicioniva_index') }}">Condicion Iva</a></li>
+                  <li><a class="dropdown-item" href="{{ url('impuesto_index') }}">Impuestos</a></li>
                 {% endif %}
                 {% if is_granted("ROLE_ADMIN") %} 
                 <li><a class="dropdown-item" href="{{ url('empresa_index') }}">Empresa</a></li>
                 {% endif %}
-                <li role="separator" class="divider"></li>
-                
-                <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Tipo de Documento</a></li>
-                <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Entidad Iva</a></li>
+               
                
           </ul>
           
@@ -88,7 +90,7 @@
           <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ url('marcas_index') }}">Ingreso Stock (Con Comprobante)</a></li>
                 <li><a class="dropdown-item" href="{{ url('categoria_index') }}">Egreso de Stock (Con Comprobante)</a></li>
-                <li><a class="dropdown-item" href="{{ url('producto_index') }}">Ajuste de Stock</a></li>
+                
           </ul>
           
         </li>

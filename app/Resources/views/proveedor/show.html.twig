@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Proveedor</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ proveedor.id }}</td>
+            </tr>
+            <tr>
+                <th>Razonsocial</th>
+                <td>{{ proveedor.razonsocial }}</td>
+            </tr>
+            <tr>
+                <th>Domicilio</th>
+                <td>{{ proveedor.domicilio }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ proveedor.email }}</td>
+            </tr>
+            <tr>
+                <th>Percepcion</th>
+                <td>{% if proveedor.percepcion %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Condicioniva</th>
+                <td>{{ proveedor.condicioniva }}</td>
+            </tr>
+            <tr>
+                <th>Cuit</th>
+                <td>{{ proveedor.cuit }}</td>
+            </tr>
+            <tr>
+                <th>Ingbrutos</th>
+                <td>{{ proveedor.ingbrutos }}</td>
+            </tr>
+            <tr>
+                <th>Codpostal</th>
+                <td>{{ proveedor.codpostal }}</td>
+            </tr>
+            <tr>
+                <th>Cbu</th>
+                <td>{{ proveedor.cbu }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('proveedor_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('proveedor_edit', { 'id': proveedor.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

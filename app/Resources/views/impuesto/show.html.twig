@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Impuesto</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ impuesto.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ impuesto.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Alicuota</th>
+                <td>{{ impuesto.alicuota }}</td>
+            </tr>
+            <tr>
+                <th>Tipoiva</th>
+                <td>{{ impuesto.tipoiva }}</td>
+            </tr>
+            <tr>
+                <th>Condicion</th>
+                <td>{{ impuesto.condicion }}</td>
+            </tr>
+            <tr>
+                <th>Codigoafip</th>
+                <td>{{ impuesto.codigoafip }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('impuesto_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

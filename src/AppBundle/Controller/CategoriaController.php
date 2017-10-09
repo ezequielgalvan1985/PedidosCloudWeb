@@ -60,7 +60,6 @@ class CategoriaController extends Controller
             $categoria->setImagen($fileName);
             //Obtener Empresa
             $categoria->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            
             $em = $this->getDoctrine()->getManager();
             $em->persist($categoria);
             $em->flush();
