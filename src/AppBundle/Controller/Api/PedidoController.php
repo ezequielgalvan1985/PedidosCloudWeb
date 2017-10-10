@@ -13,6 +13,7 @@ use AppBundle\Entity\Empleado;
 use AppBundle\Entity\Empresa;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Pedidodetalle;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -78,7 +79,25 @@ class PedidoController extends FOSRestController{
         $em->persist($pedido);
         $em->flush();
         
+        /* Leer detalle del pedido */
+        $detalles = $json['pedido']['pedidodetalles'];
+        foreach ($detalles as $item){
+
+            $producto_id = $item['producto_id'];
+            $android_id = $item['android_id'];
+            $cantidad = $item['cantidad'];
+                        
+            $pd = new Pedidodetalle();
+            $pd->setProducto($producto);
+            $pd->setCantidad($cantidad);
+            $pd->setAndroid($android_id);
+
+            $pedido->addPedidodetalle($pd);     
+        }
         
+
+
+        $result = $pedido;
         if ($result == null) {
             $respuesta = array('code'=>$code,
                            'message'=>$message,
