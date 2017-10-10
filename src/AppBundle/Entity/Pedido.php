@@ -24,7 +24,7 @@ class Pedido
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="date")
      */
     private $fecha;
 
@@ -82,7 +82,24 @@ class Pedido
     }
 
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Empleado")
+     * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
+     */
+    private $empleado;
     
+    public function getEmpleado()
+    {
+        return $this->empleado;
+    }
+    
+    public function setEmpleado($empleado)
+    {
+        $this->empleado = $empleado;
+        
+    }
+
+
      /**
      * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
@@ -251,6 +268,8 @@ class Pedido
         return $this->monto;
     }
     
+
+
     
     
     

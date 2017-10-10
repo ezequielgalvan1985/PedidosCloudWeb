@@ -5,38 +5,36 @@ Pedidos POST
 {
 	"pedido":{
 		"pedido_id":"12",
-		"fecha":"123",
-		"user_id":"1",
-		"empresa_id":1,
-		"android_id":1,
+		"fecha":"20-05-2017",
+		"empleado_id":"4",
+		"empresa_id":"6",
+		"cliente_id":"1",
+		"android_id":"1",
 		"pedidodetalles":
 			[
 				{
-					"id": 6,
-					"android_id": 6,
-					"producto_id": 1,
-					"cantidad":1
+					"id": "6",
+					"android_id": "6",
+					"producto_id": "1",
+					"cantidad":"1"
 				},
 				{
-					"id": 2,
-					"android_id": 6,
-					"producto_id": 42,
-					"cantidad":1
+					"id": "2",
+					"android_id": "6",
+					"producto_id": "42",
+					"cantidad":"1"
 				}
 			]
 		}
 }
 ---------------------------------------------------------------
-
-
 php bin/console generate:doctrine:crud AppBundle:Tipodocumento
-
 
 php bin/console generate:doctrine:entity AppBundle:Entidadiva
 php bin/console generate:doctrine:crud AppBundle:Entidadiva
 
 php bin/console generate:doctrine:entity AppBundle:Proveedor
 php bin/console generate:doctrine:crud AppBundle:Proveedor
-
+---------------------------------------------------------------
 
 
