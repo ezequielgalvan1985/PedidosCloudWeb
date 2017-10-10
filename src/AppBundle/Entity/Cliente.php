@@ -37,11 +37,21 @@ class Cliente
     
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tipodoc", type="string", length=20, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Tipodocumento")
+     * @ORM\JoinColumn(name="tipodocumento_id", referencedColumnName="id")
      */
-    private $tipodoc;
+    private $tipodocumento;
+    
+    public function getTipodocumento()
+    {
+        return $this->tipodocumento;
+    }
+    
+    public function setTipodocumento($tipodocumento)
+    {
+        $this->tipodocumento = $tipodocumento;
+        return $this;
+    }
     
 
     /**
@@ -136,25 +146,7 @@ class Cliente
         $this->razonsocial = $razonsocial;
         return $this;
     }
-    /**
-    * Get tipodoc
-    * @return  
-    */
-    public function getTipodoc()
-    {
-        return $this->tipodoc;
-    }
     
-    /**
-    * Set tipodoc
-    * @return $this
-    */
-    public function setTipodoc($tipodoc)
-    {
-        $this->tipodoc = $tipodoc;
-        return $this;
-    }
-
 
     /**
     * Get web

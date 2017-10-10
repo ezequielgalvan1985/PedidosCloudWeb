@@ -24,7 +24,7 @@ class Movimientostock
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="date")
      */
     private $fecha;
 

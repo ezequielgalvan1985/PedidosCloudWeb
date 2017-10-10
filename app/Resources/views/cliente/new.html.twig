@@ -1,16 +1,13 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Cliente creation</h1>
-
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('cliente_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <h3>Cliente Nuevo </h1>
+    <div class="col-sm-6 col-xs-12">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Guardar" class="btn btn-success"/>
+        {{ form_end(form) }}
+        <a href="{{ path('cliente_index') }}" class="btn btn-default">Volver al Listado</a>
+            
+    </div>
 {% endblock %}
