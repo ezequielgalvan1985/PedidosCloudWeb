@@ -61,23 +61,7 @@ class Pedido
     private $monto;
     
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Empleado")
-     * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
-     */
-    private $empleado;
-    
-    public function getEmpleado()
-    {
-        return $this->empleado;
-    }
-    
-    public function setEmpleado($empleado)
-    {
-        $this->empleado = $empleado;
-        return $this;
-    }
-    
+   
     /**
      * @ORM\ManyToOne(targetEntity="Cliente")
      * @ORM\JoinColumn(name="cliente_id", referencedColumnName="id")
@@ -113,7 +97,7 @@ class Pedido
     public function setEmpresa($empresa)
     {
         $this->empresa = $empresa;
-        return $this;
+        
     }
     
      /**

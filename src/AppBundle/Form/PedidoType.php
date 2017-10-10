@@ -16,7 +16,8 @@ class PedidoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fecha',  DateType::class, [ 'widget' => 'single_text']  );
+        $builder->add('fecha',  DateType::class, [ 'widget' => 'single_text']  )
+                ;
     }
     
     /**

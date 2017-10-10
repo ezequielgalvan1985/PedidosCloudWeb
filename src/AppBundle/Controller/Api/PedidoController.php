@@ -9,6 +9,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Pedido;
+use AppBundle\Entity\Empleado;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -53,7 +54,7 @@ class PedidoController extends FOSRestController{
     public function postPedidosAction(Request $request){
         //leer json
         $content = $request->getContent();
-        $code = '200'; $message='OK';
+        $code = '200'; $message='OK'; $result = "";
         //parsear detalle
         $json = json_decode($content, true);
         $em = $this->getDoctrine()->getManager();
@@ -67,6 +68,7 @@ class PedidoController extends FOSRestController{
             $code = '500';
             $message = 'no se encontro empresa';
         }
+        $empleado = new Empleado();
         $empleado = $this->getDoctrine()->getRepository('AppBundle:Empleado')->findById($empleado_id);
         if(!$empleado){
             $code = '500';
@@ -80,11 +82,11 @@ class PedidoController extends FOSRestController{
         $pedido->setFecha($fecha);
         
         //validar empleado
-        $pedido->setEmpleado($empleado);
-        $pedido->setAndroid_id($android_id);
+        //$pedido->setEmpleado($empleado);
+        //$pedido->setAndroid_id($android_id);
         
-        $em->persist($pedido);
-        $em->flush();
+        //$em->persist($pedido);
+        //$em->flush();
         
         
         if ($result == null) {

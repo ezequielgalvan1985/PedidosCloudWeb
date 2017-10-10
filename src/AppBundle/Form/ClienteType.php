@@ -17,7 +17,7 @@ class ClienteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('razonsocial', null, array('label'=>'Razon Social'))
-                ->add('contacto', null, array('label'=>'Contacto'))
+                ->add('contacto', null, array('label'=>'Contacto', 'required'  => false))
                 ->add('condicioniva', EntityType::class, array(
                         'class' => 'AppBundle:Condicioniva',
                         'choice_label' => 'nombre',
