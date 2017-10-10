@@ -4,7 +4,7 @@
         <field id="tpd3" name="Nombre" width="232" order="0"/>
         <field id="tpd4" name="Fecha de inicio" width="95" order="1"/>
         <field id="tpd5" name="Fecha de fin" width="105" order="2"/>
-        <option id="color.recent"><![CDATA[#009900 #00cc00]]></option>
+        <option id="color.recent"><![CDATA[#339900 #009900 #00cc00]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nombre" width="210" order="0"/>
@@ -34,16 +34,6 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Add Pedido ApiRestJson" color="#8cb6ce" meeting="false" start="2017-10-13" duration="10" complete="50" expand="true">
-            <notes><![CDATA[generar metodo en backend - ok 
-
-realizar pruebas desde aplicaciones rest - ok
-
-modificar codigo de app android - 
-realizar pruebas desde app android - 
-
-]]></notes>
-        </task>
         <task id="40" name="Pedidos Listados hoy, todos" color="#8cb6ce" meeting="false" start="2017-10-06" duration="1" complete="0" expand="true">
             <notes><![CDATA[filtrar listados
 
@@ -52,7 +42,6 @@ Hoy los pedidos de hoy
 todos, todos los pedidos
 ]]></notes>
         </task>
-        <task id="42" name="Paginator todos los ABM" color="#8cb6ce" meeting="false" start="2017-10-24" duration="3" complete="0" expand="true"/>
         <task id="2" name="Modificar ABM Clientes" color="#00cc00" meeting="false" start="2017-10-09" duration="1" complete="100" expand="true">
             <notes><![CDATA[Agregar campos- ok
 generar geters y setters - ok
@@ -61,6 +50,18 @@ frontent
 agregar validacion email - ok
 
 
+
+]]></notes>
+        </task>
+        <task id="38" name="Ajustar Estilo y tipo de campos" color="#8cb6ce" meeting="false" start="2017-10-09" duration="10" complete="0" expand="true">
+            <notes><![CDATA[marcas
+categorias
+productos
+clientes
+condicioniva
+proveedores
+empleados
+tipo de doc
 
 ]]></notes>
         </task>
@@ -78,16 +79,29 @@ modificacion
 listado]]></notes>
         </task>
         <task id="18" name="ABM Impuestos" color="#8cb6ce" meeting="false" start="2017-10-12" duration="2" complete="0" expand="true"/>
-        <task id="23" name="ABM Condicion IVA" color="#8cb6ce" meeting="false" start="2017-10-17" duration="1" complete="0" expand="true"/>
-        <task id="28" name="DateTimePicker investigar" color="#8cb6ce" meeting="false" start="2017-10-17" duration="2" complete="50" expand="true">
-            <notes><![CDATA[Listo
+        <task id="0" name="Add Pedido ApiRestJson" color="#8cb6ce" meeting="false" start="2017-10-13" duration="10" complete="50" expand="true">
+            <notes><![CDATA[generar metodo en backend - ok 
+
+realizar pruebas desde aplicaciones rest - ok
+
+modificar codigo de app android - 
+realizar pruebas desde app android - 
+
 ]]></notes>
         </task>
-        <task id="38" name="Ajustar Estilo y tipo de campos" color="#8cb6ce" meeting="false" start="2017-10-09" duration="10" complete="0" expand="true">
-            <notes><![CDATA[marcas
-categorias
-productos
-clientes
+        <task id="23" name="ABM Condicion IVA" color="#8cb6ce" meeting="false" start="2017-10-17" duration="1" complete="0" expand="true">
+            <notes><![CDATA[crear entity - ok
+
+format en frontend
+
+pruebas
+add
+edit
+list
+borrar]]></notes>
+        </task>
+        <task id="28" name="DateTimePicker investigar" color="#339900" meeting="false" start="2017-10-17" duration="2" complete="100" expand="true">
+            <notes><![CDATA[Listo
 ]]></notes>
         </task>
         <task id="29" name="Select2 investigar" color="#009900" meeting="false" start="2017-10-19" duration="2" complete="100" expand="true">
@@ -108,6 +122,8 @@ listado
 
 ]]></notes>
         </task>
+        <task id="42" name="Paginator todos los ABM" color="#8cb6ce" meeting="false" start="2017-10-24" duration="3" complete="0" expand="true"/>
+        <task id="52" name="Cambiar Contraseña" color="#8cb6ce" meeting="false" start="2017-10-26" duration="3" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="desarrollador" function="Default:0" contacts="" phone=""/>
