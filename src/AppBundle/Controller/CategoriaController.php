@@ -23,13 +23,20 @@ class CategoriaController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Categoria::class);
+        
         //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
-        $categorias = $repository->findByEmpresa($empresa);
+        
+        //$categorias = $repository->findByEmpresa($empresa);
+        $queryBuilder = $this->getDoctrine()->getRepository(Categoria::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.nombre LIKE :filter')
+                     ->setParameter('filter', '%'. $request->query->getAlnum('filter'). '%');
+        $categorias = $queryBuilder;
+
+
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),10);
+        $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),1);
 
         return $this->render('categoria/index.html.twig', array(
             'pagination' => $pagination,

@@ -41,7 +41,7 @@ class ClienteController extends FOSRestController
         $empresa = $currentuser->getEmpresa();
         $registros = $repository->findByEmpresa($empresa);
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),3);
         
         return $this->render('cliente/index.html.twig', array(
             'pagination' => $pagination,
