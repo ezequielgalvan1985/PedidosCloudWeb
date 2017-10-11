@@ -54,18 +54,22 @@ class PedidoController extends FOSRestController{
         if (!$empresa) {
             $code = '500';
             $message = 'no se encontro empresa';
+            throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
         }
 
         $empleado = $this->getDoctrine()->getRepository(Empleado::class)->find($empleado_id);
         if(!$empleado){
             $code = '500';
             $message = 'no se encontro empleado';
+            throw $this->createNotFoundException('No se encuentra Empleado '.$empleado_id);
         }
 
         $cliente = $this->getDoctrine()->getRepository(Cliente::class)->find($cliente_id);
         if(!$cliente){
             $code = '500';
             $message = 'no se encontro cliente';
+            throw $this->createNotFoundException('No se encuentra Cliente '.$cliente_id);
+           
         }
                 
         $pedido = new Pedido();
@@ -76,8 +80,6 @@ class PedidoController extends FOSRestController{
         $pedido->setEmpleado($empleado);
         $pedido->setAndroid_id($android_id);
         
-        $em->persist($pedido);
-        $em->flush();
         
         /* Leer detalle del pedido */
         $detalles = $json['pedido']['pedidodetalles'];
@@ -86,14 +88,22 @@ class PedidoController extends FOSRestController{
             $producto_id = $item['producto_id'];
             $android_id = $item['android_id'];
             $cantidad = $item['cantidad'];
-                        
+            //Validar que producto pertenezca a la Empresa
+            $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
+            if(!$producto){
+                $code = '500';
+                $message = 'no se encontro Producto';
+                throw $this->createNotFoundException('No se encuentra producto '.$producto_id);
+            } 
             $pd = new Pedidodetalle();
             $pd->setProducto($producto);
             $pd->setCantidad($cantidad);
-            $pd->setAndroid($android_id);
+            //$pd->setAndroid($android_id);
 
             $pedido->addPedidodetalle($pd);     
         }
+        $em->persist($pedido);
+        $em->flush();
         
 
 

@@ -118,7 +118,7 @@ class Pedido
     }
     
      /**
-    * @ORM\OneToMany(targetEntity="Pedidodetalle", mappedBy="pedido")
+    * @ORM\OneToMany(targetEntity="Pedidodetalle", mappedBy="pedido_id",cascade={"all"})
     */
     private $pedidodetalles;
 
@@ -131,6 +131,12 @@ class Pedido
         return $this->pedidodetalles;
     }
     
+    public function addPedidodetalle(Pedidodetalle $pd){
+        $this->pedidodetalles->add($pd);
+        $pd->setPedido($this);
+
+
+    }
     
     
     
