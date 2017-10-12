@@ -19,7 +19,7 @@ class CategoriaController extends Controller
      * Lists all categorium entities.
      *
      * @Route("/", name="categoria_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
@@ -28,18 +28,34 @@ class CategoriaController extends Controller
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
         
-        //$categorias = $repository->findByEmpresa($empresa);
+        //Crear formulario de filtro
+        $categoria = new Categoria();
+        $form_filter = $this->createForm('AppBundle\Form\CategoriaFilterType', $categoria);
+        $form_filter->handleRequest($request);
+
         $queryBuilder = $this->getDoctrine()->getRepository(Categoria::class)->createQueryBuilder('bp');
-        $queryBuilder->where('bp.nombre LIKE :filter')
-                     ->setParameter('filter', '%'. $request->query->getAlnum('filter'). '%');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($categoria->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $categoria->getNombre(). '%');   
+            }
+            if($categoria->getDescripcion()){
+                $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
+                             ->setParameter('descripcion', '%'. $categoria->getDescripcion(). '%');
+            }
+            
+        }
         $categorias = $queryBuilder;
 
+        
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),1);
 
         return $this->render('categoria/index.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 
