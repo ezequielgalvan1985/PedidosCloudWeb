@@ -39,8 +39,8 @@ class UserController extends FOSRestController
     $user = $user_manager->findUserByUsername($username);
     $encoder = $factory->getEncoder($user);
 
-    $bool = ($encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt())) ? "true" : "false";
-    if ($bool){
+    $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());
+    if ($bool==true){
         $respuesta = array('code'=>Response::HTTP_OK,
                            'message'=>$message,
                            'data'=>$user
@@ -49,8 +49,7 @@ class UserController extends FOSRestController
         $respuesta = array('code'=>Response::HTTP_UNAUTHORIZED,
                            'message'=>'Usuario y/o Contraseña Invalido',
                            'data'=>''
-                        );
-        
+                        );  
     }
     return $respuesta;
 }
