@@ -109,7 +109,7 @@ class PedidoController extends FOSRestController{
 
         $result = $pedido;
         if ($result == null) {
-            $respuesta = array('code'=>$code,
+            $respuesta = array('code'=>Response::HTTP_OK,
                            'message'=>$message,
                            'data'=>''
                         );
