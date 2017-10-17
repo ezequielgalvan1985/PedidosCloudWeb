@@ -25,38 +25,15 @@ use \FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 class CategoriaController extends FOSRestController{
-    
-    /**
-    * @Rest\Get("/api/categorias/{empresa_id}")
-    */
-    public function getCategoriasAction($empresa_id){
-        $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
-        $result = $this->getDoctrine()->getRepository('AppBundle:Categoria')->findByEmpresa($empresa);
-        if ($result === null) {
-            $respuesta = array('code'=>'500',
-                           'message'=>'No se encontraron registros',
-                           'data'=>$result
-                        );
-        }else{
-            $respuesta = array('code'=>'200',
-                           'message'=>'ok',
-                           'data'=>$result
-                        );
-        
-        }
-        return $respuesta;
-    }
+   
 
     /**
-    * @Rest\Post("/api/categorias/{empresa_id}")
+    * @Rest\Post("/api/categorias")
     */
-    public function postCategoriasAction($empresa_id, Request $request){
+    public function postCategoriasAction(Request $request){
+        $empresa_id = $request->get('empresa_id');
         $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
-        //Leer Categoria
-        $categoria = new Categoria();
-        $categoria->setEmpresa($empresa);
-        $categoria->setNombre($request->get('nombre'));
-        $categoria->setDescripcion($request->get('descripcion'));
+        $result = $this->getDoctrine()->getRepository('AppBundle:Categoria')->findByEmpresa($empresa);
         if ($result === null) {
             $respuesta = array('code'=>'500',
                            'message'=>'No se encontraron registros',

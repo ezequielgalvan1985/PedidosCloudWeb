@@ -14,25 +14,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use\Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use \FOS\RestBundle\Controller\FOSRestController;
-
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 class ClienteController extends FOSRestController{
     
     /**
-    * @Rest\Get("/api/clientes/{empresa_id}")
+    * @Rest\Post("/api/clientes")
     */
-    public function getClientesAction($empresa_id){
+    public function getClientesAction(Request $request){
+        $empresa_id = $request->get('empresa_id');
         $empresa = $this->getDoctrine()->getRepository('AppBundle:Empresa')->findById($empresa_id);
-
         $result = $this->getDoctrine()->getRepository('AppBundle:Cliente')->findByEmpresa($empresa);
-
         if ($result === null) {
             $respuesta = array('code'=>'500',
                            'message'=>'No se encontraron registros',

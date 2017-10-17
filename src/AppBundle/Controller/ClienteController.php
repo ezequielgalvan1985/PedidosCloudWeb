@@ -31,20 +31,50 @@ class ClienteController extends FOSRestController
      * Lists all cliente entities.
      *
      * @Route("/", name="cliente_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Cliente::class);
+        
         //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
-        $registros = $repository->findByEmpresa($empresa);
+        
+
+         //Crear formulario de filtro
+        $cliente = new Cliente();
+        $form_filter = $this->createForm('AppBundle\Form\ClienteFilterType', $cliente);
+        $form_filter->handleRequest($request);
+
+        $queryBuilder = $this->getDoctrine()->getRepository(Cliente::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($cliente->getRazonsocial()){
+                $queryBuilder->andWhere('bp.razonsocial LIKE :razonsocial')
+                             ->setParameter('razonsocial', '%'. $cliente->getRazonsocial(). '%');   
+            }
+            if($cliente->getContacto()){
+                $queryBuilder->andWhere('bp.contacto LIKE :contacto')
+                             ->setParameter('contacto', '%'. $cliente->getContacto(). '%');
+            }
+            if($cliente->getNdoc()){
+                $queryBuilder->andWhere('bp.ndoc LIKE :ndoc')
+                             ->setParameter('ndoc', '%'. $cliente->getNdoc(). '%');
+            }
+            
+        }
+        $registros = $queryBuilder;
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),3);
         
+
+
+
+
+
         return $this->render('cliente/index.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $pagination,'form_filter'=>$form_filter->createView()
         ));
     }
     

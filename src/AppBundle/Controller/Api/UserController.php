@@ -30,16 +30,19 @@ class UserController extends FOSRestController
   public function loginJson(Request $request)
   {
     $content = $request->getContent();
-    $code = '200'; $message='OK'; $result = "";
-    $json = json_decode($content, true);
-    $username = $json['user']['username'];
-    $password = $json['user']['password'];
+    $code = '200'; $message='OK'; $result = ""; $bool=false;
+    //$json = json_decode($content, true);
+    $username = $request->get('username');
+    $password = $request->get('password');
     $user_manager = $this->get('fos_user.user_manager');
     $factory = $this->get('security.encoder_factory');
     $user = $user_manager->findUserByUsername($username);
-    $encoder = $factory->getEncoder($user);
-
-    $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());
+    if ($user){
+        $encoder = $factory->getEncoder($user);  
+        $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());
+    }
+    
+   
     if ($bool==true){
         $respuesta = array('code'=>Response::HTTP_OK,
                            'message'=>$message,

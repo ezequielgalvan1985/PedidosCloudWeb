@@ -28,10 +28,15 @@ class HojarutaController extends Controller
     public function indexAction(Request $request)
     {
         $repository = $this->getDoctrine()->getRepository(Hojaruta::class);
-        //Obtener empresa
+         //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
+
+        //Obtener empresa
+      
+       
         $registros = $repository->findByEmpresa($empresa);
+
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
 
@@ -51,6 +56,8 @@ class HojarutaController extends Controller
         $hojaruta = new Hojaruta();
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
+       
+        //Formulario de Alta de Hoja de ruta
         $form = $this->createForm('AppBundle\Form\HojarutaType', $hojaruta);
         $form->add('empleado', EntityType::class, array(
                         'class' => 'AppBundle:Empleado',
@@ -62,6 +69,8 @@ class HojarutaController extends Controller
                         },
                         'choice_label' => 'TextoCombo'));
         $form->handleRequest($request);
+        //Formulario de Alta de Hoja de ruta
+
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

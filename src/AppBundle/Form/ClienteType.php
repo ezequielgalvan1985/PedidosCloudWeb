@@ -16,11 +16,11 @@ class ClienteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('razonsocial', null, array('label'=>'Razon Social'))
-                ->add('contacto', null, array('label'=>'Contacto', 'required'  => false))
+        $builder->add('razonsocial', null, array('label'=>'Razon Social','required'  => true))
+                ->add('contacto', null, array('label'=>'Contacto', 'required'  => true))
                 ->add('condicioniva', EntityType::class, array(
                         'class' => 'AppBundle:Condicioniva',
-                        'choice_label' => 'nombre',
+                        'choice_label' => 'Condicion',
                         'label'=> 'Condicion Iva'
                     ))
                 ->add('tipodocumento', EntityType::class, array(
@@ -29,7 +29,7 @@ class ClienteType extends AbstractType
                         'label'=> 'Tipo Documento'
                     ))
                 
-                ->add('ndoc', null, array('label'=>'Numero Doc.'))
+                ->add('ndoc', null, array('label'=>'Numero Doc.','required'  => true))
                 ->add('telefono')
                 ->add('direccion')
                 ->add('email', EmailType::class, array('required'  => false))
