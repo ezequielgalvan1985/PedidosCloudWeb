@@ -44,9 +44,7 @@ class Categoria
      *
      * @ORM\Column(name="imagen", type="string", length=255, nullable=true)
      * @Assert\Image(
-     *     
      *     maxWidth = 400,
-     *    
      *     maxHeight = 400,
      *     maxSize = "2M",
      *     maxSizeMessage = "Too big."
@@ -203,6 +201,8 @@ class Categoria
     {
         return $this->imagen;
     }
+    
+    
     
     
 }
