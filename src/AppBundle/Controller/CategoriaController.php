@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Categoria controller.
@@ -50,10 +51,8 @@ class CategoriaController extends Controller
         }
         $categorias = $queryBuilder;
 
-        
-
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),1);
+        $pagination = $paginator->paginate($categorias, $request->query->getInt('page', 1),10);
 
         return $this->render('categoria/index.html.twig', array(
             'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
@@ -119,8 +118,10 @@ class CategoriaController extends Controller
         $deleteForm = $this->createDeleteForm($categoria);
         $editForm = $this->createForm('AppBundle\Form\CategoriaType', $categoria);
         $editForm->handleRequest($request);
-
+        
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            //$categoria->setImagen( new File($this->getParameter('images').'/'.$categoria->getImagen()));
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('categoria_edit', array('id' => $categoria->getId()));

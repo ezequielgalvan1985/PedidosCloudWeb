@@ -103,7 +103,7 @@ class Categoria
     {
         // se deshace del __DIR__ para no meter la pata
         // al mostrar el documento/imagen cargada en la vista.
-        return '/uploads/categorias/images/'.$this->imagen ;
+        return '/uploads/images/'.$this->imagen ;
         //return $this->getDirImagen().'/'. $this->imagen ; 
     }
     
