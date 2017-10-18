@@ -5,20 +5,20 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-
-
-class CategoriaType extends AbstractType
+class MarcaFilterType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('descripcion')
-                ->add('imagen', FileType::class, array('data_class' => null, 'required'=>false));
+        $builder->add('nombre')
+        ->add('descripcion')
+        ->add('buscar', SubmitType::class, 
+                array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+
     }
     
     /**
@@ -27,7 +27,7 @@ class CategoriaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Categoria'
+            'data_class' => 'AppBundle\Entity\Marca'
         ));
     }
 
@@ -36,7 +36,7 @@ class CategoriaType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_categoria';
+        return 'appbundle_marca';
     }
 
 

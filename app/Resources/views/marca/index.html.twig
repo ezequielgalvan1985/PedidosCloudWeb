@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Marcas list</h1>
-
-    <table class="table">
+    
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="#">Marcas</a></li>
+</ol>
+  
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Listado de Marcas</div>
+        <div class="panel-body">
+            <table class="table">
         <thead>
             <tr>
                 <strong>Total: </strong>{{ pagination.getTotalItemCount }}
@@ -23,9 +32,9 @@
                 <td>{{ marca.imagen }}</td>
                 <td>
                     
-                            <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default">show</a>
-                       
-                            <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary">edit</a>
+                <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default">Ver</a>
+
+                <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary">Editar</a>
                         
                 </td>
             </tr>
@@ -38,6 +47,21 @@
     
         
             <a href="{{ path('marcas_new') }}" class="btn btn-flat btn-primary">Nuevo</a>
-        
+     </div>
+    </div>
+    </div>
+    
+
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+            <div class="panel panel-default">
+             <div class="panel-heading">
+                <h3 class="panel-title">Filtros</h3>
+              </div>
+              
+              <div class="panel-body">
+                   {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+              </div>
+            </div>
+        </div>
     
 {% endblock %}

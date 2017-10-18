@@ -7,7 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\User;
+use AppBundle\Service\FileUploader;
+
 /**
  * Categoria controller.
  *
@@ -65,7 +66,7 @@ class CategoriaController extends Controller
      * @Route("/new", name="categoria_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         $categoria = new Categoria();
         $form = $this->createForm('AppBundle\Form\CategoriaType', $categoria);
@@ -73,13 +74,7 @@ class CategoriaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $categoria->getImagen();
-            // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            
-            // Move the file to the directory where brochures are stored
-            $file->move($this->getParameter('categorias_images'),$fileName);
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
+            $fileName = $fileUploader->upload($file);
             $categoria->setImagen($fileName);
             //Obtener Empresa
             $categoria->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());

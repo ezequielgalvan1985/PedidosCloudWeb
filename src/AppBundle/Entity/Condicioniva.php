@@ -113,5 +113,13 @@ class Condicioniva
     {
         return $this->alicuota;
     }
+    /**
+     * Get alicuota
+     *
+     * @return string
+     */
+    public function getSelectTexto1(){
+        return $this->getNombre() . "  " .$this->getAlicuota();
+    }
 }
 

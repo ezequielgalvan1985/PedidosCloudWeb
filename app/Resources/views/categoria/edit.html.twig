@@ -2,6 +2,12 @@
 {% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
     
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('categoria_index')}}">Categorias</a></li>
+  <li class="active"><a href="#">Editar</a></li>
+</ol>
+  
 <div class="row">    
     <div class="col-xs-12 col-sm-9 col-lg-9">
     <div class="panel panel-default">
@@ -11,7 +17,12 @@
 
         {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
-            <input type="submit" value="Edit" />
+            <div class="row">
+            <label>Imagen Actual: </label>
+            
+            <img src="{{ categorium.getUploadDir() }}" style="height: 400px;width: 400px;">
+            </div>
+            <input type="submit" value="Edit" class="btn btn-flat btn-primary"/>
         {{ form_end(edit_form) }}
 
    

@@ -20,7 +20,7 @@ class ClienteType extends AbstractType
                 ->add('contacto', null, array('label'=>'Contacto', 'required'  => true))
                 ->add('condicioniva', EntityType::class, array(
                         'class' => 'AppBundle:Condicioniva',
-                        'choice_label' => 'Condicion',
+                        'choice_label' => 'getSelectTexto1',
                         'label'=> 'Condicion Iva'
                     ))
                 ->add('tipodocumento', EntityType::class, array(
@@ -28,7 +28,6 @@ class ClienteType extends AbstractType
                         'choice_label' => 'nombre',
                         'label'=> 'Tipo Documento'
                     ))
-                
                 ->add('ndoc', null, array('label'=>'Numero Doc.','required'  => true))
                 ->add('telefono')
                 ->add('direccion')

@@ -42,7 +42,6 @@ class UserController extends FOSRestController
         $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());
     }
     
-   
     if ($bool==true){
         $respuesta = array('code'=>Response::HTTP_OK,
                            'message'=>$message,

@@ -43,19 +43,19 @@ class Categoria
      * @var string
      *
      * @ORM\Column(name="imagen", type="string", length=255, nullable=true)
-     * @Assert\Image()
+     * @Assert\Image(
+     *     
+     *     maxWidth = 400,
+     *    
+     *     maxHeight = 400,
+     *     maxSize = "2M",
+     *     maxSizeMessage = "Too big."
+     * )
      */
     private $imagen;
     
     
-    /**
-     * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 400,
-     *     minHeight = 200,
-     *     maxHeight = 400
-     * )
-     */
+    
     
     
      /**

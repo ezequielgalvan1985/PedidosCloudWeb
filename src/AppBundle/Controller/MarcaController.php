@@ -5,8 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use Symfony\Component\Security\Core\User\User;
 use AppBundle\Entity\Marca;
 /**
  * Marca controller.
@@ -19,22 +17,36 @@ class MarcaController extends Controller
      * Lists all marca entities.
      *
      * @Route("/", name="marcas_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
-        
-        $em = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(Marca::class);
         //Obtener empresa
-        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        $empresa = $currentuser->getEmpresa();
-        $marcas = $repository->findByEmpresa($empresa);
+        $empresa  = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+         //Crear formulario de filtro
+        $marca = new Marca();
+        $form_filter = $this->createForm('AppBundle\Form\MarcaFilterType', $marca);
+        $form_filter->handleRequest($request);
+        $queryBuilder = $this->getDoctrine()->getRepository(Marca::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($marca->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $marca->getNombre(). '%');   
+            }
+            if($marca->getDescripcion()){
+                $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
+                             ->setParameter('descripcion', '%'. $marca->getDescripcion(). '%');
+            }   
+        }
+        $marcas = $queryBuilder;
+        
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($marcas, $request->query->getInt('page', 1),10);
         
         return $this->render('marca/index.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 

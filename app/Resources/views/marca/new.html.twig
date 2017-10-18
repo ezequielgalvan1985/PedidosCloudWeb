@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Marca creation</h1>
+   
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('marcas_index')}}">Marcas </a></li>
+  <li class="active"><a href="#">Nuevo </a></li>
+</ol>
+  
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" class="btn btn-flat btn-primary"value="Guardar" />
-    {{ form_end(form) }}
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Nuevo Registro</div>
+        <div class="panel-body">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-flat btn-primary" value="Guardar" />
+        {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('marcas_index') }}">Back to the list</a>
-        </li>
-    </ul>
+      
+                <a href="{{ path('marcas_index') }}">Back to the list</a>
+        </div>
+    </div>
+    </div>
+</div>
 {% endblock %}

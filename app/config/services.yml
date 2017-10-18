@@ -37,7 +37,9 @@ services:
     #app.redirect_after_registration_subscriber:
     #    class: AppBundle\EventListener\RedirectAfterRegistrationSubscriber
     #    autowire: true
-        
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDir: '%images%'       
         
         
 

@@ -1,7 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Cliente</h1>
+   
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('cliente_index')}}">Clientes </a></li>
+  <li class="active"><a href="#">Detalle </a></li>
+  
+</ol>
+
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Detalle Registro</div>
+        <div class="panel-body">
 
     <table class="table">
         <tbody>
@@ -43,18 +55,12 @@
             </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('cliente_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}">Edit</a>
-        </li>
-        <li>
+        
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}" class="btn btn-flat btn-primary" >Editar</a>
+                <input type="submit" value="Delete" class="btn btn-flat btn-danger">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}
