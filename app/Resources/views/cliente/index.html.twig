@@ -32,17 +32,13 @@
                         <td><a href="{{ path('cliente_show', { 'id': cliente.id }) }}">{{ cliente.id }}</a></td>
                         <td>{{ cliente.razonsocial }}</td>
                         <td>{{ cliente.contacto }}</td>
-                        
                         <td>{{ cliente.ndoc }}</td>
                         <td>{{ cliente.telefono }}</td>
                         <td>{{ cliente.email }}</td>
 
                         <td>
-                           
-                                    <a href="{{ path('cliente_show', { 'id': cliente.id }) }}" class="btn btn-default">Ver</a>
-                               
-                                    <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}" class="btn btn-primary" >Editar</a>
-                               
+                            <a href="{{ path('cliente_show', { 'id': cliente.id }) }}" class="btn btn-default">Ver</a>
+                            <a href="{{ path('cliente_edit', { 'id': cliente.id }) }}" class="btn btn-primary" >Editar</a>
                         </td>
                     </tr>
                 {% endfor %}

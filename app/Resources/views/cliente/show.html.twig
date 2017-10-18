@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Cliente</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <th>Tipo Doc.</th>
-                <td>{{ cliente.tipodocumento }}</td>
+                <td>{{ cliente.tipodocumento.nombre }}</td>
             </tr>
             <tr>
                 <th>Num. doc</th>

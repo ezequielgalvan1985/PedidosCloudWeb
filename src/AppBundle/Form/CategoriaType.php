@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
+
 class CategoriaType extends AbstractType
 {
     /**
@@ -14,7 +15,8 @@ class CategoriaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('descripcion')->add('imagen', FileType::class);
+        $builder->add('nombre')->add('descripcion')
+                ->add('imagen', FileType::class);
     }
     
     /**

@@ -1,43 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Categorium</h1>
+    
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Detalle Registro</div>
+        <div class="panel-body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorium.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ categorium.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Descripcion</th>
-                <td>{{ categorium.descripcion }}</td>
-            </tr>
-            <tr>
-                <th>Imagen Name</th>
-                <td>{{ categorium.imagen }}</td>
-            </tr>
-             <tr>
-                <th>Imagen </th>
-                <td><img src="{{ categorium.getUploadDir() }}"></td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ categorium.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ categorium.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Descripcion</th>
+                    <td>{{ categorium.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th>Imagen Name</th>
+                    <td>{{ categorium.imagen }}</td>
+                </tr>
+                 <tr>
+                    <th>Imagen </th>
+                    <td><img src="{{ categorium.getUploadDir() }}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('categoria_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}">Edit</a>
-        </li>
-        <li>
+            <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}" class="btn btn-flat btn-primary">Editar</a>
+            
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Eliminar" class="btn btn-flat btn-danger">
             {{ form_end(delete_form) }}
         </li>
     </ul>
