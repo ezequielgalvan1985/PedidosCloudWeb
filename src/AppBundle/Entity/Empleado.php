@@ -71,36 +71,6 @@ class Empleado
     private $email;
 
     
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=100,nullable=true)
-     */
-    private $username;
-    
-    /**
-     * Set username
-     *
-     * @param string $username
-     *
-     * @return Empleado
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
     
     
     /**

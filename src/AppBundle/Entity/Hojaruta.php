@@ -45,7 +45,7 @@ class Hojaruta
     private $notas;
 
     /**
-    * @ORM\OneToMany(targetEntity="Hojarutadetalle", mappedBy="hojaruta")
+    * @ORM\OneToMany(targetEntity="Hojarutadetalle", mappedBy="hojaruta",cascade={"all"})
     */
     private $hojarutadetalles;
 

@@ -58,8 +58,8 @@ class EmpleadoController extends Controller
             $currentuser = $this->get('security.token_storage')->getToken()->getUser();
             $empresa = $currentuser->getEmpresa();
              //Crea empleado
-            $username = $empleado->getNombre() . $empleado->getApellido() . $empleado->getId() ;
-            $empleado->setUsername($username);
+            $username = $empleado->getEmail();//$empleado->getNombre() . $empleado->getApellido() . $empleado->getId() ;
+            
             $empleado->setEmpresa($empresa);
             $em->persist($empleado);
             $em->flush();
@@ -81,6 +81,10 @@ class EmpleadoController extends Controller
             $user->setEmpresa($empresa);
             $userManager->updateUser($user);
             
+            //Asoscia usuario a empleado
+            $empleado->setUser($user);
+             $em->persist($empleado);
+            $em->flush();
             
             return $this->redirectToRoute('empleado_show', array('id' => $empleado->getId()));
         }

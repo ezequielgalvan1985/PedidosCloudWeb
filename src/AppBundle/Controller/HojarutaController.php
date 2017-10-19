@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -23,25 +22,42 @@ class HojarutaController extends Controller
      * Lists all hojaruta entities.
      *
      * @Route("/", name="hojaruta_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Hojaruta::class);
-         //Obtener empresa
+        //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
-
-        //Obtener empresa
+        
+        //Crear formulario de filtro
+        $hojaruta = new Hojaruta();
+        $form_filter = $this->createForm('AppBundle\Form\HojarutaFilterType', $hojaruta);
+        $form_filter->handleRequest($request);
+        $queryBuilder = $this->getDoctrine()->getRepository(Hojaruta::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($hojaruta->getTitulo()){
+                $queryBuilder->andWhere('bp.titulo LIKE :titulo')
+                             ->setParameter('titulo', '%'. $hojaruta->getTitulo(). '%');   
+            }
+            if($hojaruta->getNotas()){
+                $queryBuilder->andWhere('bp.notas LIKE :notas')
+                             ->setParameter('notas', '%'. $hojaruta->getNotas(). '%');
+            }
+            if($hojaruta->getDiaId()){
+                $queryBuilder->andWhere('bp.diaId = :dia')
+                             ->setParameter('dia',  $hojaruta->getDiaId());
+            }
+        }
+        $registros = $queryBuilder;
       
-       
-        $registros = $repository->findByEmpresa($empresa);
-
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
 
         return $this->render('hojaruta/index.html.twig', array(
-              'pagination' => $pagination,
+              'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 

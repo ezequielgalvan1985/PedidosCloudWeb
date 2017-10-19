@@ -2,10 +2,17 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
     
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('hojaruta_index')}}">Hoja de rutas</a></li>
+  <li class="active"><a href="#">Nuevo</a></li>
+</ol>
+  
+  
     <div class="row">
     <div class="col-xs-12 col-sm-6">
     <div class="panel panel-default">
-    <div class="panel-heading"> <b>Alta Hoja de Ruta</b></div>
+    <div class="panel-heading"> <b>Nuevo Hoja de Ruta</b></div>
     <div class="panel-body">
     
 

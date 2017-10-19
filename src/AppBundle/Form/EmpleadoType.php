@@ -19,7 +19,6 @@ class EmpleadoType extends AbstractType
     {
         $builder->add('nombre')->add('apellido')
                 ->add('email', EmailType::class )
-                ->add('username', TextType::class,array('disabled'=> 'true'))
                 ->add('ndoc')->add('direccion')
                 ->add('telefono')
                 ->add('tipo',ChoiceType::class, array(

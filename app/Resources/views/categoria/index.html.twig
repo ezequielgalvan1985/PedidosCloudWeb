@@ -5,7 +5,7 @@
 
 <ol class="breadcrumb">
   <li><a href="{{path('homepage')}}">Inicio</a></li>
-  <li class="active"><a href="#">Categorias</a></li>
+  <li class="active"><a href="{{path('categoria_index')}}">Categorias</a></li>
 </ol>
 
 <div class="row">    
@@ -49,18 +49,22 @@
             <a href="{{ path('categoria_new') }}" class="btn btn-primary">Nuevo</a>
         </div>
     </div>
+    </div>    
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+          </div>
+
+          <div class="panel-body">
+               {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+          </div>
+        </div>
+    </div>
+          
+          
     </div>
     
 
-    <div class="col-xs-12 col-sm-3 col-lg-3">
-            <div class="panel panel-default">
-             <div class="panel-heading">
-                <h3 class="panel-title">Filtros</h3>
-              </div>
-              
-              <div class="panel-body">
-                   {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
-              </div>
-            </div>
-        </div>
+    
 {% endblock %}

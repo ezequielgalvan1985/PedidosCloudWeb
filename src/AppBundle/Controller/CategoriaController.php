@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\FileUploader;
-use Symfony\Component\HttpFoundation\File\File;
+
 
 /**
  * Categoria controller.
@@ -47,7 +47,6 @@ class CategoriaController extends Controller
                 $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
                              ->setParameter('descripcion', '%'. $categoria->getDescripcion(). '%');
             }
-            
         }
         $categorias = $queryBuilder;
 

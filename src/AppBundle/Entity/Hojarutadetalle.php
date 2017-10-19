@@ -38,7 +38,7 @@ class Hojarutadetalle
     
      /**
      * @ORM\ManyToOne(targetEntity="Hojaruta", inversedBy="hojarutadetalles")
-     * @ORM\JoinColumn(name="hojaruta_id", referencedColumnName="id")
+     
      */
     private $hojaruta;
     

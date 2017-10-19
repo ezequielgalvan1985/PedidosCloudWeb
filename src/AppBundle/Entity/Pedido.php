@@ -118,7 +118,7 @@ class Pedido
     }
     
      /**
-    * @ORM\OneToMany(targetEntity="Pedidodetalle", mappedBy="pedido_id",cascade={"all"})
+    * @ORM\OneToMany(targetEntity="Pedidodetalle", mappedBy="pedido",cascade={"all"})
     */
     private $pedidodetalles;
 

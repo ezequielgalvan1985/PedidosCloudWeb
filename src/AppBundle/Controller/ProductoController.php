@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\User;
+
 /**
  * Producto controller.
  *
@@ -19,19 +19,46 @@ class ProductoController extends Controller
      * Lists all producto entities.
      *
      * @Route("/", name="producto_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Producto::class);
         //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
-        $productos = $repository->findByEmpresa($empresa);
+        
+        //Crear formulario de filtro
+        $producto = new Producto();
+        $form_filter = $this->createForm('AppBundle\Form\ProductoFilterType', $producto);
+        $form_filter->handleRequest($request);
+
+        $queryBuilder = $this->getDoctrine()->getRepository(Producto::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($producto->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $producto->getNombre(). '%');   
+            }
+            if($producto->getDescripcion()){
+                $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
+                             ->setParameter('descripcion', '%'. $producto->getDescripcion(). '%');
+            }
+            if($producto->getMarca()){
+                $queryBuilder->andWhere('bp.marca = :marca')
+                             ->setParameter('marca', $producto->getMarca());
+            }
+            if($producto->getCategoria()){
+                $queryBuilder->andWhere('bp.categoria = :categoria')
+                             ->setParameter('categoria', $producto->getCategoria());
+            }
+        }
+        $productos = $queryBuilder;
+        
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($productos, $request->query->getInt('page', 1),10);
         return $this->render('producto/index.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 

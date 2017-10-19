@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('hojaruta_index')}}">Hoja de rutas</a></li>
+  <li class="active"><a href="#">Detalle</a></li>
+</ol>
+    
+    
     <div class="row">
     <div class="col-xs-12 col-sm-6">
     <div class="panel panel-default">
@@ -9,7 +17,8 @@
             
                    <table class="table">
                        <tr><th>ID:</th><td>{{hojaruta.id}}</td></tr>
-                       <tr><th>Usuario:</th><td>{{hojaruta.empleado.textocombo}}</td></tr>
+                       <tr><th>Usuario:</th><td>{{hojaruta.empleado.textocombo}} 
+                               <a href="{{ path('empleado_show', { 'id': hojaruta.empleado.id }) }}" class="btn btn-sm btn-default">Ver Datos</a> </td></tr>  
                        <tr><th>Titulo:</th><td>{{hojaruta.titulo}}</td></tr>
                        <tr><th>Notas:</th><td>{{hojaruta.notas}}</td></tr>
                        
