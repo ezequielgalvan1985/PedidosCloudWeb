@@ -10,9 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bridge\Doctrine\Form\Type\TextType;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Security\Core\User\User;
+
 /**
  * Pedido controller.
  *
@@ -24,16 +22,41 @@ class PedidoController extends Controller
      * Lists all pedido entities.
      *
      * @Route("/", name="pedido_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+       
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+         
+        //Crear formulario de filtro
+       
+        //$form_filter = $this->createForm('AppBundle\Form\PedidoFilterType', $pedido);
+        //$form_filter->handleRequest($request);
+       // $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
 
-        $pedidos = $em->getRepository('AppBundle:Pedido')->findAll();
+        $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+        
+        /*
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($pedido->getFechadesde()){
+                $queryBuilder->andWhere('bp.fecha >= :fechadesde')
+                             ->setParameter('fechadesde',  $pedido->getFechadesde());   
+            }
+            if ($pedido->getFechahasta()){
+                $queryBuilder->andWhere('bp.fecha <= :fechahasta')
+                             ->setParameter('fechahasta',  $pedido->getFechahasta());   
+            }
+        }
+        */
+        $pedidos = $queryBuilder;
+        
 
         return $this->render('pedido/index.html.twig', array(
-            'pedidos' => $pedidos,
+            'pedidos' => $pedidos, //'form_filter'=>$form_filter->createView()
         ));
     }
     

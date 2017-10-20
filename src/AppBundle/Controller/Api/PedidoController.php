@@ -13,19 +13,13 @@ use AppBundle\Entity\Empleado;
 use AppBundle\Entity\Empresa;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\User;
 use AppBundle\Entity\Pedidodetalle;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use\Symfony\Component\HttpFoundation\JsonResponse;
 
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use \FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -34,21 +28,22 @@ class PedidoController extends FOSRestController{
     
    
     /**
-    * @Rest\Post("/api/pedido/add/")
+    * @Rest\Post("/api/pedido/add")
     */
     public function postPedidosAction(Request $request){
         //leer json
+        
         $content = $request->getContent();
         $code = '200'; $message='OK'; $result = "";
         //parsear detalle
         $json = json_decode($content, true);
         $em = $this->getDoctrine()->getManager();
         //Leer Pedido
-        $empresa_id = $json['pedido']['empresa_id'];
-        $fecha = $json['pedido']['fecha'];
-        $empleado_id = $json['pedido']['empleado_id'];
-        $android_id = $json['pedido']['android_id'];
-        $cliente_id = $json['pedido']['cliente_id'];
+        $empresa_id = $json['empresa_id'];
+        $fecha = $json['fecha'];
+        $user_id = $json['user_id'];
+        $android_id = $json['android_id'];
+        $cliente_id = $json['cliente_id'];
       
         $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
         if (!$empresa) {
@@ -56,12 +51,19 @@ class PedidoController extends FOSRestController{
             $message = 'no se encontro empresa';
             throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
         }
-
-        $empleado = $this->getDoctrine()->getRepository(Empleado::class)->find($empleado_id);
+        $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
+        if(!$user){
+            $code = '500';
+            $message = 'no se encontro usuario';
+            throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
+        }
+        
+        
+        $empleado = $this->getDoctrine()->getRepository(Empleado::class)->findOneByUser($user);
         if(!$empleado){
             $code = '500';
             $message = 'no se encontro empleado';
-            throw $this->createNotFoundException('No se encuentra Empleado '.$empleado_id);
+            throw $this->createNotFoundException('No se encuentra Empleado '.$user->getId());
         }
 
         $cliente = $this->getDoctrine()->getRepository(Cliente::class)->find($cliente_id);
@@ -81,8 +83,11 @@ class PedidoController extends FOSRestController{
         $pedido->setAndroid_id($android_id);
         
         
-        /* Leer detalle del pedido */
-        $detalles = $json['pedido']['pedidodetalles'];
+        /* Leer detalle del pedido 
+         * 
+         *  
+         */
+        $detalles = $json['pedidodetalles'];
         foreach ($detalles as $item){
 
             $producto_id = $item['producto_id'];
@@ -102,6 +107,7 @@ class PedidoController extends FOSRestController{
 
             $pedido->addPedidodetalle($pd);     
         }
+         
         $em->persist($pedido);
         $em->flush();
         
