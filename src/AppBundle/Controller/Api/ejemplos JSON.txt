@@ -4,26 +4,19 @@ ejemplos JSON
 Pedidos POST
 {
 	"pedido":{
-		"pedido_id":"12",
-		"fecha":"20-05-2017",
-		"empleado_id":"4",
-		"empresa_id":"6",
-		"cliente_id":"1",
+		"fecha":"20-07-2017",
+		"empresa_id":"1",
+		"user_id":"3",
 		"android_id":"1",
+                "cliente_id":"1",
 		"pedidodetalles":
 			[
 				{
-					"id": "6",
 					"android_id": "6",
 					"producto_id": "1",
 					"cantidad":"1"
-				},
-				{
-					"id": "2",
-					"android_id": "6",
-					"producto_id": "42",
-					"cantidad":"1"
 				}
+		
 			]
 		}
 }
