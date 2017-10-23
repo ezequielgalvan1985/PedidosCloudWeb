@@ -30,4 +30,12 @@ php bin/console generate:doctrine:entity AppBundle:Proveedor
 php bin/console generate:doctrine:crud AppBundle:Proveedor
 ---------------------------------------------------------------
 
+-----------------------------------------------
+https://databases.000webhost.com/
+root
+Gamuza99
 
+https://pedidosapp.000webhostapp.com/
+q1w2e3r4
+ezgatrabajo@gmail.com
+-----------------------------------------------

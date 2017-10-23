@@ -21,19 +21,45 @@ class EmpleadoController extends Controller
      * Lists all empleado entities.
      *
      * @Route("/", name="empleado_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(Empleado::class);
-        //Obtener empresa
+        
+         //Obtener empresa
         $currentuser = $this->get('security.token_storage')->getToken()->getUser();
         $empresa = $currentuser->getEmpresa();
-        $registros = $repository->findByEmpresa($empresa);
+        
+        //Crear formulario de filtro
+        $empleado = new Empleado();
+        $form_filter = $this->createForm('AppBundle\Form\EmpleadoFilterType', $empleado);
+        $form_filter->handleRequest($request);
+
+        $queryBuilder = $this->getDoctrine()->getRepository(Empleado::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                  
+        
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($empleado->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $empleado->getNombre(). '%');   
+            }
+            if($empleado->getApellido()){
+                $queryBuilder->andWhere('bp.descripcion LIKE :apellido')
+                             ->setParameter('apellido', '%'. $empleado->getApellido(). '%');
+            }
+            if($empleado->getNdoc()){
+                $queryBuilder->andWhere('bp.ndoc = :ndoc')
+                             ->setParameter('ndoc',  $empleado->getNdoc());
+            }
+        }
+        $registros = $queryBuilder;
+        
+        
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
         return $this->render('empleado/index.html.twig', array(
-            'pagination' => $pagination,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 
@@ -51,7 +77,7 @@ class EmpleadoController extends Controller
         $empleado = new Empleado();
         $form = $this->createForm('AppBundle\Form\EmpleadoType', $empleado);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa

@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h3>Empleados</h3>
+ 
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="{{path('empleado_index')}}">Empleado</a></li>
+</ol>
 
-    <table class="table">
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Listado de Empleados</div>
+        <div class="panel-body">
+            <table class="table">
         <thead>
             <tr>
                 <strong>Total: </strong>{{ pagination.getTotalItemCount }}
@@ -42,6 +51,24 @@
         {{ knp_pagination_render(pagination) }}
     </div>
   
-    <a href="{{ path('empleado_new') }}">Create a new empleado</a>
+    <a href="{{ path('empleado_new') }}">Nuevo</a>
+      </div>
+    </div>
+    </div>  
         
+        
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+          </div>
+
+          <div class="panel-body">
+               {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+          </div>
+        </div>
+    </div>
+          
+          
+    </div>    
 {% endblock %}
