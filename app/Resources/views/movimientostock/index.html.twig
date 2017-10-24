@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Movimientostocks list</h1>
+    
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="{{path('movimientostock_index')}}">Movimientos de Stock</a></li>
+</ol>
 
-    <table>
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Listado de Movimientos</div>
+        <div class="panel-body">
+            <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -25,10 +34,10 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}">show</a>
+                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}" class="btn btn-default">Ver</a>
                         </li>
                         <li>
-                            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}">edit</a>
+                            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}" class="btn btn-primary">Editar</a>
                         </li>
                     </ul>
                 </td>
@@ -36,10 +45,28 @@
         {% endfor %}
         </tbody>
     </table>
+ 
+   
+    <a href="{{ path('movimientostock_new') }}">Nuevo</a>
+    </div>
+    </div>
+    </div>  
+      
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+          </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('movimientostock_new') }}">Create a new movimientostock</a>
-        </li>
-    </ul>
+          <div class="panel-body">
+               {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+          </div>
+        </div>
+    </div>
+          
+          
+    </div>
+    
+
+        
 {% endblock %}

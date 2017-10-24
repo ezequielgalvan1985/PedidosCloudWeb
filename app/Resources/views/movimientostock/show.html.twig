@@ -1,9 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Movimientostock</h1>
+    
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('movimientostock_index')}}">Movimientos de Stock</a></li>
+  <li class="active"><a href="#">Detalle</a></li>
+</ol>
+  
+  
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Detalle Registro</div>
+        <div class="panel-body">
 
-    <table>
+        <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -28,17 +40,15 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('movimientostock_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}">Edit</a>
-        </li>
-        <li>
+  
+      
+            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}" class="btn btn-flat btn-primary" >Editar</a>
+     
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Delete" class="btn btn-flat btn-danger">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+      </div>
+    </div>
+    </div>
+</div>
 {% endblock %}

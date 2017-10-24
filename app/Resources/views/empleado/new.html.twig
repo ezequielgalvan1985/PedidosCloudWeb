@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Empleado creation</h1>
+    
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('empleado_index')}}">Empleados</a></li>
+  <li class="active"><a href="#">Nuevo</a></li>
+</ol>
+  
 
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Nuevo Registro</div>
+        <div class="panel-body">
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-flat btn-primary"value="Guardar" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('empleado_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    
+    
+         </div>
+    </div>
+    </div>
+</div>
 {% endblock %}

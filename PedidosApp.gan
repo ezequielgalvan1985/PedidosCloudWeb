@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="PedidosApp" company="" webLink="http://" view-date="2017-10-06" view-index="0" gantt-divider-location="436" resource-divider-location="300" version="2.8.5" locale="es_AR">
+<?xml version="1.0" encoding="UTF-8"?><project name="PedidosApp" company="" webLink="http://" view-date="2017-10-06" view-index="0" gantt-divider-location="436" resource-divider-location="300" version="2.8.5" locale="es">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Nombre" width="232" order="0"/>
@@ -42,18 +42,7 @@ Hoy los pedidos de hoy
 todos, todos los pedidos
 ]]></notes>
         </task>
-        <task id="2" name="Modificar ABM Clientes" color="#00cc00" meeting="false" start="2017-10-09" duration="1" complete="100" expand="true">
-            <notes><![CDATA[Agregar campos- ok
-generar geters y setters - ok
-
-frontent 
-agregar validacion email - ok
-
-
-
-]]></notes>
-        </task>
-        <task id="38" name="Ajustar Estilo y tipo de campos" color="#8cb6ce" meeting="false" start="2017-10-09" duration="10" complete="0" expand="true">
+        <task id="38" name="Ajustar Estilo y tipo de campos" color="#8cb6ce" meeting="false" start="2017-10-09" duration="10" complete="50" expand="true">
             <notes><![CDATA[marcas
 categorias
 productos
@@ -79,7 +68,7 @@ modificacion
 listado]]></notes>
         </task>
         <task id="18" name="ABM Impuestos" color="#8cb6ce" meeting="false" start="2017-10-12" duration="2" complete="0" expand="true"/>
-        <task id="0" name="Add Pedido ApiRestJson" color="#8cb6ce" meeting="false" start="2017-10-13" duration="10" complete="50" expand="true">
+        <task id="0" name="Add Pedido ApiRestJson" color="#8cb6ce" meeting="false" start="2017-10-13" duration="10" complete="80" expand="true">
             <notes><![CDATA[generar metodo en backend - ok 
 
 realizar pruebas desde aplicaciones rest - ok
@@ -100,15 +89,6 @@ edit
 list
 borrar]]></notes>
         </task>
-        <task id="28" name="DateTimePicker investigar" color="#339900" meeting="false" start="2017-10-17" duration="2" complete="100" expand="true">
-            <notes><![CDATA[Listo
-]]></notes>
-        </task>
-        <task id="29" name="Select2 investigar" color="#009900" meeting="false" start="2017-10-19" duration="2" complete="100" expand="true">
-            <notes><![CDATA[investigar - ok
-implementar en todos los campos de la aplicacion - ok
-]]></notes>
-        </task>
         <task id="24" name="ABM Movimiento Stock" color="#8cb6ce" meeting="false" start="2017-10-20" duration="2" complete="0" expand="true">
             <notes><![CDATA[nueva entidad
 editar formulario
@@ -123,6 +103,7 @@ listado
 ]]></notes>
         </task>
         <task id="42" name="Paginator todos los ABM" color="#8cb6ce" meeting="false" start="2017-10-24" duration="3" complete="0" expand="true"/>
+        <task id="54" name="ABM Empleados" color="#8cb6ce" meeting="false" start="2017-10-25" duration="2" complete="0" expand="true"/>
         <task id="52" name="Cambiar Contraseña" color="#8cb6ce" meeting="false" start="2017-10-26" duration="3" complete="0" expand="true"/>
     </tasks>
     <resources>
@@ -130,7 +111,6 @@ listado
     </resources>
     <allocations>
         <allocation task-id="0" resource-id="0" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
-        <allocation task-id="2" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <previous/>

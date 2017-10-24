@@ -18,16 +18,41 @@ class MovimientostockController extends Controller
      * Lists all movimientostock entities.
      *
      * @Route("/", name="movimientostock_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        
+        //Crear formulario de filtro
+        $movimientostock = new Movimientostock();
+        $form_filter = $this->createForm('AppBundle\Form\MovimientostockFilterType', $movimientostock);
+        $form_filter->handleRequest($request);
 
-        $movimientostocks = $em->getRepository('AppBundle:Movimientostock')->findAll();
-
+        $queryBuilder = $this->getDoctrine()->getRepository(Movimientostock::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+           /*
+            if ($movimientostock->getNrocomprobante()){
+                $queryBuilder->andWhere('bp.nrocomprobante = :nrocomprobante')
+                             ->setParameter('nrocomprobante',  $movimientostock->getNrocomprobante());   
+            }
+            if($movimientostock->getProveedor()){
+                $queryBuilder->andWhere('bp.proveedor = :proveedor')
+                             ->setParameter('proveedor',  $movimientostock->getProveedor());
+            }
+             if($movimientostock->getProducto()){
+                $queryBuilder->andWhere('bp.producto = :producto')
+                             ->setParameter('producto',  $movimientostock->getProducto());
+            }
+            */
+        }
+        $movimientostocks = $queryBuilder;
         return $this->render('movimientostock/index.html.twig', array(
-            'movimientostocks' => $movimientostocks,
+            'movimientostocks' => $movimientostocks,'form_filter'=> $form_filter->createView()
         ));
     }
 
@@ -42,9 +67,10 @@ class MovimientostockController extends Controller
         $movimientostock = new Movimientostock();
         $form = $this->createForm('AppBundle\Form\MovimientostockType', $movimientostock);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $movimientostock->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($movimientostock);
             $em->flush();
 

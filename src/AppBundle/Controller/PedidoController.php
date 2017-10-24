@@ -32,15 +32,13 @@ class PedidoController extends Controller
         $empresa = $currentuser->getEmpresa();
          
         //Crear formulario de filtro
-       
-        //$form_filter = $this->createForm('AppBundle\Form\PedidoFilterType', $pedido);
-        //$form_filter->handleRequest($request);
-       // $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
-
+        $pedido = new Pedido();
+        $form_filter = $this->createForm('AppBundle\Form\PedidoFilterType', $pedido);
+        $form_filter->handleRequest($request);
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
         $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
         
-        /*
+        
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {
             if ($pedido->getFechadesde()){
                 $queryBuilder->andWhere('bp.fecha >= :fechadesde')
@@ -51,7 +49,7 @@ class PedidoController extends Controller
                              ->setParameter('fechahasta',  $pedido->getFechahasta());   
             }
         }
-        */
+        
         $pedidos = $queryBuilder;
         
 

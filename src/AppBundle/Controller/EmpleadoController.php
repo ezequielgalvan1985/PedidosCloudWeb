@@ -45,7 +45,7 @@ class EmpleadoController extends Controller
                              ->setParameter('nombre', '%'. $empleado->getNombre(). '%');   
             }
             if($empleado->getApellido()){
-                $queryBuilder->andWhere('bp.descripcion LIKE :apellido')
+                $queryBuilder->andWhere('bp.apellido LIKE :apellido')
                              ->setParameter('apellido', '%'. $empleado->getApellido(). '%');
             }
             if($empleado->getNdoc()){
