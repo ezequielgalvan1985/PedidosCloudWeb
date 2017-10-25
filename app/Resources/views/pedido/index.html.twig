@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for pedido in pedidos %}
+        {% for pedido in pagination %}
             <tr>
                 <td><a href="{{ path('pedido_show', { 'id': pedido.id }) }}">{{ pedido.id }}</a></td>
                 <td>{% if pedido.fecha %}{{ pedido.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -43,7 +43,9 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
    
     <a href="{{ path('pedido_new') }}" class="btn btn-primary">Nuevo</a>
      </div>

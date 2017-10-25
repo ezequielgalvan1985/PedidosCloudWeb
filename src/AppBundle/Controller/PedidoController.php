@@ -50,11 +50,13 @@ class PedidoController extends Controller
             }
         }
         
-        $pedidos = $queryBuilder;
+        $registros = $queryBuilder;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         
 
         return $this->render('pedido/index.html.twig', array(
-            'pedidos' => $pedidos, //'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, //'form_filter'=>$form_filter->createView()
         ));
     }
     

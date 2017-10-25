@@ -59,14 +59,14 @@ class ClienteController extends FOSRestController
                              ->setParameter('contacto', '%'. $cliente->getContacto(). '%');
             }
             if($cliente->getNdoc()){
-                $queryBuilder->andWhere('bp.ndoc LIKE :ndoc')
-                             ->setParameter('ndoc', '%'. $cliente->getNdoc(). '%');
+                $queryBuilder->andWhere('bp.ndoc = :ndoc')
+                             ->setParameter('ndoc',  $cliente->getNdoc());
             }
             
         }
         $registros = $queryBuilder;
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),3);
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         
 
 

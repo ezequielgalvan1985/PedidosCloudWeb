@@ -19,16 +19,40 @@ class ProveedorController extends Controller
      * Lists all proveedor entities.
      *
      * @Route("/", name="proveedor_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+         //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        
+        //Crear formulario de filtro
+        $proveedor = new Proveedor();
+        $form_filter = $this->createForm('AppBundle\Form\ProveedorFilterType', $proveedor);
+        $form_filter->handleRequest($request);
 
-        $proveedors = $em->getRepository('AppBundle:Proveedor')->findAll();
+        $queryBuilder = $this->getDoctrine()->getRepository(Proveedor::class)->createQueryBuilder('t1');
+        $queryBuilder->where('t1.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($proveedor->getRazonsocial()){
+                $queryBuilder->andWhere('t1.razonsocial = :razonsocial')
+                             ->setParameter('razonsocial', $proveedor->getRazonsocial());   
+            }
+            if($proveedor->getCuit()){
+                $queryBuilder->andWhere('t1.cuit = :cuit')
+                             ->setParameter('cuit', $proveedor->getCuit());
+            }
+        }
+        $registros = $queryBuilder;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
+        
 
+        
         return $this->render('proveedor/index.html.twig', array(
-            'proveedors' => $proveedors,
+             'pagination' => $pagination,'form_filter'=>$form_filter->createView()
         ));
     }
 

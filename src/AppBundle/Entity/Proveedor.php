@@ -96,7 +96,24 @@ class Proveedor
      */
     private $cbu;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Empresa")
+     * @ORM\JoinColumn(name="empresa_id", referencedColumnName="id")
+     */
+    private $empresa;
+    
+    public function getEmpresa()
+    {
+        return $this->empresa;
+    }
+    
+    public function setEmpresa($empresa)
+    {
+        $this->empresa = $empresa;
+        return $this;
+    }
+    
+    
     /**
      * Get id
      *

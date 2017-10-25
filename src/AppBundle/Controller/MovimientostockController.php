@@ -33,26 +33,29 @@ class MovimientostockController extends Controller
 
         $queryBuilder = $this->getDoctrine()->getRepository(Movimientostock::class)->createQueryBuilder('bp');
         $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
-                     
+                  
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {
-           /*
+           
             if ($movimientostock->getNrocomprobante()){
                 $queryBuilder->andWhere('bp.nrocomprobante = :nrocomprobante')
                              ->setParameter('nrocomprobante',  $movimientostock->getNrocomprobante());   
             }
-            if($movimientostock->getProveedor()){
-                $queryBuilder->andWhere('bp.proveedor = :proveedor')
-                             ->setParameter('proveedor',  $movimientostock->getProveedor());
+            if($movimientostock->getTipomovimiento()){
+                $queryBuilder->andWhere('bp.tipomovimiento = :tipomovimiento')
+                             ->setParameter('tipomovimiento',  $movimientostock->getTipomovimiento());
             }
              if($movimientostock->getProducto()){
                 $queryBuilder->andWhere('bp.producto = :producto')
                              ->setParameter('producto',  $movimientostock->getProducto());
             }
-            */
+           
         }
-        $movimientostocks = $queryBuilder;
+          
+        $registros = $queryBuilder;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         return $this->render('movimientostock/index.html.twig', array(
-            'movimientostocks' => $movimientostocks,'form_filter'=> $form_filter->createView()
+            'pagination' => $pagination,'form_filter'=> $form_filter->createView()
         ));
     }
 

@@ -1,55 +1,69 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Proveedors list</h1>
+  
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="{{path('proveedor_index')}}">Proveedores</a></li>
+</ol>
 
-    <table>
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Listado de Proveedores</div>
+        <div class="panel-body">
+            <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Razonsocial</th>
-                <th>Domicilio</th>
+                <th>Razon Social</th>
                 <th>Email</th>
-                <th>Percepcion</th>
-                <th>Condicioniva</th>
+                
                 <th>Cuit</th>
-                <th>Ingbrutos</th>
-                <th>Codpostal</th>
                 <th>Cbu</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for proveedor in proveedors %}
+        {% for proveedor in pagination %}
             <tr>
                 <td><a href="{{ path('proveedor_show', { 'id': proveedor.id }) }}">{{ proveedor.id }}</a></td>
                 <td>{{ proveedor.razonsocial }}</td>
-                <td>{{ proveedor.domicilio }}</td>
                 <td>{{ proveedor.email }}</td>
-                <td>{% if proveedor.percepcion %}Yes{% else %}No{% endif %}</td>
-                <td>{{ proveedor.condicioniva.nombre }}</td>
                 <td>{{ proveedor.cuit }}</td>
-                <td>{{ proveedor.ingbrutos }}</td>
-                <td>{{ proveedor.codpostal }}</td>
                 <td>{{ proveedor.cbu }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('proveedor_show', { 'id': proveedor.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('proveedor_edit', { 'id': proveedor.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                   
+                    <a href="{{ path('proveedor_show', { 'id': proveedor.id }) }}" class="btn btn-default">Ver</a>
+
+                    <a href="{{ path('proveedor_edit', { 'id': proveedor.id }) }}" class="btn btn-primary" >Editar</a>
+                        
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('proveedor_new') }}">Create a new proveedor</a>
-        </li>
-    </ul>
+            <a href="{{ path('proveedor_new') }}">Nuevo</a>
+           </div>
+    </div>
+    </div>  
+            
+            
+
+           
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+          </div>
+
+          <div class="panel-body">
+               {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+          </div>
+        </div>
+    </div>
+          
+          
+    </div>  
 {% endblock %}
