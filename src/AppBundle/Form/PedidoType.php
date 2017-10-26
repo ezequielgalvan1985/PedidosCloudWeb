@@ -34,7 +34,7 @@ class PedidoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_pedido';
+        return 'appbundle_Pedido';
     }
 
 

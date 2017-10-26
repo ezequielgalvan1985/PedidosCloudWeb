@@ -22,7 +22,7 @@ class Pedido
     private $id;
 
     /**
-     * @var \DateTime
+     * @var \Date
      *
      * @ORM\Column(name="fecha", type="date")
      */

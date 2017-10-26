@@ -8,8 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Pedido controller.
@@ -59,9 +60,9 @@ class PedidoController extends Controller
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         
-
+        
         return $this->render('pedido/index.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView(), 'estados'=> GlobalValue::ESTADOS
         ));
     }
     
@@ -77,10 +78,11 @@ class PedidoController extends Controller
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         
         // Filtrar por Empresa y por fecha de hoy
-        $hoy = new \DateTime('now');
+        $hoy = date("Y-m-d");;
+        
+        
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
         $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
-        
         $queryBuilder->andWhere('bp.fecha = :hoy')
                              ->setParameter('hoy', $hoy ); 
         
@@ -110,7 +112,7 @@ class PedidoController extends Controller
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         
         return $this->render('pedido/pedidos_hoy.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView(), 'hoy'=>$hoy
         ));
     }
     

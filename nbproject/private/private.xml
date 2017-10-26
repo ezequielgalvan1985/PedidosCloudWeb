@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/CategoriaController.php</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/movimientostock/show.html.twig</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/MovimientostockController.php</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/categoria/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Entity/GlobalValue.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/PedidoController.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Form/EmpleadoType.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/notas</file>
         </group>
     </open-files>
 </project-private>

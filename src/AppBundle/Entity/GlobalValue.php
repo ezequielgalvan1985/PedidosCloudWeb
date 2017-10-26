@@ -22,13 +22,27 @@ class GlobalValue{
     const ROLE_CARGADATOS_DISPLAY = 'Carga de Datos';
     const ROLE_DEPOSITO_DISPLAY = 'Deposito';
     
+    const ROLES = 
+            array(
+                    GlobalValue::ROLE_ADMIN => GlobalValue::ROLE_ADMIN_DISPLAY,
+                    GlobalValue::ROLE_EMPRESA => GlobalValue::ROLE_EMPRESA_DISPLAY,
+                    GlobalValue::ROLE_VENDEDOR => GlobalValue::ROLE_VENDEDOR_DISPLAY,
+                    GlobalValue::ROLE_CARGADATOS => GlobalValue::ROLE_CARGADATOS_DISPLAY,
+                    GlobalValue::ROLE_DEPOSITO => GlobalValue::ROLE_DEPOSITO_DISPLAY
+                );
+    
+    
+    
+    
+    
     /*DIAS de la Semana*/
     const LUNES_DISPLAY = 'Lunes';
     const MARTES_DISPLAY = 'Martes';
     const MIERCOLES_DISPLAY = 'Miercoles';
     const JUEVES_DISPLAY = 'Jueves';
     const VIERNES_DISPLAY = 'Viernes';
-    const SABADOS_DISPLAY = 'Sabados';
+    const SABADO_DISPLAY = 'Sabado';
+    const DOMINGO_DISPLAY = 'Domingo';
     
     const LUNES_ID = 1;
     const MARTES_ID = 2;
@@ -36,16 +50,40 @@ class GlobalValue{
     const JUEVES_ID = 4;
     const VIERNES_ID = 5;
     const SABADOS_ID = 6;
+    const DOMINGO_ID = 7;
+    
+    const DIAS_SEMANA = 
+            array(
+                    GlobalValue::LUNES_ID => GlobalValue::LUNES_DISPLAY,
+                    GlobalValue::MARTES_ID => GlobalValue::MARTES_DISPLAY,
+                    GlobalValue::MIERCOLES_ID => GlobalValue::MIERCOLES_DISPLAY,
+                    GlobalValue::JUEVES_ID => GlobalValue::JUEVES_DISPLAY,
+                    GlobalValue::VIERNES_ID => GlobalValue::VIERNES_DISPLAY,
+                    GlobalValue::SABADO_ID => GlobalValue::SABADO_DISPLAY,
+                    GlobalValue::DOMINGO_ID => GlobalValue::DOMINGO_DISPLAY
+                );
+    
+    
+    
+    
     
     /*Estado de pedido*/
     const PENDIENTE = 1;
-    const ENTREGADO = 2;
-    const PAGADO = 3;
+    const ENVIADO = 2;
+    const ENTREGADO = 3;
+    const PAGADO = 4;
     
     const PENDIENTE_DISPLAY = 'Pendiente';
+    const ENVIADO_DISPLAY = 'Entregado';
     const ENTREGADO_DISPLAY = 'Entregado';
     const PAGADO_DISPLAY = 'Pagado';
     
+    const ESTADOS = array(
+                          GlobalValue::PENDIENTE =>GlobalValue::PENDIENTE_DISPLAY,
+                          GlobalValue::ENVIADO => GlobalValue::ENVIADO_DISPLAY,
+                          GlobalValue::ENTREGADO => GlobalValue::ENTREGADO_DISPLAY,
+                          GlobalValue::PAGADO => GlobalValue::PAGADO_DISPLAY);
     
+        
     
 }
