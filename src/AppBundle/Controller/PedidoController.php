@@ -35,10 +35,11 @@ class PedidoController extends Controller
         $pedido = new Pedido();
         $form_filter = $this->createForm('AppBundle\Form\PedidoFilterType', $pedido);
         $form_filter->handleRequest($request);
+        
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
         $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
         
-        
+        //Filtros
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {
             if ($pedido->getFechadesde()){
                 $queryBuilder->andWhere('bp.fecha >= :fechadesde')
@@ -48,6 +49,10 @@ class PedidoController extends Controller
                 $queryBuilder->andWhere('bp.fecha <= :fechahasta')
                              ->setParameter('fechahasta',  $pedido->getFechahasta());   
             }
+             if ($pedido->getEstadoId()){
+                $queryBuilder->andWhere('bp.estadoId = :estadoid')
+                             ->setParameter('estadoid',  $pedido->getEstadoId());   
+            }
         }
         
         $registros = $queryBuilder;
@@ -56,7 +61,7 @@ class PedidoController extends Controller
         
 
         return $this->render('pedido/index.html.twig', array(
-            'pagination' => $pagination, //'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
     
@@ -64,16 +69,48 @@ class PedidoController extends Controller
      * Lists all pedido entities.
      *
      * @Route("/hoy", name="pedido_hoy")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
-    public function hoyAction()
+    public function hoyAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+         //Obtener empresa
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        
         // Filtrar por Empresa y por fecha de hoy
-        $pedidos = $em->getRepository('AppBundle:Pedido')->findAll();
-
-        return $this->render('pedido/index.html.twig', array(
-            'pedidos' => $pedidos,
+        $hoy = new \DateTime('now');
+        $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+        
+        $queryBuilder->andWhere('bp.fecha = :hoy')
+                             ->setParameter('hoy', $hoy ); 
+        
+        
+        //Crear formulario de filtro
+        $pedido = new Pedido();
+        $form_filter = $this->createForm('AppBundle\Form\PedidoHoyFilterType', $pedido);
+        $form_filter->handleRequest($request);
+        //Filtros
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($pedido->getFechadesde()){
+                $queryBuilder->andWhere('bp.fecha >= :fechadesde')
+                             ->setParameter('fechadesde',  $pedido->getFechadesde());   
+            }
+            if ($pedido->getFechahasta()){
+                $queryBuilder->andWhere('bp.fecha <= :fechahasta')
+                             ->setParameter('fechahasta',  $pedido->getFechahasta());   
+            }
+             if ($pedido->getEstadoId()){
+                $queryBuilder->andWhere('bp.estadoId = :estadoid')
+                             ->setParameter('estadoid',  $pedido->getEstadoId());   
+            }
+        }
+        
+        $registros = $queryBuilder;
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
+        
+        return $this->render('pedido/pedidos_hoy.html.twig', array(
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
     

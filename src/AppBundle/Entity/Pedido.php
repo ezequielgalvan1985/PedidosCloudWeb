@@ -202,9 +202,9 @@ class Pedido
         return $this->fechahasta;
     }
     /**
-     * Set estadoId
+     * Set estado
      *
-     * @param integer $estadoId
+     * @param integer $estado
      *
      * @return Pedido
      */
@@ -216,7 +216,7 @@ class Pedido
     }
 
     /**
-     * Get estadoId
+     * Get estado
      *
      * @return int
      */
