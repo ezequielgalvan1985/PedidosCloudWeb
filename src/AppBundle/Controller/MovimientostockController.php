@@ -76,7 +76,7 @@ class MovimientostockController extends Controller
             $movimientostock->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($movimientostock);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('movimientostock_show', array('id' => $movimientostock->getId()));
         }
 
@@ -116,7 +116,7 @@ class MovimientostockController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('movimientostock_edit', array('id' => $movimientostock->getId()));
         }
 

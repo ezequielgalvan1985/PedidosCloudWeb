@@ -72,7 +72,7 @@ class ProveedorController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($proveedor);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('proveedor_show', array('id' => $proveedor->getId()));
         }
 
@@ -112,7 +112,7 @@ class ProveedorController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('proveedor_edit', array('id' => $proveedor->getId()));
         }
 

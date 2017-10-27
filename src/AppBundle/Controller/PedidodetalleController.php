@@ -72,7 +72,7 @@ class PedidodetalleController extends Controller
             $pedidodetalle->setPedido($pedido);
             $em->persist($pedidodetalle);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('pedidodetalle_new', array('pedido_id' => $pedido->getId()));
         }
 
@@ -114,7 +114,7 @@ class PedidodetalleController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('pedidodetalle_edit', array('id' => $pedidodetalle->getId()));
         }
 

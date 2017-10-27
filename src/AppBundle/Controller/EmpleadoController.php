@@ -111,7 +111,7 @@ class EmpleadoController extends Controller
             $empleado->setUser($user);
              $em->persist($empleado);
             $em->flush();
-            
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('empleado_show', array('id' => $empleado->getId()));
         }
 
@@ -151,7 +151,7 @@ class EmpleadoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('empleado_edit', array('id' => $empleado->getId()));
         }
 

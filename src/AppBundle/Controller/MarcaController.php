@@ -107,7 +107,7 @@ class MarcaController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('marcas_edit', array('id' => $marca->getId()));
         }
 

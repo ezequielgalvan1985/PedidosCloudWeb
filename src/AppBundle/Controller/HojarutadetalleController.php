@@ -68,6 +68,7 @@ class HojarutadetalleController extends Controller
             $hojarutadetalle->setHojaruta($hojaruta);
             $em->persist($hojarutadetalle);
             $em->flush();
+            $this->addFlash(  'success','Guardado Correctamente!');
         }
         
        
@@ -109,7 +110,7 @@ class HojarutadetalleController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('hojarutadetalle_edit', array('id' => $hojarutadetalle->getId()));
         }
 

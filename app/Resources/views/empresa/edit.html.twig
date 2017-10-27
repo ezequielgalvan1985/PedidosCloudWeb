@@ -1,21 +1,24 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Empresa edit</h1>
-
+      
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="#">Editar Datos de la Empresa</a></li>
+</ol>
+  
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Editar Registro</div>
+        <div class="panel-body">
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" value="Gardar Cambios" class="btn btn-flat btn-primary" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('empresa_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        </div>
+    </div>
+    </div>
+</div>
 {% endblock %}

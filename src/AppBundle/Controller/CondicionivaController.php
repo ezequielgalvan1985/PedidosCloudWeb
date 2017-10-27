@@ -75,7 +75,7 @@ class CondicionivaController extends Controller
             $condicioniva->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());    
             $em->persist($condicioniva);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('condicioniva_show', array('id' => $condicioniva->getId()));
         }
 
@@ -115,7 +115,7 @@ class CondicionivaController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('condicioniva_edit', array('id' => $condicioniva->getId()));
         }
 

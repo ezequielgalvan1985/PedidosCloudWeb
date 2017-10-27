@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
 class DefaultController extends Controller
 {
     /**
@@ -20,6 +23,30 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+    /**
+     * @Route("/downloadapk", name="downloadapk")
+     */
+    public function downloadapkAction()
+    {       
+            $path = __DIR__.'/../../../web/apk/';
+            $file = 'app-debug.apk';
+            $response = new BinaryFileResponse($path . $file);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT,'app-debug.apk');
+            return $response;
+    }
+    
+    
+     /**
+     * @Route("/admin", name="admin")
+     */
+    public function adminAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        return $this->render('default/admin.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]);
+    }
+    
     /**
      * @Route("/create", name="create")
      */

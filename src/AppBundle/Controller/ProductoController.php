@@ -79,7 +79,7 @@ class ProductoController extends Controller
             $producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($producto);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('producto_show', array('id' => $producto->getId()));
         }
 
@@ -119,7 +119,7 @@ class ProductoController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('producto_edit', array('id' => $producto->getId()));
         }
 

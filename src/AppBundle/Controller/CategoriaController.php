@@ -27,8 +27,7 @@ class CategoriaController extends Controller
     {
         
         //Obtener empresa
-        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        $empresa = $currentuser->getEmpresa();
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         
         //Crear formulario de filtro
         $categoria = new Categoria();
@@ -79,7 +78,7 @@ class CategoriaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($categoria);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('categoria_show', array('id' => $categoria->getId()));
         }
 
@@ -122,7 +121,7 @@ class CategoriaController extends Controller
             //$categoria->setImagen( new File($this->getParameter('images').'/'.$categoria->getImagen()));
             
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('categoria_edit', array('id' => $categoria->getId()));
         }
 

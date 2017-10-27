@@ -100,6 +100,7 @@ class HojarutaController extends Controller
             
             $em->persist($hojaruta);
             $em->flush();
+            $this->addFlash(  'success','Guardado Correctamente!');
             //redirigir a alta de detalle de hoja de ruta
             return $this->redirectToRoute('hojarutadetalle_new', array('hojaruta_id' => $hojaruta->getId()));
         }
@@ -140,7 +141,7 @@ class HojarutaController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('hojaruta_edit', array('id' => $hojaruta->getId()));
         }
 

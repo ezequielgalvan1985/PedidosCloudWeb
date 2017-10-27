@@ -110,7 +110,7 @@ class ClienteController extends FOSRestController
             
             $em->persist($cliente);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('cliente_show', array('id' => $cliente->getId()));
         }
 
@@ -150,7 +150,7 @@ class ClienteController extends FOSRestController
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('cliente_edit', array('id' => $cliente->getId()));
         }
 

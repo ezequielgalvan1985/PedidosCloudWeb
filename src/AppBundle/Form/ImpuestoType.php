@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 class ImpuestoType extends AbstractType
 {
     /**
@@ -19,6 +20,7 @@ class ImpuestoType extends AbstractType
         ->add('condicioniva', EntityType::class, array(
                         'class' => 'AppBundle:Condicioniva',
                         'choice_label' => 'nombre',
+                        'required'=>false
                     ))
         ->add('codigoafip');
     }

@@ -45,7 +45,7 @@ security:
         
         - { path: ^/empleado/, role: ROLE_EMPRESA }
         
-        - { path: ^/empresa/, role: ROLE_ADMIN }
+        - { path: ^/empresa/, role: ROLE_EMPRESA }
         - { path: ^/user/, role: ROLE_ADMIN }
         #- { path: ^/api, roles: ROLE_API }
         

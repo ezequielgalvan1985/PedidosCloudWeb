@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
     
 
@@ -36,9 +36,9 @@
                 <td>{{ impuesto.codigoafip }}</td>
                 <td>
                    
-                    <a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}">show</a>
+                    <a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}" class="btn btn-default">Ver</a>
 
-                    <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}">edit</a>
+                    <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}" class="btn btn-primary">Editar</a>
                       
                 </td>
             </tr>

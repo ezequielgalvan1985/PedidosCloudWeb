@@ -3,11 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Empresa;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Empresa controller.
  *
@@ -26,7 +28,7 @@ class EmpresaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $empresas = $em->getRepository('AppBundle:Empresa')->findAll();
-
+        
         return $this->render('empresa/index.html.twig', array(
             'empresas' => $empresas,
         ));
@@ -48,7 +50,7 @@ class EmpresaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($empresa);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('empresa_show', array('id' => $empresa->getId()));
         }
 
@@ -82,13 +84,22 @@ class EmpresaController extends Controller
      */
     public function editAction(Request $request, Empresa $empresa)
     {
+         //Obtener empresa
+        
+        if ($empresa->getId() !=  $this->get('security.token_storage')->getToken()->getUser()->getEmpresa()->getId())
+        {
+            $response = new Response();
+            $response->setStatusCode(500);
+            return $response;
+        }
+
         $deleteForm = $this->createDeleteForm($empresa);
         $editForm = $this->createForm('AppBundle\Form\EmpresaType', $empresa);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('empresa_edit', array('id' => $empresa->getId()));
         }
 
@@ -98,7 +109,12 @@ class EmpresaController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
+    
+    
+    
+    
+    
+    
     /**
      * Deletes a empresa entity.
      *

@@ -13,7 +13,7 @@ class EmpresaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('email')->add('razonsocial')->add('userId')->add('telefono')->add('direccion');
+        $builder->add('nombre')->add('email')->add('razonsocial')->add('telefono')->add('direccion');
     }
     
     /**

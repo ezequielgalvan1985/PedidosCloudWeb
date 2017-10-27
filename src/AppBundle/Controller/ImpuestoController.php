@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * Impuesto controller.
@@ -19,16 +20,36 @@ class ImpuestoController extends Controller
      * Lists all impuesto entities.
      *
      * @Route("/", name="impuesto_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+       
+        //Crear formulario de filtro
+        $impuesto = new Impuesto();
+        $form_filter = $this->createForm('AppBundle\Form\ImpuestoFilterType', $impuesto);
+        $form_filter->handleRequest($request);
 
-        $impuestos = $em->getRepository('AppBundle:Impuesto')->findAll();
+        $queryBuilder = $this->getDoctrine()->getRepository(Impuesto::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = bp.empresa');
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($impuesto->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $impuesto->getNombre(). '%');   
+            }
+            if($impuesto->getCondicioniva()){
+                $queryBuilder->andWhere('bp.condicioniva = :condicioniva')
+                             ->setParameter('condicioniva',  $impuesto->getCondicioniva());
+            }
+        }
+        $registros = $queryBuilder;
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
 
         return $this->render('impuesto/index.html.twig', array(
-            'impuestos' => $impuestos,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 
@@ -46,7 +67,6 @@ class ImpuestoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $impuesto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());    
             $em->persist($impuesto);
             $em->flush();
 

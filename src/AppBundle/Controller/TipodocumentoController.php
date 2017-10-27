@@ -23,8 +23,7 @@ class TipodocumentoController extends Controller
     public function indexAction(Request $request)
     {
        //Obtener empresa
-        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        $empresa = $currentuser->getEmpresa();
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         
         //Crear formulario de filtro
         $tipodocumento = new Tipodocumento();
@@ -72,7 +71,7 @@ class TipodocumentoController extends Controller
             $tipodocumento->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($tipodocumento);
             $em->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('tipodocumento_show', array('id' => $tipodocumento->getId()));
         }
 
@@ -113,7 +112,7 @@ class TipodocumentoController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('tipodocumento_edit', array('id' => $tipodocumento->getId()));
         }
 
