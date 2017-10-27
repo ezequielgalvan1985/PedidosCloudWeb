@@ -120,8 +120,7 @@
                 <li><a class="dropdown-item" href="{{ url('pedido_hoy') }}">Pedidos de hoy</a> </li>
                 <li><a class="dropdown-item" href="{{ url('pedido_index') }}">Listado de Pedidos</a></li>
                 {% if is_granted("ROLE_VENDEDOR") %}    
-                 
-                 <li><a class="dropdown-item" href="{{ url('hojaruta_index') }}">Hojas de ruta</a></li>
+                    <li><a class="dropdown-item" href="{{ url('hojaruta_index') }}">Hojas de ruta</a></li>
                 {% endif %}  
           </ul>
         

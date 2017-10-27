@@ -150,6 +150,10 @@ class EmpleadoController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $user = $empleado->getUser();
+            //$user = $userManager->findUserBy(array('id'=>$user->getId()));
+            $user->setRoles(array($empleado->getTipo()));
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('empleado_edit', array('id' => $empleado->getId()));

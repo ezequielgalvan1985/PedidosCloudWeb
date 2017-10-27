@@ -40,8 +40,8 @@ security:
         - { path: ^/producto/, role: ROLE_CARGADATOS }
         - { path: ^/hojaruta/, role: ROLE_CARGADATOS }
         - { path: ^/hojarutadetalle/, role: ROLE_CARGADATOS }
-        - { path: ^/pedido/, role: ROLE_CARGADATOS }
-        - { path: ^/pedidodetalle/, role: ROLE_CARGADATOS }
+        - { path: ^/pedido/, role: [ROLE_CARGADATOS, ROLE_DEPOSITO] }
+        - { path: ^/pedidodetalle/, role: [ROLE_CARGADATOS, ROLE_DEPOSITO] }
         
         - { path: ^/empleado/, role: ROLE_EMPRESA }
         

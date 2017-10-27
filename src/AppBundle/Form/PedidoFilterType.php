@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\SelectType;
 
 
 class PedidoFilterType extends AbstractType
@@ -20,13 +22,15 @@ class PedidoFilterType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+       
+        
         $builder->add('fechadesde',  DateType::class, [ 'widget' => 'single_text', 'label'=>'Fecha Desde']  )
                 ->add('fechahasta',  DateType::class, [ 'widget' => 'single_text', 'label'=>'Fecha Hasta']  )
                 ->add('estadoid', ChoiceType::class, array(
                         'choices'   => array('Pendiente' => '1', 'Enviado' => '2', 'Entregado' => '3', 'Rechazado' => '4'),
                         'required'  => false,
-                        'label'=>'Estado'))
-                ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+                        'label'=>'Estado'));
+                ;
     }
     
     /**

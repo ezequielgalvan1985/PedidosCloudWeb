@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -29,12 +30,24 @@ class PedidoController extends Controller
     {
        
         //Obtener empresa
-        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        $empresa = $currentuser->getEmpresa();
-         
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        
+       
         //Crear formulario de filtro
         $pedido = new Pedido();
         $form_filter = $this->createForm('AppBundle\Form\PedidoFilterType', $pedido);
+        $form_filter->add('empleado', EntityType::class, array(
+                        'class' => 'AppBundle:Empleado', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'TextoCombo'))
+                    ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+         
         $form_filter->handleRequest($request);
         
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
@@ -50,9 +63,13 @@ class PedidoController extends Controller
                 $queryBuilder->andWhere('bp.fecha <= :fechahasta')
                              ->setParameter('fechahasta',  $pedido->getFechahasta());   
             }
-             if ($pedido->getEstadoId()){
+            if ($pedido->getEstadoId()){
                 $queryBuilder->andWhere('bp.estadoId = :estadoid')
                              ->setParameter('estadoid',  $pedido->getEstadoId());   
+            }
+            if ($pedido->getEmpleado()){
+                $queryBuilder->andWhere('bp.empleado = :empleado')
+                             ->setParameter('empleado',  $pedido->getEmpleado());   
             }
         }
         
@@ -93,6 +110,19 @@ class PedidoController extends Controller
         //Crear formulario de filtro
         $pedido = new Pedido();
         $form_filter = $this->createForm('AppBundle\Form\PedidoHoyFilterType', $pedido);
+        $form_filter->add('empleado', EntityType::class, array(
+                        'class' => 'AppBundle:Empleado', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'TextoCombo'))
+                    ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+         
+                        
         $form_filter->handleRequest($request);
         //Filtros
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {

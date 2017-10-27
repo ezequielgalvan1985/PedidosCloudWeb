@@ -24,8 +24,7 @@ class PedidoHoyFilterType extends AbstractType
                         'choices'   => GlobalValue::ESTADOS_SELECT,
                         'required'  => false,
                         'label'=>'Estado')
-                )
-                ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+                );
     }
     
     /**
