@@ -27,7 +27,13 @@ class Producto
      * @ORM\Column(name="nombre", type="string", length=50)
      */
     private $nombre;
-
+     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigoexterno", type="string", length=50)
+     */
+    private $codigoexterno;
     /**
      * @var string
      *
@@ -139,6 +145,34 @@ class Producto
     public function getNombre()
     {
         return $this->nombre;
+    }
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Set nombre
+     *
+     * @param string $codigoexterno
+     *
+     */
+    public function setCodigoexterno($codigoexterno)
+    {
+        $this->codigoexterno = $codigoexterno;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoexterno
+     *
+     */
+    public function getCodigoexterno()
+    {
+        return $this->codigoexterno;
     }
 
     /**

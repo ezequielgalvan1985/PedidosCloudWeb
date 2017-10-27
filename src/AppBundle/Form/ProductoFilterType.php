@@ -16,6 +16,7 @@ class ProductoFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nombre')
+                ->add('codigoexterno')
                 ->add('descripcion')
                 ->add('categoria', EntityType::class, array(
                         'class' => 'AppBundle:Categoria',

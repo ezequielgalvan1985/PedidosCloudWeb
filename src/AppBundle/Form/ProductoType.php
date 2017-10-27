@@ -22,7 +22,7 @@ class ProductoType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')
+        $builder->add('nombre')->add('codigoexterno')
                 ->add('categoria', EntityType::class, array(
                         'class' => 'AppBundle:Categoria',
                         'choice_label' => 'nombre',

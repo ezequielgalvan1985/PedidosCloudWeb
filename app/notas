@@ -26,7 +26,9 @@ The key fingerprint is:
 
 php bin/console generate:doctrine:entity
 php bin/console generate:doctrine:crud
+
 php bin/console doctrine:schema:update --force
+
 php bin/console cache:clear --no-warmup --env=dev
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:validate
