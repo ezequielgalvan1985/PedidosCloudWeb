@@ -29,7 +29,7 @@
         {% for pedido in pagination %}
             <tr>
                 <td><a href="{{ path('pedido_show', { 'id': pedido.id }) }}">{{ pedido.id }}</a></td>
-                <td>{% if pedido.fecha %}{{ pedido.fecha|date('d-m-Y') }}  {% endif %}</td>
+                <td>{% if pedido.fecha %}{{ pedido.fecha|date('d/m/Y') }}  {% endif %}</td>
                 <td>{{ pedido.empleado.getTextoCombo}}</td>
                 <td>{{ estados[pedido.estadoId] }}</td>
                 
@@ -38,7 +38,7 @@
                 <td>{{ pedido.monto }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default">Ver</a>
-                    <a class="btn btn-default" href="{{ path('pedido_edit', { 'id': pedido.id }) }}" class="btn btn-primary">Editar</a>
+                    
                 </td>
                     
                 </td>

@@ -1,4 +1,28 @@
+ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA1BMpVHak/EQhl9U8rG8kRadlbwEhzHpgbfDFg4C10jQfTvbUwU+9BdDrFcJOvjAEJWXxkWXwLacB4nyeiD3rjTt45ULpbzKdpnD4iwT5Bz/lLnvkUKXm1XRkNln+NCCqGi3wv1hb91H/ehzHo16sk1XiYjyBP2w5IoxMU04gPtxxIvBG+cPQJF+uSR1DTWrVRVHgZ1QPuhQu7oh1bfu2T71N4ErTL+XgCOPYWzHuiH2C8U1G5lmntMvtybtu7uv/iyW+MSLvgn8uycHPG8MdjbbDRH7FyHOii33dsvqljcJWTVnX7ftL3X7v6mfJV0niAoUcU9+qWVSaSTTQKgMy1Q== rsa-key-20171026
 
+000host
+web q1w2e3r4
+ftp Gamuza99
+---------------------------------------
+ssh
+U(,=??k@}geE
+
+
+am_}TnQXr[))
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtIQMOW4f3qk/apgSFv1TaTtSFJ08j4u5ocQbnXH2Oi1UzEOKXAImBJKpmW3f2d5eONTdCwvB9rKlCYahQt4AqDJyL0jI6RSduzr4tDLszvInsXnWg2aqGBh0XN98YBS53QBRnSE1eQOajoT/K/p+sCHjNPZqk8xU9nto+EadeNiGtmr5S/zOJe40RdoZlWGUm/qAB0SrkOh9SB/pSD+dNGjBS9bKufQI1qZaHJoKZCr/y9eIHNd6BBkqGgsy3kkolVH1LbA9tf697XZFfDSMcRQru80eiy7PlBr93gZ9vT84n3hkXoztk3wCV6qVmzhmhzqTGNwZpOsKffIXLdL1VQ==
+
+
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/apppedidos/.ssh/id_rsa.
+Your public key has been saved in /home/apppedidos/.ssh/id_rsa.pub.
+The key fingerprint is:
+26:92:51:3f:da:85:f7:37:0e:03:ac:9b:df:86:1a:85 
+
+
+
+-------------------------------------------
 
 php bin/console generate:doctrine:entity
 php bin/console generate:doctrine:crud

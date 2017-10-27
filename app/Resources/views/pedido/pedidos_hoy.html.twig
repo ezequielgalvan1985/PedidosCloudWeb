@@ -10,7 +10,7 @@
 <div class="row">    
     <div class="col-xs-12 col-sm-9 col-lg-9">
     <div class="panel panel-default">
-        <div class="panel-heading">Listado de Pedidos</div>
+        <div class="panel-heading">Listado de Pedidos {{hoy}}</div>
         <div class="panel-body">
             <table class="table">
         <thead>
@@ -28,16 +28,16 @@
         {% for pedido in pagination %}
             <tr>
                 <td><a href="{{ path('pedido_show', { 'id': pedido.id }) }}">{{ pedido.id }}</a></td>
-                <td>{% if pedido.fecha %}{{ pedido.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                 <td>{% if pedido.fecha %}{{ pedido.fecha|date('d/m/Y') }}  {% endif %}</td>
                 <td>{{ pedido.empleado.getTextoCombo}}</td>
-                <td>{{ pedido.estadoId }}</td>
+                 <td>{{ estados[pedido.estadoId] }}</td>
                 
                 <td>{{ pedido.subtotal }}</td>
                 
                 <td>{{ pedido.monto }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default">Ver</a>
-                    <a class="btn btn-default" href="{{ path('pedido_edit', { 'id': pedido.id }) }}" class="btn btn-primary">Editar</a>
+                    
                 </td>
                     
                 </td>

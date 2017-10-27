@@ -5,8 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Condicioniva;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 /**
  * Condicioniva controller.
  *
@@ -18,16 +19,41 @@ class CondicionivaController extends Controller
      * Lists all condicioniva entities.
      *
      * @Route("/", name="condicioniva_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        //Obtener empresa
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        
+        
+        //Crear formulario de filtro
+        $condicion = new Condicioniva();
+        $form_filter = $this->createForm('AppBundle\Form\CondicionivaType', $condicion);
+        $form_filter->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+        $form_filter->handleRequest($request);
+        
+        $queryBuilder = $this->getDoctrine()->getRepository(Condicioniva::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($condicion->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $condicion->getNombre(). '%');   
+            }
+            if ($condicion->getAlicuota()){
+                $queryBuilder->andWhere('bp.alicuota = :alicuota')
+                             ->setParameter('alicuota',  $condicion->getAlicuota());   
+            }
+        }
+        $registros = $queryBuilder;
 
-        $condicionivas = $em->getRepository('AppBundle:Condicioniva')->findAll();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
+
 
         return $this->render('condicioniva/index.html.twig', array(
-            'condicionivas' => $condicionivas,
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
         ));
     }
 
@@ -42,6 +68,7 @@ class CondicionivaController extends Controller
         $condicioniva = new Condicioniva();
         $form = $this->createForm('AppBundle\Form\CondicionivaType', $condicioniva);
         $form->handleRequest($request);
+        
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\GlobalValue;
 
 /**
  * Pedidodetalle controller.
@@ -78,6 +79,7 @@ class PedidodetalleController extends Controller
         return $this->render('pedidodetalle/new.html.twig', array(
             'pedidodetalles' => $pedidodetalles,
             'pedido'=>$pedido,
+            'estados'=> GlobalValue::ESTADOS,
             'form' => $form->createView(),
         ));
     }

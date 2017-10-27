@@ -18,16 +18,40 @@ class TipodocumentoController extends Controller
      * Lists all tipodocumento entities.
      *
      * @Route("/", name="tipodocumento_index")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+       //Obtener empresa
+        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+        $empresa = $currentuser->getEmpresa();
+        
+        //Crear formulario de filtro
+        $tipodocumento = new Tipodocumento();
+        $form_filter = $this->createForm('AppBundle\Form\TipodocumentoFilterType', $tipodocumento);
+        $form_filter->handleRequest($request);
 
-        $tipodocumentos = $em->getRepository('AppBundle:Tipodocumento')->findAll();
+        $queryBuilder = $this->getDoctrine()->getRepository(Tipodocumento::class)->createQueryBuilder('bp');
+        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+                     
+        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
+            if ($tipodocumento->getNombre()){
+                $queryBuilder->andWhere('bp.nombre LIKE :nombre')
+                             ->setParameter('nombre', '%'. $tipodocumento->getNombre(). '%');   
+            }
+            if($tipodocumento->getDescripcion()){
+                $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
+                             ->setParameter('descripcion', '%'. $tipodocumento->getDescripcion(). '%');
+            }
+        }
+        $registros = $queryBuilder;
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
+
 
         return $this->render('tipodocumento/index.html.twig', array(
-            'tipodocumentos' => $tipodocumentos,
+            'pagination' => $pagination, 'form_filter' => $form_filter->createView()
         ));
     }
 

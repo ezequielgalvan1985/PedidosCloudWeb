@@ -62,7 +62,10 @@ class PedidoController extends Controller
         
         
         return $this->render('pedido/index.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView(), 'estados'=> GlobalValue::ESTADOS
+            'pagination' => $pagination, 
+            'form_filter'=>$form_filter->createView(), 
+            'estados'=> GlobalValue::ESTADOS
+            
         ));
     }
     
@@ -76,15 +79,15 @@ class PedidoController extends Controller
     {
          //Obtener empresa
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-        
         // Filtrar por Empresa y por fecha de hoy
-        $hoy = date("Y-m-d");;
-        
+        //setlocale(LC_TIME,"es_AR");
+        $hoy = date("Y-m-d");
         
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
-        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+        $queryBuilder->where('bp.empresa = :empresa')
+                     ->setParameter('empresa', $empresa);
         $queryBuilder->andWhere('bp.fecha = :hoy')
-                             ->setParameter('hoy', $hoy ); 
+                     ->setParameter('hoy', $hoy ); 
         
         
         //Crear formulario de filtro
@@ -112,7 +115,9 @@ class PedidoController extends Controller
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
         
         return $this->render('pedido/pedidos_hoy.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView(), 'hoy'=>$hoy
+            'pagination' => $pagination, 
+            'form_filter'=>$form_filter->createView(), 'hoy'=>$hoy,
+            'estados'=> GlobalValue::ESTADOS
         ));
     }
     

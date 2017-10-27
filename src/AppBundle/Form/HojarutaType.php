@@ -21,14 +21,9 @@ class HojarutaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('diaId',ChoiceType::class, array(
-                        'choices' => array(
-                            GlobalValue::LUNES_DISPLAY=> GlobalValue::LUNES_ID,
-                            GlobalValue::MARTES_DISPLAY => GlobalValue::MARTES_ID,
-                            GlobalValue::MIERCOLES_DISPLAY=> GlobalValue::MIERCOLES_ID,
-                            GlobalValue::JUEVES_DISPLAY=> GlobalValue::JUEVES_ID,
-                            GlobalValue::VIERNES_DISPLAY=> GlobalValue::VIERNES_ID,
-                            GlobalValue::SABADOS_DISPLAY=> GlobalValue::SABADOS_ID,
-                            )
+                        'choices' => GlobalValue::DIAS_SEMANA_SELECT,
+                        'label'=>'Dia',
+                        'required'=>false
                         )
                     )
                 

@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Entity\GlobalValue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
@@ -21,18 +22,11 @@ class HojarutaFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('diaId',ChoiceType::class, array(
-                        'choices' => array(
-                            GlobalValue::LUNES_DISPLAY=> GlobalValue::LUNES_ID,
-                            GlobalValue::MARTES_DISPLAY => GlobalValue::MARTES_ID,
-                            GlobalValue::MIERCOLES_DISPLAY=> GlobalValue::MIERCOLES_ID,
-                            GlobalValue::JUEVES_DISPLAY=> GlobalValue::JUEVES_ID,
-                            GlobalValue::VIERNES_DISPLAY=> GlobalValue::VIERNES_ID,
-                            GlobalValue::SABADOS_DISPLAY=> GlobalValue::SABADOS_ID,
-                            ), 
+                        'choices' =>GlobalValue::DIAS_SEMANA_SELECT,
+                        'label'=>'Dia',
                         'required'=>false
-                        )
-                    )
-                ->add('titulo')
+                    ))
+                ->add('titulo', TextType::class )
                 ->add('notas', TextareaType::class)
                 ->add('Buscar', SubmitType::class)
                 ;

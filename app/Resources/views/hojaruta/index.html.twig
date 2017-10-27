@@ -30,7 +30,7 @@
             <tr>
                 <td><a href="{{ path('hojaruta_show', { 'id': hojarutum.id }) }}">{{ hojarutum.id }}</a></td>
                 <td>{{ hojarutum.empleado.nombre }} - {{ hojarutum.empleado.apellido }}</td>
-                <td>{{ hojarutum.diaId }}</td>
+                <td>{{ dias[hojarutum.diaId] }}</td>
                 <td>{{ hojarutum.titulo }}</td>
                 
                 

@@ -49,7 +49,7 @@ class GlobalValue{
     const MIERCOLES_ID = 3;
     const JUEVES_ID = 4;
     const VIERNES_ID = 5;
-    const SABADOS_ID = 6;
+    const SABADO_ID = 6;
     const DOMINGO_ID = 7;
     
     const DIAS_SEMANA = 
@@ -63,6 +63,17 @@ class GlobalValue{
                     GlobalValue::DOMINGO_ID => GlobalValue::DOMINGO_DISPLAY
                 );
     
+    const DIAS_SEMANA_SELECT = 
+            array(
+                    GlobalValue::LUNES_DISPLAY => GlobalValue::LUNES_ID  ,
+                    GlobalValue::MARTES_DISPLAY => GlobalValue::MARTES_ID ,
+                    GlobalValue::MIERCOLES_DISPLAY => GlobalValue::MIERCOLES_ID,
+                    GlobalValue::JUEVES_DISPLAY => GlobalValue::JUEVES_ID ,
+                    GlobalValue::VIERNES_DISPLAY => GlobalValue::VIERNES_ID ,
+                    GlobalValue::SABADO_DISPLAY => GlobalValue::SABADO_ID ,
+                    GlobalValue::DOMINGO_DISPLAY => GlobalValue::DOMINGO_ID 
+                );
+    
     
     
     
@@ -74,7 +85,7 @@ class GlobalValue{
     const PAGADO = 4;
     
     const PENDIENTE_DISPLAY = 'Pendiente';
-    const ENVIADO_DISPLAY = 'Entregado';
+    const ENVIADO_DISPLAY = 'Enviado';
     const ENTREGADO_DISPLAY = 'Entregado';
     const PAGADO_DISPLAY = 'Pagado';
     
@@ -83,6 +94,14 @@ class GlobalValue{
                           GlobalValue::ENVIADO => GlobalValue::ENVIADO_DISPLAY,
                           GlobalValue::ENTREGADO => GlobalValue::ENTREGADO_DISPLAY,
                           GlobalValue::PAGADO => GlobalValue::PAGADO_DISPLAY);
+    
+    const ESTADOS_SELECT = 
+                        array(
+                          GlobalValue::PENDIENTE_DISPLAY =>GlobalValue::PENDIENTE ,
+                          GlobalValue::ENVIADO_DISPLAY => GlobalValue::ENVIADO ,
+                          GlobalValue::ENTREGADO_DISPLAY => GlobalValue::ENTREGADO,
+                          GlobalValue::PAGADO_DISPLAY=> GlobalValue::PAGADO
+                        );
     
         
     

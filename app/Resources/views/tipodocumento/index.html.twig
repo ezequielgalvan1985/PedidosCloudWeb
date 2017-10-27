@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
-    <h1>Tipodocumentos list</h1>
+  
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li class="active"><a href="{{path('tipodocumento_index')}}">Tipo de Documento</a></li>
+</ol>
 
-    <table>
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Listado de Tipo de documento</div>
+        <div class="panel-body">
+            <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -13,29 +22,43 @@
             </tr>
         </thead>
         <tbody>
-        {% for tipodocumento in tipodocumentos %}
+        {% for tipodocumento in pagination %}
             <tr>
                 <td><a href="{{ path('tipodocumento_show', { 'id': tipodocumento.id }) }}">{{ tipodocumento.id }}</a></td>
                 <td>{{ tipodocumento.nombre }}</td>
                 <td>{{ tipodocumento.descripcion }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('tipodocumento_show', { 'id': tipodocumento.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('tipodocumento_edit', { 'id': tipodocumento.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                   
+                    <a href="{{ path('tipodocumento_show', { 'id': tipodocumento.id }) }}" class="btn btn-default">Ver</a>
+
+                    <a href="{{ path('tipodocumento_edit', { 'id': tipodocumento.id }) }}" class="btn btn-primary">Editar</a>
+                       
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        <a href="{{ path('tipodocumento_new') }}" >Nuevo</a>
+     </div>
+    </div>
+    </div>  
+        
+        
+    <div class="col-xs-12 col-sm-3 col-lg-3">
+        <div class="panel panel-default">
+         <div class="panel-heading">
+            <h3 class="panel-title">Filtros</h3>
+          </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('tipodocumento_new') }}">Create a new tipodocumento</a>
-        </li>
-    </ul>
+          <div class="panel-body">
+               {{ form(form_filter, {'attr': {'novalidate': 'novalidate'}}) }}
+          </div>
+        </div>
+    </div>
+          
+          
+    </div>
 {% endblock %}

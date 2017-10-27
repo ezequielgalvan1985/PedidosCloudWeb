@@ -25,14 +25,11 @@
                 <td>{{ impuesto.condicioniva.nombre }}</td>
                 <td>{{ impuesto.codigoafip }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                   
+                    <a href="{{ path('impuesto_show', { 'id': impuesto.id }) }}">show</a>
+
+                    <a href="{{ path('impuesto_edit', { 'id': impuesto.id }) }}">edit</a>
+                      
                 </td>
             </tr>
         {% endfor %}

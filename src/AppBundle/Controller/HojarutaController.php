@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AppBundle\Entity\GlobalValue;
 
 /**
  * Hojarutum controller.
@@ -57,7 +58,9 @@ class HojarutaController extends Controller
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
 
         return $this->render('hojaruta/index.html.twig', array(
-              'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
+              'pagination' => $pagination, 
+              'form_filter'=>$form_filter->createView(),
+              'dias'=> GlobalValue::DIAS_SEMANA
         ));
     }
 
