@@ -8,6 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 /**
  * Producto controller.
  *
@@ -86,6 +90,38 @@ class ProductoController extends Controller
         return $this->render('producto/new.html.twig', array(
             'producto' => $producto,
             'form' => $form->createView(),
+        ));
+    }
+    
+    
+    /**
+     *
+     * @Route("/import", name="producto_import")
+     * @Method({"GET", "POST"})
+     */
+    public function importAction(Request $request)
+    {
+        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+        $serializer = $this->container->get('serializer');
+        $data = $serializer->decode(file_get_contents('data.csv'), 'csv');
+        $em = $this->getDoctrine()->getManager();
+        //$producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+        
+        $producto = new Producto();
+        foreach($data as $p) {
+            $producto->setNombre($p['nombre']);
+            $producto->setDescripcion($p['descripcion']);
+            $producto->setPrecio($p['precio']);
+            $producto->setCodigoexterno($p['codigoexterno']);
+            $categoria = new Categoria();
+            $producto->setCategoria($categoria);
+            //$em->persist($producto);
+            //$em->flush();
+        }
+        
+        return $this->render('producto/import.html.twig', array('data'=>$data
+        
+
         ));
     }
 
