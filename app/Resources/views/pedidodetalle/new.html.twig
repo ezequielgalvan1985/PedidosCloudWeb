@@ -13,8 +13,12 @@
                        <tr><th>Fecha:</th><td>{{pedido.fecha|date('d-m-Y')}}</td></tr>
                        <tr><th>Cliente:</th><td>{{pedido.cliente.textocombo}}</td></tr>
                        <tr><th>Estado:</th><td>{{estados[pedido.estadoId]}}</td></tr>
-                       
+                  
                    </table>
+                    <form action="/new" method="post">
+                        <input type="hidden" value="{{pedido.id}}" name="pedido_id"></>   
+                        <input class="btn btn-warning" type="submit" value="Pasar Pedido a Entregado" />
+                    </form>
                </div>
             </div>
         </div>

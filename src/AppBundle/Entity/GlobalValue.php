@@ -85,7 +85,7 @@ class GlobalValue{
     const PAGADO = 4;
     
     const PENDIENTE_DISPLAY = 'Pendiente';
-    const ENVIADO_DISPLAY = 'Enviado';
+    const ENVIADO_DISPLAY = 'Pendiente (Android)';
     const ENTREGADO_DISPLAY = 'Entregado';
     const PAGADO_DISPLAY = 'Pagado';
     

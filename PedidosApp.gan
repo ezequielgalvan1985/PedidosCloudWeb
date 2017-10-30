@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="PedidosApp" company="" webLink="http://" view-date="2017-10-05" view-index="0" gantt-divider-location="436" resource-divider-location="300" version="2.8.5" locale="es_AR">
+<?xml version="1.0" encoding="UTF-8"?><project name="PedidosApp" company="" webLink="http://" view-date="2017-10-05" view-index="0" gantt-divider-location="436" resource-divider-location="300" version="2.8.5" locale="es">
     <description/>
     <view zooming-state="default:0" id="gantt-chart">
         <field id="tpd3" name="Nombre" width="314" order="0"/>
@@ -35,11 +35,48 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
         <task id="18" name="ABM Impuestos" color="#8cb6ce" meeting="false" start="2017-10-12" duration="2" complete="0" expand="true"/>
-        <task id="64" name="Editar datos empresa" meeting="false" start="2017-10-05" duration="1" complete="0" expand="true"/>
+        <task id="65" name="Listado Existencias por producto" color="#8cb6ce" meeting="false" start="2017-10-05" duration="1" complete="0" expand="true">
+            <notes><![CDATA[cuando se pasa el estado del pedido a entregado
+se genera un movimiento de stock de egreso
+
+dentro de la pantalla pedidodetallenew,
+agregar boton, "pasar pedido a entregado"
+esta funcionalidad genera el movimiento de egreso de stock
+
+
+
+]]></notes>
+        </task>
+        <task id="69" name="chequear stock del producto desde el celular" color="#8cb6ce" meeting="false" start="2017-10-05" duration="1" complete="0" expand="true">
+            <notes><![CDATA[
+Agregar boton "Consultar Stock " en el menu principal
+
+crear nuevo servicio rest "consultastock"
+post con Empresa_id
+se consultan las existencias
+se devuelve un json con producto, existencia
+
+agregar un campo en sql lite para guarda el stock actual
+parsear el json con existencias de stock
+recorrer los productos  del json
+buscar el producto en sqlite
+obtener producto
+modificar campo stock
+guardar cambio
+
+
+* en patanlla detalle del producto mostrar el campo stock
+
+* en pantalla detalle del producto agregar boton "consultar stock"
+	llamar a la funcionalidad "consutalstock"
+	actualizar valor del campo stock en "detalle de producto"
+
+]]></notes>
+        </task>
+        <task id="66" name="Agrear Facturacion electronica" meeting="false" start="2017-10-05" duration="1" complete="0" expand="true"/>
         <task id="62" name="chequear integridad de estados entre app y web" meeting="false" start="2017-10-05" duration="1" complete="0" expand="true"/>
         <task id="42" name="Paginator todos los ABM" color="#8cb6ce" meeting="false" start="2017-10-24" duration="3" complete="0" expand="true"/>
         <task id="57" name="Editar cantidad en pedidos" meeting="false" start="2017-10-24" duration="1" complete="0" expand="true"/>
-        <task id="52" name="Cambiar Contraseña" color="#8cb6ce" meeting="false" start="2017-10-26" duration="3" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="desarrollador" function="Default:0" contacts="" phone=""/>
