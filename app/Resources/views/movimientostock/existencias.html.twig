@@ -15,37 +15,28 @@
             <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Fecha</th>
-                <th>Cantidad</th>
-                <th>Nrocomprobante</th>
-                <th>Tipomovimiento</th>
-                <th>Actions</th>
+                
+                <th>Producto</th>
+                <th>Ingreso</th>
+                <th>Egreso</th>
+                <th>Stock Actual</th>
             </tr>
         </thead>
         <tbody>
+            
         {% for movimientostock in pagination %}
             <tr>
-                <td><a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}">{{ movimientostock.id }}</a></td>
-                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ movimientostock.cantidad }}</td>
-                <td>{{ movimientostock.nrocomprobante }}</td>
+                <td>{{ movimientostock.nombre }}</td>
+                <td>{{ movimientostock.ingreso }}</td>
+                <td>{{ movimientostock.egreso }}</td>
+                <td>{{ movimientostock.ingreso - movimientostock.egreso }}</td>
                 
-                <td>{{ tipomovimientos[movimientostock.tipomovimiento] }}</td>
-                <td>
-                  
-                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}" class="btn btn-default">Ver</a>
-                      
-                            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}" class="btn btn-primary">Editar</a>
-                     
-                </td>
+                
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
-    </div>
+   
    
     <a href="{{ path('movimientostock_new') }}">Nuevo</a>
     </div>

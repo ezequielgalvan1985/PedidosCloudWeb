@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Fecha</th>
-                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('d-m-Y') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Cantidad</th>
@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <th>Tipomovimiento</th>
-                <td>{{ movimientostock.tipomovimiento }}</td>
+                <td>{{ tipomovimientos[movimientostock.tipomovimiento] }}</td>
             </tr>
         </tbody>
     </table>

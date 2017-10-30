@@ -31,7 +31,6 @@ class PedidoController extends Controller
        
         //Obtener empresa
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-        
        
         //Crear formulario de filtro
         $pedido = new Pedido();
@@ -200,6 +199,7 @@ class PedidoController extends Controller
         return $this->render('pedido/new.html.twig', array(
             'pedido' => $pedido,
             'form' => $form->createView(),
+           
         ));
     }
 
