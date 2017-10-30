@@ -1,10 +1,12 @@
 {# empty Twig template #}
+<b> Estructura del archivo </b>
+
 <div class="row">
-    <b> Estructura del archivo </b>
-    
-{% for item in data %}
-    
-    {{item}}
-    
-{% endfor %}    
+    <table class="table">  
+    {% for item in data %}
+
+        {{item['nombre']}}
+
+    {% endfor %}    
+    </table>
 </div>

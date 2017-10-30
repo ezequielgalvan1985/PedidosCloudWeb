@@ -8,9 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use League\Csv\Reader;
+use League\Csv\Statement;
 
 /**
  * Producto controller.
@@ -101,28 +100,35 @@ class ProductoController extends Controller
      */
     public function importAction(Request $request)
     {
-        $serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
-        $serializer = $this->container->get('serializer');
-        $data = $serializer->decode(file_get_contents('data.csv'), 'csv');
+        //$serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+        //$serializer = $this->container->get('serializer');
+        //$data = $serializer->decode(file_get_contents('data.csv'), 'csv');
         $em = $this->getDoctrine()->getManager();
         //$producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+        //$reader = Reader::createFromPath(path: '%kernel.root_dir%/../src/AppBundle/Data/data.csv');
+        $reader = Reader::createFromPath('data.csv');
+        $results = $reader->fetchAssoc();
         
         $producto = new Producto();
-        foreach($data as $p) {
+        $data = $results;
+        /*
+        foreach($results as $p) {
+            
             $producto->setNombre($p['nombre']);
             $producto->setDescripcion($p['descripcion']);
             $producto->setPrecio($p['precio']);
             $producto->setCodigoexterno($p['codigoexterno']);
-            $categoria = new Categoria();
+            $categoria = $em->getRepository(Categoria::class)->findBy(1);
+            $marca = $em->getRepository(Marca::class)->findBy(1);
             $producto->setCategoria($categoria);
-            //$em->persist($producto);
-            //$em->flush();
+            $producto->setMarca($marca);
+            $em->persist($producto);
+            $em->flush();
         }
-        
-        return $this->render('producto/import.html.twig', array('data'=>$data
-        
-
-        ));
+        */
+        return $this->render('producto/import.html.twig', 
+                    array('data'=>$data)
+                );
     }
 
     /**
