@@ -104,13 +104,42 @@ class ProductoController extends Controller
         //$serializer = $this->container->get('serializer');
         //$data = $serializer->decode(file_get_contents('data.csv'), 'csv');
         $em = $this->getDoctrine()->getManager();
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         //$producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
         //$reader = Reader::createFromPath(path: '%kernel.root_dir%/../src/AppBundle/Data/data.csv');
-        $reader = Reader::createFromPath('data.csv');
-        $results = $reader->fetchAssoc();
+        //$reader = Reader::createFromPath('data.csv');
+        //$archivo = fgetcsv('data.csv');
+        $csv = array();
+        $lines = file('data.csv', FILE_IGNORE_NEW_LINES);
+       
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+        $i = 0;
+        foreach ($csv as $record)
+        {
+            
+            if ($i > 0){
+                $producto = new Producto();
+                $producto->setNombre($record[1]);
+                $producto->setDescripcion($record[2]);
+                $producto->setPrecio($record[3]); 
+                $producto->setCodigoexterno($record[4]);   
+                $producto->setEmpresa($empresa);
+                $em->persist($producto);
+                $em->flush();
+            }
+             $i = $i +1;
+        }
         
-        $producto = new Producto();
-        $data = $results;
+ 
+           
+       print_r($csv);
+       
+       $data = $csv;
+       //$producto = new Producto();
+       // $data = $results;
         /*
         foreach($results as $p) {
             

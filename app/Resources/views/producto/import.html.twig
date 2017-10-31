@@ -3,10 +3,13 @@
 
 <div class="row">
     <table class="table">  
-    {% for item in data %}
-
-        {{item['nombre']}}
-
-    {% endfor %}    
+        {% for item in data %}
+        {{item[0]}}
+        {{item[1]}}
+        {{item[2]}}
+        {{item[3]}}
+        {{item[4]}}
+        <br>
+        {% endfor %}
     </table>
 </div>
