@@ -15,6 +15,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/es.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" />
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
         <!--
         
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -26,6 +27,8 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="{{ asset('js/select2.min.js') }}"></script>
         -->
+        
+        
         <script>
             jQuery(document).ready(function() {
                 $('.js-datepicker').datepicker();
@@ -40,7 +43,7 @@
             });
         </script>
     </head>
-    <body style="padding-top: 70px">
+    <body style="padding-top: 70px" class="bg-dark">
 
   <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
@@ -148,7 +151,7 @@
           <a href="#" class="dropdown-toggle" 
              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
 
-              Mi Cuenta ({{ app.user.username|trans({'%username%': app.user.username}, 'FOSUserBundle') }})<span class="caret"></span></a>
+              Mi Cuenta ({{ app.user.username|trans({'%username%': app.user.username}, 'FOSUserBundle') }}) <span class="caret"></span></a>
           <ul class="dropdown-menu">
            <li class="nav-item">
              <a class="nav-link" href="#" >

@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/impuesto/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/ImpuestoController.php</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/categoria/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/impuesto/edit.html.twig</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/categoria/edit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/ProductoController.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/web/data.csv</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/producto/import.html.twig</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/notas</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/base.html.twig</file>
         </group>
     </open-files>
 </project-private>
