@@ -57,13 +57,16 @@ class RegistrationController extends BaseController
                  * Add new functionality (e.g. log the registration) *
                  *****************************************************/
 
-               
+               //validar si existe empresa con mismo mail
                 $empresa = new Empresa();
-                //$empresa->setUser($user);
-                $empresa->setEmail($user->getEmail());
-                $empresa->setDireccion('prueba direccion');
-                $empresa->setNombre('nombre prueba');
                 $em = $this->getDoctrine()->getManager();
+                
+                
+                
+                $empresa->setDireccion('');
+                $empresa->setNombre('');
+                $empresa->setEmail($user->getEmail());
+                
                 $em->persist($empresa);
                 $em->flush();
                 

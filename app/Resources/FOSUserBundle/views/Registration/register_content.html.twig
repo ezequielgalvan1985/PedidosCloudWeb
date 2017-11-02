@@ -3,29 +3,23 @@
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 <div class="card-header">Registrar Nueva Cuenta</div>
-      <div class="card-body">
+    <div class="card-body">
       
+    
 
-{{ form_errors(form) }}
+    
+    {{ form_start(form) }}
+    {{ form_row(form.username, {'label':'Username:'}) }}
+    {{ form_row(form.email, {'label':'Email:'}) }}
+    {{ form_row(form.plainPassword.first, {'label':'Contraseña:'}) }}
+    {{ form_row(form.plainPassword.second, {'label':'Repetir Contraseña:'}) }}
 
-{{ form_label(form.username) }}
-{{ form_widget(form.username) }}
-{{ form_errors(form.username) }}
-
-{{ form_label(form.email) }}
-{{ form_widget(form.email) }}
-{{ form_errors(form.email) }}
-
-{{ form_label(form.plainPassword.first) }}
-{{ form_widget(form.plainPassword.first) }}
-{{ form_errors(form.plainPassword.first) }}
-
-{{ form_label(form.plainPassword.second) }}
-{{ form_widget(form.plainPassword.second) }}
-
-{{ form_rest(form) }}
-
-      </div>
+        <button type="submit" class="btn btn-flat btn-primary">Crear Cuenta!</button>
+         <a class="d-block small mt-3" href="/"> <i class="fa fa-arrow-left"></i> Volver</a>
+    {{ form_end(form) }}
+    
+    
+    </div>
     
 
 
