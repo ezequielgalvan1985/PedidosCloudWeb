@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
   <head>
 
@@ -48,7 +48,7 @@
             </li>
            {% if not(is_granted("IS_AUTHENTICATED_REMEMBERED")) %}
                 <li class="nav-item">
-                  <a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_login') }}">Ingresar</a>
+                  <a class="nav-link js-scroll-trigger" href="/login">Ingresar</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link js-scroll-trigger" href="/register">Registrarse</a>
@@ -58,7 +58,7 @@
                   <a class="nav-link js-scroll-trigger" href="/admin">Mi Cuenta</a>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="{{ path('fos_user_security_logout') }}" >
+                    <a class="nav-link js-scroll-trigger" href="logout" >
                      Salir
                     </a>
                  </li>
