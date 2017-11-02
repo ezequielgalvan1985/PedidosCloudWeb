@@ -26,11 +26,7 @@
 
         {% endblock fos_user_content %}
     {% endblock %}
-      {% if error %}
-        <div class="alert alert-danger">
-            <strong>Error!</strong> {{ error.messageKey|trans({}, 'messages') }}
-        </div>
-    {% endif %}
+   
         <div class="text-center">
             <hr>
           <a class="d-block small mt-3" href="/register">Registrarme</a>

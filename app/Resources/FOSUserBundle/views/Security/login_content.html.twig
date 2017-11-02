@@ -3,6 +3,11 @@
 
 <div class="card-header">Iniciar Sesion</div>
     <div class="card-body">
+     {% if error is not empty %}
+        <div class="alert alert-danger">
+            <strong>Error!</strong> {{ error.messageKey|trans({}, 'messages') }}
+        </div>
+    {% endif %}
     
     <form action="{{ path("fos_user_security_check") }}" method="post">
         {% if csrf_token %}
