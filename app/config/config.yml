@@ -8,6 +8,12 @@ imports:
 parameters:
     locale: en
     categorias_images: '%kernel.project_dir%/web/uploads/images/categorias/'
+    archivos_productos_path: '%kernel.project_dir%/web/uploads/archivos/productos/'
+    archivos_clientes_path: '%kernel.project_dir%/web/uploads/archivos/clientes/'
+    archivos_marcas_path: '%kernel.project_dir%/web/uploads/archivos/marcas/'
+    archivos_categorias_path: '%kernel.project_dir%/web/uploads/archivos/categorias/'
+    
+    
     images: '%kernel.project_dir%/web/uploads/images/'
 framework:
     #esi: ~

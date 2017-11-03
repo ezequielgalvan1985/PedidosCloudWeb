@@ -5,8 +5,10 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use AppBundle\Entity\GlobalValue;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 class ArchivoType extends AbstractType
 {
@@ -15,7 +17,11 @@ class ArchivoType extends AbstractType
     {
         $builder->add('nombre')
                 ->add('descripcion')
-                ->add('tipo')
+                ->add('tipo',ChoiceType::class, array(
+                        'choices' => GlobalValue::ARCHIVO_TIPO_SELECT,
+                        'label'=>'Contenido',
+                        'required'=>true
+                        ))
                 ->add('archivo',FileType::class, array('label' => 'Archivo (Csv)'));
     }
     
@@ -34,7 +40,7 @@ class ArchivoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_producto';
+        return 'appbundle_archivo';
     }
 
 

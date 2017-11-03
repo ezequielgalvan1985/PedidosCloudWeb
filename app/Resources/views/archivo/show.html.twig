@@ -4,7 +4,7 @@
 
 <ol class="breadcrumb">
   <li><a href="{{path('homepage')}}">Inicio</a></li>
-  <li ><a href="{{path('categoria_index')}}">Categorias</a></li>
+  <li ><a href="{{path('archivo_index')}}">Archivos</a></li>
   <li class="active"><a href="#">Detalle </a></li>
 </ol>
   
@@ -19,26 +19,29 @@
             <tbody>
                 <tr>
                     <th>Id</th>
-                    <td>{{ categorium.id }}</td>
+                    <td>{{ archivo.id }}</td>
                 </tr>
                 <tr>
                     <th>Nombre</th>
-                    <td>{{ categorium.nombre }}</td>
+                    <td>{{ archivo.nombre }}</td>
                 </tr>
                 <tr>
                     <th>Descripcion</th>
-                    <td>{{ categorium.descripcion }}</td>
+                    <td>{{ archivo.descripcion }}</td>
                 </tr>
                 <tr>
-                    <th>Imagen Name</th>
-                    <td>{{ categorium.imagen }}</td>
+                    <th>Tipo</th>
+                    <td>{{ archivo.tipo }}</td>
                 </tr>
-                 <tr>
-                    <th>Imagen </th>
-                    <td>
-                        <img src="{{ categorium.getUploadDir() }}" style="height: 400px;width: 400px;">
-                    </td>
+                <tr>
+                    <th>Estado</th>
+                    <td>{{ archivo.estado }}</td>
                 </tr>
+                <tr>
+                    <th>Archivo File name</th>
+                    <td>{{ archivo.archivo }}</td>
+                </tr>
+                
             </tbody>
         </table>
 
@@ -46,7 +49,7 @@
 
     {{ form_start(delete_form) }}
         <input type="submit" value="Eliminar" class="btn btn-flat btn-danger">
-        <a href="{{ path('categoria_edit', { 'id': categorium.id }) }}" class="btn btn-flat btn-primary">Editar</a>
+        <a href="{{ path('archivo_edit', { 'id': archivo.id }) }}" class="btn btn-flat btn-primary">Editar</a>
     {{ form_end(delete_form) }}
         </div>
     </div>

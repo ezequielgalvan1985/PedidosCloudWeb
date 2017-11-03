@@ -2,16 +2,15 @@
 {% form_theme form_filter 'bootstrap_3_layout.html.twig' %}
 {% block body %}
     
-
 <ol class="breadcrumb">
   <li><a href="{{path('homepage')}}">Inicio</a></li>
-  <li class="active"><a href="{{path('categoria_index')}}">Categorias</a></li>
+  <li class="active"><a href="{{path('archivo_index')}}">Archivos</a></li>
 </ol>
 
 <div class="row">    
     <div class="col-xs-12 col-sm-9 col-lg-9">
     <div class="panel panel-default">
-        <div class="panel-heading">Listado de categorias</div>
+        <div class="panel-heading">Listado de archivos</div>
         <div class="panel-body">
             <table class="table">
                 <thead>
@@ -21,22 +20,24 @@
                         <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                         <th>Nombre</th>
                         <th>Descripcion</th>
-                        <th>Imagen</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for item in pagination %}
                     <tr>
-                        <td><a href="{{ path('categoria_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
+                        <td><a href="{{ path('archivo_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
                         <td>{{ item.nombre }}</td>
                         <td>{{ item.descripcion }}</td>
-                        <td>{{ item.imagen }}</td>
+                        <td>{{ item.tipo }}</td>
+                        <td>{{ item.estado }}</td>
                         <td>
                            
-                            <a href="{{ path('categoria_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
+                            <a href="{{ path('archivo_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
                                
-                            <a href="{{ path('categoria_edit', { 'id': item.id }) }}" class="btn btn-primary">Editar</a>
+                            <a href="{{ path('archivo_edit', { 'id': item.id }) }}" class="btn btn-primary">Editar</a>
                                
                         </td>
                     </tr>
@@ -46,7 +47,7 @@
             <div class="navigation">
                 {{ knp_pagination_render(pagination) }}
             </div>
-            <a href="{{ path('categoria_new') }}" >Nuevo</a>
+            <a href="{{ path('archivo_new') }}" >Nuevo</a>
         </div>
     </div>
     </div>  

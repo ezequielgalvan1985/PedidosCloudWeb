@@ -67,14 +67,10 @@ class ClienteController extends FOSRestController
         $registros = $queryBuilder;
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
-        
-
-
-
-
 
         return $this->render('cliente/index.html.twig', array(
-            'pagination' => $pagination,'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination,
+            'form_filter'=>$form_filter->createView()
         ));
     }
     

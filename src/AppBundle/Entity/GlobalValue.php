@@ -126,9 +126,16 @@ class GlobalValue{
     const ARCHIVO_CLIENTES = 2;
     const ARCHIVO_CATEGORIAS = 3;
     
-    const ARCHIVO_PRODUCTOS_DISPLAY = 1;
-    const ARCHIVO_CLIENTES_DISPLAY = 2;
-    const ARCHIVO_CATEGORIAS_DISPLAY = 3;
+    const ARCHIVO_PRODUCTOS_DISPLAY = 'PRODUCTOS';
+    const ARCHIVO_CLIENTES_DISPLAY = 'CLIENTES';
+    const ARCHIVO_CATEGORIAS_DISPLAY = 'CATEGORIAS';
+    
+    const ARCHIVO_TIPO_SELECT = 
+                        array(
+                                GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY =>GlobalValue::ARCHIVO_PRODUCTOS ,
+                                GlobalValue::ARCHIVO_CLIENTES_DISPLAY => GlobalValue::ARCHIVO_CLIENTES ,  
+                                GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY => GlobalValue::ARCHIVO_CATEGORIAS ,  
+                        );
     
     //Tipos de Archivos
     const ARCHIVO_ESTADO_UPLOAD = 1;
@@ -137,11 +144,11 @@ class GlobalValue{
     const ARCHIVO_ESTADO_ERROR_PROCESADO = 4;
     
     
-    const ARCHIVO_TIPO_SELECT = 
-                        array(
-                                GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY =>GlobalValue::ARCHIVO_PRODUCTOS ,
-                                GlobalValue::ARCHIVO_CLIENTES_DISPLAY => GlobalValue::ARCHIVO_CLIENTES ,  
-                                GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY => GlobalValue::ARCHIVO_CATEGORIAS ,  
-                        );
+    const ARCHIVO_ESTADO_UPLOAD_DISPLAY = 'SUBIDO';
+    const ARCHIVO_ESTADO_PROCESADO_DISPLAY = 'PROCESADO';
+    const ARCHIVO_ESTADO_ERROR_UPLOAD_DISPLAY = 'NO SE PUDO SUBIR';
+    const ARCHIVO_ESTADO_ERROR_PROCESADO_DISPLAY = 'NO SE PUDO PROCCESAR';
+    
+    
     
 }

@@ -3,12 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Archivo;
+use AppBundle\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\FileUploader;
-
+use AppBundle\Entity\GlobalValue;
 
 /**
  * Archivo controller.
@@ -34,9 +35,12 @@ class ArchivoController extends Controller
         $form_filter = $this->createForm('AppBundle\Form\ArchivoFilterType', $archivo);
         $form_filter->handleRequest($request);
 
-        $queryBuilder = $this->getDoctrine()->getRepository(Archivo::class)->createQueryBuilder('bp');
-        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
+        $queryBuilder = $this->getDoctrine()->getRepository(Archivo::class)
+                ->createQueryBuilder('bp')
+                ->where('bp.empresa = :empresa')
+                ->setParameter('empresa', $empresa);
                      
+         
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {
             if ($archivo->getNombre()){
                 $queryBuilder->andWhere('bp.nombre LIKE :nombre')
@@ -46,6 +50,12 @@ class ArchivoController extends Controller
                 $queryBuilder->andWhere('bp.descripcion LIKE :descripcion')
                              ->setParameter('descripcion', '%'. $archivo->getDescripcion(). '%');
             }
+            
+            if($archivo->getTipo()){
+                $queryBuilder->andWhere('bp.tipo = :tipo')
+                             ->setParameter('tipo',  $archivo->getTipo());
+            }
+            
         }
         $archivos = $queryBuilder;
 
@@ -53,7 +63,10 @@ class ArchivoController extends Controller
         $pagination = $paginator->paginate($archivos, $request->query->getInt('page', 1),10);
 
         return $this->render('archivo/index.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, 
+            'form_filter'=>$form_filter->createView(),
+            'estados'=> GlobalValue::ARCHIVO_ESTADOS,
+            'tipos'=>GlobalValues::ARCHIVO_TIPOS
         ));
     }
 
@@ -70,9 +83,12 @@ class ArchivoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $archivo->getImagen();
-            $fileName = $fileUploader->upload($file);
-            $archivo->setImagen($fileName);
+            
+            $file = $archivo->getArchivo();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('archivos_productos_path'), $fileName);
+            $archivo->setArchivo($fileName);
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_ERROR_UPLOAD);
             //Obtener Empresa
             $archivo->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em = $this->getDoctrine()->getManager();
@@ -96,12 +112,12 @@ class ArchivoController extends Controller
      */
     public function showAction(Archivo $archivo)
     {   
-        $archivo->setDirImagen($this->getParameter('archivos_images'));
         $deleteForm = $this->createDeleteForm($archivo);
         
         return $this->render('archivo/show.html.twig', array(
-            'categorium' => $archivo,
+            'archivo' => $archivo,
             'delete_form' => $deleteForm->createView(),
+            'estados'=> GlobalValue::ESTADOS
         ));
     }
 
