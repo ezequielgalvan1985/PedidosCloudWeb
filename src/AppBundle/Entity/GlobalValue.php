@@ -121,6 +121,27 @@ class GlobalValue{
                                 GlobalValue::EGRESO_DISPLAY => GlobalValue::EGRESO ,  
                         );
     
-        
+    //Tipos de Archivos
+    const ARCHIVO_PRODUCTOS = 1;
+    const ARCHIVO_CLIENTES = 2;
+    const ARCHIVO_CATEGORIAS = 3;
+    
+    const ARCHIVO_PRODUCTOS_DISPLAY = 1;
+    const ARCHIVO_CLIENTES_DISPLAY = 2;
+    const ARCHIVO_CATEGORIAS_DISPLAY = 3;
+    
+    //Tipos de Archivos
+    const ARCHIVO_ESTADO_UPLOAD = 1;
+    const ARCHIVO_ESTADO_PROCESADO = 2;
+    const ARCHIVO_ESTADO_ERROR_UPLOAD = 3;
+    const ARCHIVO_ESTADO_ERROR_PROCESADO = 4;
+    
+    
+    const ARCHIVO_TIPO_SELECT = 
+                        array(
+                                GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY =>GlobalValue::ARCHIVO_PRODUCTOS ,
+                                GlobalValue::ARCHIVO_CLIENTES_DISPLAY => GlobalValue::ARCHIVO_CLIENTES ,  
+                                GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY => GlobalValue::ARCHIVO_CATEGORIAS ,  
+                        );
     
 }

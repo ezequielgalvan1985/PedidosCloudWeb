@@ -1,5 +1,34 @@
-{# empty Twig template #}
-<b> Estructura del archivo </b>
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block body %}
+    
+
+
+<ol class="breadcrumb">
+  <li><a href="{{path('homepage')}}">Inicio</a></li>
+  <li ><a href="{{path('producto_index')}}">Productos</a></li>
+  <li class="active"><a href="#">Importar</a></li>
+</ol>
+  
+
+<div class="row">    
+    <div class="col-xs-12 col-sm-9 col-lg-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Seleccionar Archivo</div>
+        <div class="panel-body">
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" class="btn btn-flat btn-primary"value="Guardar y Procesar" />
+        {{ form_end(form) }}
+
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
 
 <div class="row">
     <table class="table">  
@@ -13,3 +42,4 @@
         {% endfor %}
     </table>
 </div>
+{% endblock %}
