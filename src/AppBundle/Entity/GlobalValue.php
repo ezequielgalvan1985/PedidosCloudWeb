@@ -137,6 +137,13 @@ class GlobalValue{
                                 GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY => GlobalValue::ARCHIVO_CATEGORIAS ,  
                         );
     
+    const ARCHIVO_TIPOS = 
+                        array(
+                                GlobalValue::ARCHIVO_PRODUCTOS =>GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY ,
+                                GlobalValue::ARCHIVO_CLIENTES => GlobalValue::ARCHIVO_CLIENTES_DISPLAY ,  
+                                GlobalValue::ARCHIVO_CATEGORIAS=> GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY ,  
+                        );
+    
     //Tipos de Archivos
     const ARCHIVO_ESTADO_UPLOAD = 1;
     const ARCHIVO_ESTADO_PROCESADO = 2;
@@ -149,6 +156,12 @@ class GlobalValue{
     const ARCHIVO_ESTADO_ERROR_UPLOAD_DISPLAY = 'NO SE PUDO SUBIR';
     const ARCHIVO_ESTADO_ERROR_PROCESADO_DISPLAY = 'NO SE PUDO PROCCESAR';
     
-    
+    const ARCHIVO_ESTADOS = 
+                        array(
+                                GlobalValue::ARCHIVO_ESTADO_UPLOAD =>GlobalValue::ARCHIVO_ESTADO_UPLOAD_DISPLAY ,
+                                GlobalValue::ARCHIVO_ESTADO_PROCESADO => GlobalValue::ARCHIVO_ESTADO_PROCESADO_DISPLAY ,  
+                                GlobalValue::ARCHIVO_ESTADO_ERROR_UPLOAD=> GlobalValue::ARCHIVO_ESTADO_ERROR_UPLOAD_DISPLAY ,  
+                                GlobalValue::ARCHIVO_ESTADO_ERROR_PROCESADO => GlobalValue::ARCHIVO_ESTADO_ERROR_PROCESADO_DISPLAY ,  
+                        );
     
 }

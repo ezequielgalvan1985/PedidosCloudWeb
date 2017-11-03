@@ -65,8 +65,8 @@ class ArchivoController extends Controller
         return $this->render('archivo/index.html.twig', array(
             'pagination' => $pagination, 
             'form_filter'=>$form_filter->createView(),
-            'estados'=> GlobalValue::ARCHIVO_ESTADOS,
-            'tipos'=>GlobalValues::ARCHIVO_TIPOS
+            'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
+            'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
         ));
     }
 
@@ -88,7 +88,7 @@ class ArchivoController extends Controller
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
             $file->move($this->getParameter('archivos_productos_path'), $fileName);
             $archivo->setArchivo($fileName);
-            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_ERROR_UPLOAD);
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
             //Obtener Empresa
             $archivo->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em = $this->getDoctrine()->getManager();
@@ -101,6 +101,8 @@ class ArchivoController extends Controller
         return $this->render('archivo/new.html.twig', array(
             'categorium' => $archivo,
             'form' => $form->createView(),
+            'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
+            'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
         ));
     }
 
@@ -117,36 +119,12 @@ class ArchivoController extends Controller
         return $this->render('archivo/show.html.twig', array(
             'archivo' => $archivo,
             'delete_form' => $deleteForm->createView(),
-            'estados'=> GlobalValue::ESTADOS
+            'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
+            'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
         ));
     }
 
-    /**
-     * Displays a form to edit an existing categorium entity.
-     *
-     * @Route("/{id}/edit", name="archivo_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Archivo $archivo)
-    {
-        $deleteForm = $this->createDeleteForm($archivo);
-        $editForm = $this->createForm('AppBundle\Form\ArchivoType', $archivo);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            //$archivo->setImagen( new File($this->getParameter('images').'/'.$archivo->getImagen()));
-            
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
-            return $this->redirectToRoute('archivo_edit', array('id' => $archivo->getId()));
-        }
-
-        return $this->render('archivo/edit.html.twig', array(
-            'categorium' => $archivo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+   
 
     /**
      * Deletes a categorium entity.
