@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Archivo;
+use AppBundle\Entity\Producto;
 use AppBundle\Entity\Categoria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -73,6 +74,66 @@ class ArchivoController extends Controller
     /**
      * Creates a new categorium entity.
      *
+     * @Route("/procesar/{id}", name="archivo_procesar")
+     * @Method({"GET", "POST"})
+     */
+    public function procesarAction(Request $request, Archivo $archivo)
+    {
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+        $csv = array();
+        $path = $this->getParameter('archivos_productos_path');
+        $pathfilename = $path . $archivo->getArchivo();
+        $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
+        
+        // agregar funcion validar estructura validarEstructura($pathfilename, $tipoarchivo)
+        // agregar funcion convertFileToArray
+        // agregar funciones importProductos(arrayFile)
+        // Pasa todo a un array
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+        if ($archivo->getTipo() == GlobalValue::ARCHIVO_PRODUCTOS){
+            $fileindex = 0; $header = 0;//Variable para identificar cabecera
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    
+                    $producto = new Producto();
+                    //validar si existe producto
+                    $producto->setCodigoexterno($record[4]);   
+                    
+                    
+                    $producto->setNombre($record[1]);
+                    $producto->setDescripcion($record[2]);
+                    $producto->setPrecio($record[3]); 
+                    
+                    
+                    $producto->setEmpresa($empresa);
+                    $em->persist($producto);
+                    $em->flush();
+                }
+                $fileindex = $fileindex +1;
+            }
+            print_r($csv);
+            $data = $csv;
+            $hoy = date("Y-m-d");
+            $archivo->setFecha($hoy);
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+            $em->persist($archivo);
+            $em->flush();
+            $this->addFlash(  'success','Procesado Correctamente!');
+        }
+        
+        return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
+        
+        
+        
+    }
+    /**
+     * Creates a new categorium entity.
+     *
      * @Route("/new", name="archivo_new")
      * @Method({"GET", "POST"})
      */
@@ -85,10 +146,11 @@ class ArchivoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             
             $file = $archivo->getArchivo();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = md5(uniqid()).'.csv';
             $file->move($this->getParameter('archivos_productos_path'), $fileName);
             $archivo->setArchivo($fileName);
             $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
+            //$archivo->setFilename($filename);
             //Obtener Empresa
             $archivo->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em = $this->getDoctrine()->getManager();
@@ -99,7 +161,7 @@ class ArchivoController extends Controller
         }
 
         return $this->render('archivo/new.html.twig', array(
-            'categorium' => $archivo,
+            'archivo' => $archivo,
             'form' => $form->createView(),
             'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
             'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS

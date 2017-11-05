@@ -40,6 +40,42 @@ class Archivo
     private $descripcion;
 
    
+    
+    /**
+     * @var \Date
+     *
+     * @ORM\Column(name="fecha", type="date")
+     */
+    private $fecha;
+    
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     *
+     * @return Pedido
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+    
+    
+    
+    
+    
     /**
      * @var string
      *
@@ -103,7 +139,7 @@ class Archivo
     
     
      /**
-     *
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Please, upload the a Csv file.")
      * @Assert\File( maxSize = "100000000", mimeTypes= {"text/plain", "text/csv", "application/csv", "text/excel", "application/excel"}, mimeTypesMessage = "Please upload a valid CSV | exel file")
      */

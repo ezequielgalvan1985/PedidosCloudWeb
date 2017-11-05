@@ -18,8 +18,9 @@
                         
                         <span class="label label-info">Total {{ pagination.getTotalItemCount }}</span>
                         <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
+                        <th>Fecha</th>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        
                         <th>Tipo</th>
                         <th>Estado</th>
                         <th>Actions</th>
@@ -29,15 +30,15 @@
                 {% for item in pagination %}
                     <tr>
                         <td><a href="{{ path('archivo_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
+                        <td>{% if item.fecha %}{{ item.fecha|date('d/m/Y') }}  {% endif %}</td>
                         <td>{{ item.nombre }}</td>
-                        <td>{{ item.descripcion }}</td>
-                        <td>{{ item.tipo }}</td>
-                        <td>{{ item.estado }}</td>
+                        
+                        <td>{{ archivo_tipos[item.tipo] }}</td>
+                        <td>{{ archivo_estados[item.estado] }}</td>
                         <td>
-                           
                             <a href="{{ path('archivo_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
-                               
-                            
+                            <a href="{{ path('archivo_procesar', { 'id': item.id }) }}" class="btn btn-default">Procesar</a>
+                            <a href="{{ path('archivo_procesar', { 'id': item.id }) }}" class="btn btn-default">Actualizar Precios</a>
                                
                         </td>
                     </tr>

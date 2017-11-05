@@ -96,7 +96,6 @@ class PedidoController extends Controller
          //Obtener empresa
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         // Filtrar por Empresa y por fecha de hoy
-        //setlocale(LC_TIME,"es_AR");
         $hoy = date("Y-m-d");
         
         $queryBuilder = $this->getDoctrine()->getRepository(Pedido::class)->createQueryBuilder('bp');
