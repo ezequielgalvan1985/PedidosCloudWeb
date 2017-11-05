@@ -71,15 +71,10 @@ class ArchivoController extends Controller
         ));
     }
 
-    /**
-     * Creates a new categorium entity.
-     *
-     * @Route("/procesar/{id}", name="archivo_procesar")
-     * @Method({"GET", "POST"})
-     */
-    public function procesarAction(Request $request, Archivo $archivo)
+    
+    public function procesarArchivo(Empresa $empresa, Archivo $archivo)
     {
-        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+
         $csv = array();
         $path = $this->getParameter('archivos_productos_path');
         $pathfilename = $path . $archivo->getArchivo();
@@ -103,12 +98,9 @@ class ArchivoController extends Controller
                     $producto = new Producto();
                     //validar si existe producto
                     $producto->setCodigoexterno($record[4]);   
-                    
-                    
                     $producto->setNombre($record[1]);
                     $producto->setDescripcion($record[2]);
                     $producto->setPrecio($record[3]); 
-                    
                     
                     $producto->setEmpresa($empresa);
                     $em->persist($producto);
@@ -118,15 +110,14 @@ class ArchivoController extends Controller
             }
             print_r($csv);
             $data = $csv;
-            $hoy = date("Y-m-d");
-            $archivo->setFecha($hoy);
+            
             $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
             $em->persist($archivo);
             $em->flush();
-            $this->addFlash(  'success','Procesado Correctamente!');
+        
         }
         
-        return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
+        
         
         
         
@@ -145,19 +136,32 @@ class ArchivoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $file = $archivo->getArchivo();
-            $fileName = md5(uniqid()).'.csv';
-            $file->move($this->getParameter('archivos_productos_path'), $fileName);
-            $archivo->setArchivo($fileName);
-            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
-            //$archivo->setFilename($filename);
-            //Obtener Empresa
-            $archivo->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($archivo);
-            $em->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
+            try{
+                $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+                $file = $archivo->getArchivo();
+                $fileName = md5(uniqid()).'.csv';
+                $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                $archivo->setArchivo($fileName);
+                $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
+                $hoy = date("Y-m-d");
+                $archivo->setFecha($hoy);
+                //Obtener Empresa
+                $archivo->setEmpresa($empresa);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($archivo);
+                $em->flush();
+                
+                $this->procesarArchivo($empresa, $archivo );
+                
+            
+            
+            
+            $this->addFlash(  'success','Guardado y rpocesadoCorrectamente!');
             return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
+            }catch(Exception $e){
+                return 
+            }
+            
         }
 
         return $this->render('archivo/new.html.twig', array(

@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/pedido/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Entity/Archivo.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/web/uploads/archivos/productos/38de4a42445471164c8742c2131c9b11.txt</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/ArchivoController.php</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/archivo/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/sf_prueba1/app/notas</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/app/Resources/views/archivo/show.html.twig</file>
         </group>
     </open-files>
 </project-private>
