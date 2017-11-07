@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Archivo;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Categoria;
+use AppBundle\Entity\Empresa;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -156,12 +157,13 @@ class ArchivoController extends Controller
             
             
             
-            $this->addFlash(  'success','Guardado y rpocesadoCorrectamente!');
-            return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
+                $this->addFlash(  'success','Guardado y rpocesadoCorrectamente!');
+                return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
             }catch(Exception $e){
-                return 
+                $output->writeln("WARNING: ArchivoController." + $e->getMessage());
+                  
             }
-            
+            return $this->redirectToRoute('archivo_index');
         }
 
         return $this->render('archivo/new.html.twig', array(
