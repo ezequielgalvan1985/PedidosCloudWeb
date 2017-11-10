@@ -48,6 +48,14 @@ class Producto
      * @ORM\Column(name="precio", type="decimal", precision=7, scale=2)
      */
     private $precio;
+    
+    /**
+     * @var 
+     *
+     * @ORM\Column(name="stock", type="decimal", precision=7, scale=2)
+     */
+    private $stock;
+    
 
     /**
      * @var string
@@ -227,6 +235,41 @@ class Producto
     {
         return $this->precio;
     }
+    
+    
+    
+    
+    
+    /**
+     * Set precio
+     *
+     * @param string 
+     *
+     * @return Producto
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get 
+     *
+     * @return string
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * Set imagen
