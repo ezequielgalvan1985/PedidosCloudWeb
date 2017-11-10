@@ -165,20 +165,20 @@ class GlobalValue{
                         );
     
     // PRODUCTOS
-    const PRODUCTO_CODIGOEXTERNO=1;
-    const PRODUCTO_NOMBRE=2;
-    const PRODUCTO_DESCRIPCION=3;
-    const PRODUCTO_PRECIO=4;
-    const PRODUCTO_STOCK=5;
+    const PRODUCTO_CODIGOEXTERNO=0;
+    const PRODUCTO_NOMBRE=1;
+    const PRODUCTO_DESCRIPCION=2;
+    const PRODUCTO_PRECIO=3;
+    const PRODUCTO_STOCK=4;
     
     // CLIENTES
-    const CLIENTE_CODIGOEXTERNO =1 ;
-    const CLIENTE_RAZONSOCIAL = 2;
-    const CLIENTE_CONDICIONIVA = 3;
-    const CLIENTE_DIRECCION=4;
-    const CLIENTE_NRODOC = 5;
-    const CLIENTE_TELEFONO = 6;
-    const CLIENTE_CONTACTO= 7;
+    const CLIENTE_CODIGOEXTERNO = 0 ;
+    const CLIENTE_RAZONSOCIAL   = 1;
+    const CLIENTE_CONDICIONIVA  = 2;
+    const CLIENTE_DIRECCION     = 3;
+    const CLIENTE_NRODOC        = 4;
+    const CLIENTE_TELEFONO      = 5;
+    const CLIENTE_CONTACTO      = 6;
                         
     const ERROR_VALIDATEFILE= 99;
     

@@ -16,6 +16,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Archivo
 {
+    
+    
+    public function __construct()
+    {
+       $this->fecha = new \DateTime();
+    }
+  
+  
     /**
      * @var int
      *

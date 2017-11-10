@@ -62,7 +62,7 @@ class ArchivoController extends Controller
         $archivos = $queryBuilder;
 
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($archivos, $request->query->getInt('page', 1),10);
+        $pagination = $paginator->paginate($archivos, $request->query->getInt('page', 1),8);
 
         return $this->render('archivo/index.html.twig', array(
             'pagination' => $pagination, 
@@ -129,7 +129,8 @@ class ArchivoController extends Controller
                         $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
                         $error = GlobalValue::ERROR_VALIDATEFILE;
                     }catch(\Exception $e){
-                        return GlobalValue::ERROR_VALIDATEFILE;
+                        //return GlobalValue::ERROR_VALIDATEFILE;
+                        
                     }
                 }
                  $fileindex = $fileindex +1;
