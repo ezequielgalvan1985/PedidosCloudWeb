@@ -73,7 +73,71 @@ class ArchivoController extends Controller
     }
 
     
-    public function procesarArchivo(Empresa $empresa, Archivo $archivo)
+    
+    
+    public function uploadArchivoProductos(Empresa $empresa, Archivo $archivo){
+        
+    }
+    //VALIDAR CLIENTES
+    public function validateArchivoClientes($lines){
+        
+            foreach ($lines as $key => $value)
+            {
+                $csv[$key] = str_getcsv($value);
+            }
+            $fileindex = 0; $header = 0; //Variable para identificar cabecera
+            $error = 0 ;
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    try{
+                        $record[GlobalValue::CLIENTE_RAZONSOCIAL];
+                        $record[GlobalValue::CLIENTE_CONDICIONIVA];
+                        $record[GlobalValue::CLIENTE_DIRECCION];
+                        $record[GlobalValue::CLIENTE_NRODOC];
+                        $record[GlobalValue::CLIENTE_TELEFONO];
+                        $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
+                        $record[GlobalValue::CLIENTE_CONTACTO];
+                        
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                    }catch(\Exception $e){
+                        return GlobalValue::ERROR_VALIDATEFILE;
+                    }
+                }
+                 $fileindex = $fileindex +1;
+            }
+          
+    }
+    
+    //VALIDAR PRODUCTOS
+    public function validateArchivoProducto($lines){
+        
+            foreach ($lines as $key => $value)
+            {
+                $csv[$key] = str_getcsv($value);
+            }
+            $fileindex = 0; $header = 0; //Variable para identificar cabecera
+            $error = 0 ;
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    try{
+                        $record[GlobalValue::PRODUCTO_NOMBRE];
+                        $record[GlobalValue::PRODUCTO_DESCRIPCION];
+                        $record[GlobalValue::PRODUCTO_PRECIO];
+                        $record[GlobalValue::PRODUCTO_STOCK];
+                        $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                    }catch(\Exception $e){
+                        return GlobalValue::ERROR_VALIDATEFILE;
+                    }
+                }
+                 $fileindex = $fileindex +1;
+            }
+          
+    }
+    
+    public function procesarArchivoProductos(Empresa $empresa, Archivo $archivo)
     {
 
         $csv = array();
@@ -81,10 +145,12 @@ class ArchivoController extends Controller
         $pathfilename = $path . $archivo->getArchivo();
         $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
         
-        // agregar funcion validar estructura validarEstructura($pathfilename, $tipoarchivo)
-        // agregar funcion convertFileToArray
-        // agregar funciones importProductos(arrayFile)
-        // Pasa todo a un array
+        $error = $this->validateArchivoProducto($lines);
+        
+        if ( $error > 0 ){
+            return $error;
+        }
+        
         foreach ($lines as $key => $value)
         {
             $csv[$key] = str_getcsv($value);
@@ -92,24 +158,31 @@ class ArchivoController extends Controller
         $em = $this->getDoctrine()->getManager();
         if ($archivo->getTipo() == GlobalValue::ARCHIVO_PRODUCTOS){
             $fileindex = 0; $header = 0;//Variable para identificar cabecera
+            $em = $this->getDoctrine()->getManager();
             foreach ($csv as $record)
             {
                 if ($fileindex > $header){
                     
                     $producto = new Producto();
                     //validar si existe producto
-                    $producto->setCodigoexterno($record[4]);   
-                    $producto->setNombre($record[1]);
-                    $producto->setDescripcion($record[2]);
-                    $producto->setPrecio($record[3]); 
-                    
+                    $codext = $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
+                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    //si existe se sobreescriben los datos
+                    if ($result){
+                        $producto = $result;
+                    }
+                    $producto->setCodigoexterno($codext);
+                    $producto->setNombre($record[GlobalValue::PRODUCTO_NOMBRE]);
+                    $producto->setDescripcion($record[GlobalValue::PRODUCTO_DESCRIPCION]);
+                    $producto->setPrecio($record[GlobalValue::PRODUCTO_PRECIO]); 
+                    $producto->setStock($record[GlobalValue::PRODUCTO_STOCK]); 
                     $producto->setEmpresa($empresa);
                     $em->persist($producto);
                     $em->flush();
                 }
                 $fileindex = $fileindex +1;
             }
-            print_r($csv);
+            
             $data = $csv;
             
             $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
@@ -119,10 +192,11 @@ class ArchivoController extends Controller
         }
         
         
-        
-        
-        
     }
+    
+    
+    
+    
     /**
      * Creates a new categorium entity.
      *
@@ -139,25 +213,26 @@ class ArchivoController extends Controller
             
             try{
                 $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+                
                 $file = $archivo->getArchivo();
                 $fileName = md5(uniqid()).'.csv';
-                $file->move($this->getParameter('archivos_productos_path'), $fileName);
                 $archivo->setArchivo($fileName);
                 $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
-                $hoy = date("Y-m-d");
-                $archivo->setFecha($hoy);
-                //Obtener Empresa
                 $archivo->setEmpresa($empresa);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($archivo);
                 $em->flush();
+               
                 
-                $this->procesarArchivo($empresa, $archivo );
-                
-            
-            
-            
-                $this->addFlash(  'success','Guardado y rpocesadoCorrectamente!');
+                if ($archivo->getTipo()==GlobalValue::ARCHIVO_PRODUCTOS){
+                    $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                    $this->procesarArchivoProductos($empresa, $archivo);
+                }
+                if ($archivo->getTipo()==GlobalValue::ARCHIVO_CLIENTES){
+                    $file->move($this->getParameter('archivos_clientes_path'), $fileName);
+                    $this->procesarArchivoClientes($empresa, $archivo);
+                }
+                $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
             }catch(Exception $e){
                 $output->writeln("WARNING: ArchivoController." + $e->getMessage());
@@ -190,6 +265,34 @@ class ArchivoController extends Controller
             'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
             'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
         ));
+    }
+
+    
+     /**
+     *
+     * @Route("/reprocesar/{id}", name="archivo_reprocesar")
+     * @Method("GET")
+     */
+    public function reprocesarAction(Archivo $archivo)
+    {   
+        $deleteForm = $this->createDeleteForm($archivo);
+        $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
+
+        $error = $this->procesarArchivoProductos($empresa, $archivo);
+        if ($error > 0){
+           $this->addFlash('error','Error al procesar el archivo, Formato incorrecto.');
+
+        } else{
+            $this->addFlash('success','Archivo Reprocesado Correctamente!');
+        }
+        return $this->redirectToRoute('archivo_index');
+        /*
+        return $this->render('archivo/show.html.twig', array(
+            'archivo' => $archivo,
+            'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
+            'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
+        ));*/
+        
     }
 
    

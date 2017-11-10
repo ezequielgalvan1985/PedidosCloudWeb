@@ -164,4 +164,22 @@ class GlobalValue{
                                 GlobalValue::ARCHIVO_ESTADO_ERROR_PROCESADO => GlobalValue::ARCHIVO_ESTADO_ERROR_PROCESADO_DISPLAY ,  
                         );
     
+    // PRODUCTOS
+    const PRODUCTO_CODIGOEXTERNO=1;
+    const PRODUCTO_NOMBRE=2;
+    const PRODUCTO_DESCRIPCION=3;
+    const PRODUCTO_PRECIO=4;
+    const PRODUCTO_STOCK=5;
+    
+    // CLIENTES
+    const CLIENTE_CODIGOEXTERNO =1 ;
+    const CLIENTE_RAZONSOCIAL = 2;
+    const CLIENTE_CONDICIONIVA = 3;
+    const CLIENTE_DIRECCION=4;
+    const CLIENTE_NRODOC = 5;
+    const CLIENTE_TELEFONO = 6;
+    const CLIENTE_CONTACTO= 7;
+                        
+    const ERROR_VALIDATEFILE= 99;
+    
 }
