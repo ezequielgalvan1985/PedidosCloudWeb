@@ -1,6 +1,6 @@
 
 parameters:
-    database_host: http://72.55.165.119
+    database_host: 72.55.165.119
     database_port: 2082
     database_name: symfony
     database_user: apppedidos
