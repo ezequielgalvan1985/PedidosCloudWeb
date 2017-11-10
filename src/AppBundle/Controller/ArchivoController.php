@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Archivo;
+use AppBundle\Entity\ArchivoFilter;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Categoria;
 use AppBundle\Entity\Empresa;
@@ -33,7 +34,7 @@ class ArchivoController extends Controller
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
         
         //Crear formulario de filtro
-        $archivo = new Archivo();
+        $archivo = new ArchivoFilter();
         $form_filter = $this->createForm('AppBundle\Form\ArchivoFilterType', $archivo);
         $form_filter->handleRequest($request);
 

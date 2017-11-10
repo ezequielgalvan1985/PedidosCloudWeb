@@ -6,8 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use AppBundle\Entity\GlobalValue;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use AppBundle\Entity\GlobalValue;
 
 class ArchivoFilterType extends AbstractType
 {
@@ -19,8 +21,9 @@ class ArchivoFilterType extends AbstractType
                 ->add('tipo',ChoiceType::class, array(
                         'choices' => GlobalValue::ARCHIVO_TIPO_SELECT,
                         'label'=>'Contenido',
-                        'required'=>true
-                        ));
+                        'required'=>false
+                        ))
+               ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
     }
     
     /**
@@ -29,7 +32,7 @@ class ArchivoFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Archivo'
+            'data_class' => 'AppBundle\Entity\ArchivoFilter'
         ));
     }
 
@@ -38,7 +41,7 @@ class ArchivoFilterType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_archivo';
+        return 'appbundle_archivofilter';
     }
 
 
