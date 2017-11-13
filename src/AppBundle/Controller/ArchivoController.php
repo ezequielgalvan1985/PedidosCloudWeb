@@ -138,7 +138,8 @@ class ArchivoController extends Controller
                     $registro = new Cliente();
                     //validar si existe producto
                     $codext = $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Cliente::class)->findOneByCodigoexterno($codext);
+                    $result = $this->getDoctrine()->getRepository(Cliente::class)
+                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
                     //si existe se sobreescriben los datos
                     if ($result){
                         $registro = $result;
@@ -211,9 +212,35 @@ class ArchivoController extends Controller
                         $record[GlobalValue::STOCK_CODIGOEXTERNO];
                         $record[GlobalValue::STOCK_CANTIDAD];
                         
-                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                        
                     }catch(\Exception $e){
-                        //return GlobalValue::ERROR_VALIDATEFILE;
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                        
+                    }
+                }
+                 $fileindex = $fileindex +1;
+            }
+          
+    }
+     //VALIDAR STOCKS
+    public function validateArchivoListaprecio($lines){
+        
+            foreach ($lines as $key => $value)
+            {
+                $csv[$key] = str_getcsv($value);
+            }
+            $fileindex = 0; $header = 0; //Variable para identificar cabecera
+            $error = 0 ;
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    try{
+                        $record[GlobalValue::LISTAPRECIOS_CODIGOEXTERNO];
+                        $record[GlobalValue::LISTAPRECIOS_PRECIO];
+                        
+                        
+                    }catch(\Exception $e){
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
                         
                     }
                 }
@@ -251,7 +278,8 @@ class ArchivoController extends Controller
                     $producto = new Producto();
                     //validar si existe producto
                     $codext = $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    $result = $this->getDoctrine()->getRepository(Producto::class)
+                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
                     //si existe se sobreescriben los datos
                     if ($result){
                         $producto = $result;
@@ -286,7 +314,7 @@ class ArchivoController extends Controller
         $pathfilename = $path . $archivo->getArchivo();
         $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
         
-        $error = $this->validateArchivoProducto($lines);
+        $error = $this->validateArchivoStock($lines);
         
         if ( $error > 0 ){
             return $error;
@@ -307,7 +335,8 @@ class ArchivoController extends Controller
                     $producto = new Producto();
                     //validar si existe producto
                     $codext = $record[GlobalValue::STOCK_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    $result = $this->getDoctrine()->getRepository(Producto::class)
+                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
                     //si existe se sobreescriben los datos
                     if ($result){
                         $producto = $result;
@@ -337,7 +366,7 @@ class ArchivoController extends Controller
         $pathfilename = $path . $archivo->getArchivo();
         $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
         
-        $error = $this->validateArchivoProducto($lines);
+        $error = $this->validateArchivoListaprecio($lines);
         
         if ( $error > 0 ){
             return $error;
@@ -358,7 +387,8 @@ class ArchivoController extends Controller
                     $producto = new Producto();
                     //validar si existe producto
                     $codext = $record[GlobalValue::LISTAPRECIOS_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    $result = $this->getDoctrine()->getRepository(Producto::class)
+                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
                     //si existe se sobreescriben los datos
                     if ($result){
                         $producto = $result;
@@ -421,6 +451,10 @@ class ArchivoController extends Controller
                     $file->move($this->getParameter('archivos_productos_path'), $fileName);
                     $this->procesarArchivoStocks($empresa, $archivo);
                 }
+                if ($archivo->getTipo()==GlobalValue::ARCHIVO_LISTAPRECIOS){
+                    $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                    $this->procesarArchivoListaprecios($empresa, $archivo);
+                }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
             }catch(Exception $e){
@@ -471,6 +505,12 @@ class ArchivoController extends Controller
         }
         if ($archivo->getTipo()== GlobalValue::ARCHIVO_CLIENTES){
             $error = $this->procesarArchivoClientes($empresa, $archivo);
+        }
+        if ($archivo->getTipo()== GlobalValue::ARCHIVO_LISTAPRECIOS){
+            $error = $this->procesarArchivoListaprecios($empresa, $archivo);
+        }
+        if ($archivo->getTipo()== GlobalValue::ARCHIVO_STOCK){
+            $error = $this->procesarArchivoStocks($empresa, $archivo);
         }
         
         if ($error > 0){
