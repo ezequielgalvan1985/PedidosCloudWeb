@@ -91,9 +91,39 @@ class Cliente
      */
     private $web;
     
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Condicioniva")
-     * @ORM\JoinColumn(name="condicioniva_id", referencedColumnName="id")
+     * @var string
+     *
+     * @ORM\Column(name="codigoexterno", type="string", length=50)
+     */
+    private $codigoexterno;
+    
+    /**
+     * Set nombre
+     *
+     * @param string $codigoexterno
+     *
+     */
+    public function setCodigoexterno($codigoexterno)
+    {
+        $this->codigoexterno = $codigoexterno;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoexterno
+     *
+     */
+    public function getCodigoexterno()
+    {
+        return $this->codigoexterno;
+    }
+    
+    
+    /**
+     * @ORM\Column(name="condicioniva", type="string", length=20)
      */
     private $condicioniva;
     

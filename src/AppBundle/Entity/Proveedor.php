@@ -51,8 +51,7 @@ class Proveedor
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Condicioniva")
-     * @ORM\JoinColumn(name="condicioniva_id", referencedColumnName="id")
+     * @ORM\Column(name="condicioniva", type="string", length=20)
      */
     private $condicioniva;
     

@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Archivo;
 use AppBundle\Entity\ArchivoFilter;
 use AppBundle\Entity\Producto;
-use AppBundle\Entity\Categoria;
+use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Empresa;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -108,6 +108,62 @@ class ArchivoController extends Controller
                  $fileindex = $fileindex +1;
             }
           
+    }
+    public function procesarArchivoClientes(Empresa $empresa, Archivo $archivo)
+    {
+
+        $csv = array();
+        $path = $this->getParameter('archivos_clientes_path');
+        $pathfilename = $path . $archivo->getArchivo();
+        $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
+        
+        $error = $this->validateArchivoProducto($lines);
+        
+        if ( $error > 0 ){
+            return $error;
+        }
+        
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+       
+            $fileindex = 0; $header = 0;//Variable para identificar cabecera
+            $em = $this->getDoctrine()->getManager();
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    
+                    $registro = new Cliente();
+                    //validar si existe producto
+                    $codext = $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
+                    $result = $this->getDoctrine()->getRepository(Cliente::class)->findOneByCodigoexterno($codext);
+                    //si existe se sobreescriben los datos
+                    if ($result){
+                        $registro = $result;
+                    }
+                    $registro->setCodigoexterno($codext);
+                    $registro->setRazonsocial($record[GlobalValue::CLIENTE_RAZONSOCIAL]);
+                    $registro->setCondicioniva($record[GlobalValue::CLIENTE_CONDICIONIVA]);
+                    $registro->setDireccion($record[GlobalValue::CLIENTE_DIRECCION]); 
+                    $registro->setNdoc($record[GlobalValue::CLIENTE_NRODOC]); 
+                    $registro->setTelefono($record[GlobalValue::CLIENTE_TELEFONO]); 
+                    $registro->setContacto($record[GlobalValue::CLIENTE_CONTACTO]); 
+                    $registro->setEmpresa($empresa);
+                    $em->persist($registro);
+                    $em->flush();
+                }
+                $fileindex = $fileindex +1;
+            }
+            
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+            $em->persist($archivo);
+            $em->flush();
+        
+        
+        
+        
     }
     
     //VALIDAR PRODUCTOS
@@ -229,10 +285,16 @@ class ArchivoController extends Controller
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_PRODUCTOS){
                     $file->move($this->getParameter('archivos_productos_path'), $fileName);
                     $this->procesarArchivoProductos($empresa, $archivo);
+                    
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_CLIENTES){
                     $file->move($this->getParameter('archivos_clientes_path'), $fileName);
                     $this->procesarArchivoClientes($empresa, $archivo);
+                    
+                }
+                if ($archivo->getTipo()==GlobalValue::ARCHIVO_STOCK){
+                    $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                    $this->procesarArchivoStocks($empresa, $archivo);
                 }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
@@ -279,8 +341,13 @@ class ArchivoController extends Controller
     {   
         $deleteForm = $this->createDeleteForm($archivo);
         $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-
-        $error = $this->procesarArchivoProductos($empresa, $archivo);
+        if ($archivo->getTipo()== GlobalValue::ARCHIVO_PRODUCTOS){
+            $error = $this->procesarArchivoProductos($empresa, $archivo);
+        }
+        if ($archivo->getTipo()== GlobalValue::ARCHIVO_CLIENTES){
+            $error = $this->procesarArchivoClientes($empresa, $archivo);
+        }
+        
         if ($error > 0){
            $this->addFlash('error','Error al procesar el archivo, Formato incorrecto.');
 
@@ -288,12 +355,7 @@ class ArchivoController extends Controller
             $this->addFlash('success','Archivo Reprocesado Correctamente!');
         }
         return $this->redirectToRoute('archivo_index');
-        /*
-        return $this->render('archivo/show.html.twig', array(
-            'archivo' => $archivo,
-            'archivo_estados'=> GlobalValue::ARCHIVO_ESTADOS,
-            'archivo_tipos'=>GlobalValue::ARCHIVO_TIPOS
-        ));*/
+       
         
     }
 

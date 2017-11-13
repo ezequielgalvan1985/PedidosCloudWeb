@@ -2,17 +2,13 @@ app_movimientostock:
     resource: "@AppBundle/Controller/MovimientostockController.php"
     type:     annotation
 
-app_condicioniva:
-    resource: "@AppBundle/Controller/CondicionivaController.php"
-    type:     annotation
+
 
 app_proveedor:
     resource: "@AppBundle/Controller/ProveedorController.php"
     type:     annotation
 
-app_impuesto:
-    resource: "@AppBundle/Controller/ImpuestoController.php"
-    type:     annotation
+
 
 app_tipodocumento:
     resource: "@AppBundle/Controller/TipodocumentoController.php"

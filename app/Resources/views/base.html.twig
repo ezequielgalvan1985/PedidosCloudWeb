@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}PedidosApp{% endblock %}</title>
+        <title>{% block title %}PedidosCloud{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -55,7 +55,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{url('homepage')}}">PedidosApp</a>
+      <a class="navbar-brand" href="{{url('admin')}}">PedidosCloud</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -89,6 +89,8 @@
                 {% endif %}
                <li role="separator" class="divider"></li>
                <li><a class="dropdown-item" href="{{ url('archivo_index') }}">Importar Archivos</a></li>
+               
+               
           </ul>
           
         </li>

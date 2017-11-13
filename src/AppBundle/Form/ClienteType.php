@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\GlobalValue;
 
 
 class ClienteType extends AbstractType
@@ -18,11 +20,12 @@ class ClienteType extends AbstractType
     {
         $builder->add('razonsocial', null, array('label'=>'Razon Social','required'  => true))
                 ->add('contacto', null, array('label'=>'Contacto', 'required'  => true))
-                ->add('condicioniva', EntityType::class, array(
-                        'class' => 'AppBundle:Condicioniva',
-                        'choice_label' => 'getSelectTexto1',
-                        'label'=> 'Condicion Iva'
-                    ))
+                ->add('condicioniva', ChoiceType::class, array(
+                        'choices' => GlobalValue::CONDICION_IVA_SELECT,
+                        'label'=>'Condicion Iva',
+                        'required'=>false
+                        )
+                    )
                 ->add('tipodocumento', EntityType::class, array(
                         'class' => 'AppBundle:Tipodocumento',
                         'choice_label' => 'nombre',

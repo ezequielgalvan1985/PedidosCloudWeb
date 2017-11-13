@@ -5,7 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/sf_prueba1/.gitignore</file>
             <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/sf_prueba1/htaccess_prod</file>
+            <file>file:/C:/xampp/htdocs/sf_prueba1/src/AppBundle/Controller/RegistrationnController.php</file>
             <file>file:/C:/xampp/htdocs/sf_prueba1/.htaccess_prod</file>
             <file>file:/C:/xampp/htdocs/sf_prueba1/app/notas</file>
         </group>

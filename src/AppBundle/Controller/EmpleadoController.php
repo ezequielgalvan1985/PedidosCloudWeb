@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\User;
 /**
  * Empleado controller.
  *
- * @Route("empleado")
+ * @Route("usuario")
  */
 class EmpleadoController extends Controller
 {

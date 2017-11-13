@@ -103,6 +103,24 @@ class GlobalValue{
                           GlobalValue::PAGADO_DISPLAY=> GlobalValue::PAGADO
                         );
     
+    
+    //CONDICION IVA 
+    const CONDICION_RESPONSABLEINSCRIPTO = 1;
+    const CONDICION_EXCENTO = 2;
+    
+    const CONDICION_RESPONSABLEINSCRIPTO_DISPLAY = 'RESPONSABLE INSCRIPTO';
+    const CONDICION_EXCENTO_DISPLAY = 'EXCENTO';
+    
+    const CONDICION_IVA = array(
+                                GlobalValue::CONDICION_RESPONSABLEINSCRIPTO =>GlobalValue::CONDICION_RESPONSABLEINSCRIPTO_DISPLAY,
+                                GlobalValue::CONDICION_EXCENTO => GlobalValue::CONDICION_EXCENTO_DISPLAY,
+                        );
+    const CONDICION_IVA_SELECT = array(
+                                GlobalValue::CONDICION_RESPONSABLEINSCRIPTO_DISPLAY =>GlobalValue::CONDICION_RESPONSABLEINSCRIPTO,
+                                GlobalValue::CONDICION_EXCENTO_DISPLAY => GlobalValue::CONDICION_EXCENTO,
+                        );
+    
+    
     //Tipo de Movimientos
     const INGRESO = 1;
     const EGRESO = 2;
@@ -124,27 +142,30 @@ class GlobalValue{
     //Tipos de Archivos
     const ARCHIVO_PRODUCTOS = 1;
     const ARCHIVO_CLIENTES = 2;
-    const ARCHIVO_CATEGORIAS = 3;
-    
+    const ARCHIVO_STOCK = 3;
+    const ARCHIVO_LISTAPRECIOS = 4;
     const ARCHIVO_PRODUCTOS_DISPLAY = 'PRODUCTOS';
     const ARCHIVO_CLIENTES_DISPLAY = 'CLIENTES';
-    const ARCHIVO_CATEGORIAS_DISPLAY = 'CATEGORIAS';
+    const ARCHIVO_LISTAPRECIOS_DISPLAY = 'ACTUALIZAR LISTA DE PRECIOS';
+    const ARCHIVO_STOCK_DISPLAY = 'ACTUALIZAR STOCK';
     
     const ARCHIVO_TIPO_SELECT = 
                         array(
                                 GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY =>GlobalValue::ARCHIVO_PRODUCTOS ,
                                 GlobalValue::ARCHIVO_CLIENTES_DISPLAY => GlobalValue::ARCHIVO_CLIENTES ,  
-                                GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY => GlobalValue::ARCHIVO_CATEGORIAS ,  
+                                GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY => GlobalValue::ARCHIVO_LISTAPRECIOS,
+                                GlobalValue::ARCHIVO_STOCK_DISPLAY => GlobalValue::ARCHIVO_STOCK  
                         );
     
     const ARCHIVO_TIPOS = 
                         array(
                                 GlobalValue::ARCHIVO_PRODUCTOS =>GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY ,
                                 GlobalValue::ARCHIVO_CLIENTES => GlobalValue::ARCHIVO_CLIENTES_DISPLAY ,  
-                                GlobalValue::ARCHIVO_CATEGORIAS=> GlobalValue::ARCHIVO_CATEGORIAS_DISPLAY ,  
+                                GlobalValue::ARCHIVO_LISTAPRECIOS => GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY,  
+                                GlobalValue::ARCHIVO_STOCK => GlobalValue::ARCHIVO_STOCK_DISPLAY  
                         );
     
-    //Tipos de Archivos
+    // Estado de Archivos
     const ARCHIVO_ESTADO_UPLOAD = 1;
     const ARCHIVO_ESTADO_PROCESADO = 2;
     const ARCHIVO_ESTADO_ERROR_UPLOAD = 3;
@@ -180,6 +201,14 @@ class GlobalValue{
     const CLIENTE_TELEFONO      = 5;
     const CLIENTE_CONTACTO      = 6;
                         
+    // STOCK
+    const STOCK_CODIGOEXTERNO=0;
+    const STOCK_CANTIDAD=1;
+    
+    // LISTA DE PRECIOS
+    const LISTAPRECIOS_CODIGOEXTERNO=0;
+    const LISTAPRECIOS_CANTIDAD=1;
+    
     const ERROR_VALIDATEFILE= 99;
     
 }
