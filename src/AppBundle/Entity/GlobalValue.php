@@ -207,7 +207,7 @@ class GlobalValue{
     
     // LISTA DE PRECIOS
     const LISTAPRECIOS_CODIGOEXTERNO=0;
-    const LISTAPRECIOS_CANTIDAD=1;
+    const LISTAPRECIOS_PRECIO=1;
     
     const ERROR_VALIDATEFILE= 99;
     

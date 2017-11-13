@@ -195,6 +195,33 @@ class ArchivoController extends Controller
           
     }
     
+    //VALIDAR STOCKS
+    public function validateArchivoStock($lines){
+        
+            foreach ($lines as $key => $value)
+            {
+                $csv[$key] = str_getcsv($value);
+            }
+            $fileindex = 0; $header = 0; //Variable para identificar cabecera
+            $error = 0 ;
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    try{
+                        $record[GlobalValue::STOCK_CODIGOEXTERNO];
+                        $record[GlobalValue::STOCK_CANTIDAD];
+                        
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                    }catch(\Exception $e){
+                        //return GlobalValue::ERROR_VALIDATEFILE;
+                        
+                    }
+                }
+                 $fileindex = $fileindex +1;
+            }
+          
+    }
+    
     public function procesarArchivoProductos(Empresa $empresa, Archivo $archivo)
     {
 
@@ -241,17 +268,115 @@ class ArchivoController extends Controller
                 $fileindex = $fileindex +1;
             }
             
-            $data = $csv;
-            
             $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
             $em->persist($archivo);
             $em->flush();
         
         }
         
-        
     }
     
+    
+    
+    public function procesarArchivoStocks(Empresa $empresa, Archivo $archivo)
+    {
+
+        $csv = array();
+        $path = $this->getParameter('archivos_productos_path');
+        $pathfilename = $path . $archivo->getArchivo();
+        $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
+        
+        $error = $this->validateArchivoProducto($lines);
+        
+        if ( $error > 0 ){
+            return $error;
+        }
+        
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+        if ($archivo->getTipo() == GlobalValue::ARCHIVO_STOCKS){
+            $fileindex = 0; $header = 0;//Variable para identificar cabecera
+            $em = $this->getDoctrine()->getManager();
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    
+                    $producto = new Producto();
+                    //validar si existe producto
+                    $codext = $record[GlobalValue::STOCK_CODIGOEXTERNO];
+                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    //si existe se sobreescriben los datos
+                    if ($result){
+                        $producto = $result;
+                        $producto->setCodigoexterno($codext);
+                        $producto->setStock($record[GlobalValue::STOCK_CANTIDAD]); 
+                        $producto->setEmpresa($empresa);
+                        $em->persist($producto);
+                        $em->flush();
+                    }
+                    
+                }
+                $fileindex = $fileindex +1;
+            }
+            
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+            $em->persist($archivo);
+            $em->flush();
+        }
+    }
+    
+    
+    public function procesarArchivoListaprecios(Empresa $empresa, Archivo $archivo)
+    {
+
+        $csv = array();
+        $path = $this->getParameter('archivos_productos_path');
+        $pathfilename = $path . $archivo->getArchivo();
+        $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
+        
+        $error = $this->validateArchivoProducto($lines);
+        
+        if ( $error > 0 ){
+            return $error;
+        }
+        
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value);
+        }
+        $em = $this->getDoctrine()->getManager();
+        if ($archivo->getTipo() == GlobalValue::ARCHIVO_LISTAPRECIOS){
+            $fileindex = 0; $header = 0;//Variable para identificar cabecera
+            $em = $this->getDoctrine()->getManager();
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    
+                    $producto = new Producto();
+                    //validar si existe producto
+                    $codext = $record[GlobalValue::LISTAPRECIOS_CODIGOEXTERNO];
+                    $result = $this->getDoctrine()->getRepository(Producto::class)->findOneByCodigoexterno($codext);
+                    //si existe se sobreescriben los datos
+                    if ($result){
+                        $producto = $result;
+                        $producto->setCodigoexterno($codext);
+                        $producto->setPrecio($record[GlobalValue::LISTAPRECIOS_PRECIO]); 
+                        $producto->setEmpresa($empresa);
+                        $em->persist($producto);
+                        $em->flush();
+                    }
+                }
+                $fileindex = $fileindex +1;
+            }
+            
+            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+            $em->persist($archivo);
+            $em->flush();
+        }
+    }
     
     
     
