@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use AppBundle\Entity\GlobalValue;
 /**
  * Proveedor controller.
  *
@@ -95,6 +95,7 @@ class ProveedorController extends Controller
         return $this->render('proveedor/show.html.twig', array(
             'proveedor' => $proveedor,
             'delete_form' => $deleteForm->createView(),
+            'condicioniva'=> GlobalValue::CONDICION_IVA
         ));
     }
 

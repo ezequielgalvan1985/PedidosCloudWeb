@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form;   
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +16,7 @@ class ProveedorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('razonsocial')
+        $builder->add('razonsocial', null, array('label'=>'Razon Social'))
         ->add('domicilio')
         ->add('condicioniva', ChoiceType::class, array(
                         'choices' => GlobalValue::CONDICION_IVA_SELECT,
@@ -24,7 +24,12 @@ class ProveedorType extends AbstractType
                         'required'=>false
                         )
                     )
-        ->add('email')->add('percepcion')->add('cuit')->add('ingbrutos')->add('codpostal')->add('cbu');
+        ->add('email')
+                ->add('percepcion')
+                ->add('cuit')
+                ->add('ingbrutos')
+                ->add('codpostal', null, array('label'=>'Codigo Postal'))
+                ->add('cbu');
     }
     
     /**

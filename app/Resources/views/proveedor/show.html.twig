@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <th>Condicioniva</th>
-                <td>{{ proveedor.condicioniva.nombre }}</td>
+                <td>{% if proveedor.condicioniva %} {{ condicioniva[proveedor.condicioniva] }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Cuit</th>
