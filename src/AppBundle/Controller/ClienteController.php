@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
-
+use \AppBundle\Entity\GlobalValue;
 
 
 
@@ -120,6 +120,8 @@ class ClienteController extends FOSRestController
         return $this->render('cliente/show.html.twig', array(
             'cliente' => $cliente,
             'delete_form' => $deleteForm->createView(),
+            'tipodocumentos'=> GlobalValue::TIPODOC,
+            'condicioniva'=> GlobalValue::CONDICION_IVA
         ));
     }
 

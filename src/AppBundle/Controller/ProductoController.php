@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
+
 
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -33,6 +36,26 @@ class ProductoController extends Controller
         //Crear formulario de filtro
         $producto = new Producto();
         $form_filter = $this->createForm('AppBundle\Form\ProductoFilterType', $producto);
+        $form_filter->add('categoria', EntityType::class, array(
+                        'class' => 'AppBundle:Categoria', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'))
+                    ->add('marca', EntityType::class, array(
+                        'class' => 'AppBundle:Marca', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'));
         $form_filter->handleRequest($request);
 
         $queryBuilder = $this->getDoctrine()->getRepository(Producto::class)->createQueryBuilder('bp');
@@ -75,6 +98,28 @@ class ProductoController extends Controller
     {
         $producto = new Producto();
         $form = $this->createForm('AppBundle\Form\ProductoType', $producto);
+        $form->add('categoria', EntityType::class, array(
+                        'class' => 'AppBundle:Categoria', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'))
+                    ->add('marca', EntityType::class, array(
+                        'class' => 'AppBundle:Marca', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'));
+                    
+         
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -93,79 +138,7 @@ class ProductoController extends Controller
     }
     
     
-    /**
-     *
-     * @Route("/import", name="producto_import")
-     * @Method({"GET", "POST"})
-     */
-    public function importAction(Request $request)
-    {
-        //$serializer = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
-        //$serializer = $this->container->get('serializer');
-        //$data = $serializer->decode(file_get_contents('data.csv'), 'csv');
-        $archivo = new Archivo();
-        $form = $this->createForm('AppBundle\Form\ArchivoType', $archivo);
-        $form->handleRequest($request);
-        $data = [];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-            //$producto->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            //$reader = Reader::createFromPath(path: '%kernel.root_dir%/../src/AppBundle/Data/data.csv');
-            //$reader = Reader::createFromPath('data.csv');
-            //$archivo = fgetcsv('data.csv');
-            $csv = array();
-            $lines = file('data.csv', FILE_IGNORE_NEW_LINES);
-
-            foreach ($lines as $key => $value)
-            {
-                $csv[$key] = str_getcsv($value);
-            }
-            $i = 0;
-            foreach ($csv as $record)
-            {
-
-                if ($i > 0){
-                    $producto = new Producto();
-                    $producto->setNombre($record[1]);
-                    $producto->setDescripcion($record[2]);
-                    $producto->setPrecio($record[3]); 
-                    $producto->setCodigoexterno($record[4]);   
-                    $producto->setEmpresa($empresa);
-                    $em->persist($producto);
-                    $em->flush();
-                }
-                 $i = $i +1;
-            }
-
-
-
-           print_r($csv);
-
-           $data = $csv;
-           //$producto = new Producto();
-           // $data = $results;
-            /*
-            foreach($results as $p) {
-
-                $producto->setNombre($p['nombre']);
-                $producto->setDescripcion($p['descripcion']);
-                $producto->setPrecio($p['precio']);
-                $producto->setCodigoexterno($p['codigoexterno']);
-                $categoria = $em->getRepository(Categoria::class)->findBy(1);
-                $marca = $em->getRepository(Marca::class)->findBy(1);
-                $producto->setCategoria($categoria);
-                $producto->setMarca($marca);
-                $em->persist($producto);
-                $em->flush();
-            }
-            */
-        }
-        
-        return $this->render('producto/import.html.twig', 
-                    array('data'=>$data, 'form'=>$form->createView())
-                );
-    }
+    
 
     /**
      * Finds and displays a producto entity.
@@ -193,6 +166,26 @@ class ProductoController extends Controller
     {
         $deleteForm = $this->createDeleteForm($producto);
         $editForm = $this->createForm('AppBundle\Form\ProductoType', $producto);
+        $editForm->add('categoria', EntityType::class, array(
+                        'class' => 'AppBundle:Categoria', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'))
+                    ->add('marca', EntityType::class, array(
+                        'class' => 'AppBundle:Marca', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'))   ;
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

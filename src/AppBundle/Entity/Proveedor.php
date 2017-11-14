@@ -51,7 +51,7 @@ class Proveedor
 
 
     /**
-     * @ORM\Column(name="condicioniva", type="string", length=20)
+     * @ORM\Column(name="condicioniva", type="string", length=2,nullable=true)
      */
     private $condicioniva;
     

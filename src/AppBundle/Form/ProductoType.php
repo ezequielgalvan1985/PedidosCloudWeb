@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProductoType extends AbstractType
 {
@@ -22,18 +25,11 @@ class ProductoType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('codigoexterno')
-                ->add('categoria', EntityType::class, array(
-                        'class' => 'AppBundle:Categoria',
-                        'choice_label' => 'nombre',
-                    ))
-                ->add('marca', EntityType::class, array(
-                        'class' => 'AppBundle:Marca',
-                        'choice_label' => 'nombre',
-                    ))
-                ->add('descripcion')
-                ->add('precio')
-                ->add('imagen');
+        $builder->add('nombre')
+                ->add('descripcion', TextareaType::class)
+                ->add('codigoexterno', null, array('required'=>false))
+                ->add('precio',NumberType::class)
+                ->add('imagen', FileType::class, array('data_class' => null, 'required'=>false));;
     }
     
     /**

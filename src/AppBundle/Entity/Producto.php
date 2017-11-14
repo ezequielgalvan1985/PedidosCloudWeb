@@ -32,7 +32,7 @@ class Producto
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoexterno", type="string", length=50)
+     * @ORM\Column(name="codigoexterno", type="string", length=50, nullable=true)
      */
     private $codigoexterno;
     /**
@@ -52,7 +52,7 @@ class Producto
     /**
      * @var 
      *
-     * @ORM\Column(name="stock", type="decimal", precision=7, scale=2)
+     * @ORM\Column(name="stock", type="decimal", precision=7, scale=2, nullable=true)
      */
     private $stock;
     

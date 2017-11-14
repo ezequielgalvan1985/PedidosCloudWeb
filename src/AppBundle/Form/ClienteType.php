@@ -26,10 +26,10 @@ class ClienteType extends AbstractType
                         'required'=>false
                         )
                     )
-                ->add('tipodocumento', EntityType::class, array(
-                        'class' => 'AppBundle:Tipodocumento',
-                        'choice_label' => 'nombre',
-                        'label'=> 'Tipo Documento'
+                ->add('tipodocumento', ChoiceType::class, array(
+                        'choices' => GlobalValue::TIPODOC_SELECT,
+                        'label'=> 'Tipo Documento',
+                        'required'=>false
                     ))
                 ->add('ndoc', null, array('label'=>'Numero Doc.','required'  => true))
                 ->add('telefono')

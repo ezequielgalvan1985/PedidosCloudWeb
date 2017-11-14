@@ -121,6 +121,25 @@ class GlobalValue{
                         );
     
     
+    
+    //TIPO DOCUMENTO IVA 
+    const TIPODOC_DNI = 1;
+    const TIPODOC_LC = 2;
+    
+    const TIPODOC_DNI_DISPLAY = 'Documento Nacional de Identidad';
+    const CONDICION_LC_DISPLAY = 'Libreta Civica';
+    
+    const TIPODOC = array(
+                                GlobalValue::TIPODOC_DNI =>GlobalValue::TIPODOC_DNI_DISPLAY,
+                                GlobalValue::TIPODOC_LC => GlobalValue::CONDICION_LC_DISPLAY,
+                        );
+    const TIPODOC_SELECT = array(
+                                GlobalValue::TIPODOC_DNI_DISPLAY =>GlobalValue::TIPODOC_DNI,
+                                GlobalValue::CONDICION_LC_DISPLAY => GlobalValue::TIPODOC_LC,
+                        );
+    
+    
+    
     //Tipo de Movimientos
     const INGRESO = 1;
     const EGRESO = 2;

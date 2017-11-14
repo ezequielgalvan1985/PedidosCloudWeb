@@ -77,8 +77,6 @@
                 {% if is_granted("ROLE_EMPRESA") %} 
                   <li><a class="dropdown-item" href="{{ url('empleado_index') }}">Usuarios</a></li>
                   
-                  
-                  <li><a class="dropdown-item" href="{{ url('tipodocumento_index') }}">Tipo de Documento</a></li>
                     {% if is_granted("ROLE_SUPER_ADMIN") %} 
                         <li><a class="dropdown-item" href="{{ url('condicioniva_index') }}">Condicion Iva</a></li>
                         <li><a class="dropdown-item" href="{{ url('impuesto_index') }}">Impuestos</a></li>

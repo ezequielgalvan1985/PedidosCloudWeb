@@ -17,7 +17,8 @@ class CategoriaFilterType extends AbstractType
     {
         $builder->add('nombre')
         ->add('descripcion')
-        ->add('buscar', SubmitType::class, array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
+        ->add('buscar', SubmitType::class, 
+                array('label' => 'Buscar', 'attr'=>array('class'=>'btn btn-flat btn-default')));
 
     }
     

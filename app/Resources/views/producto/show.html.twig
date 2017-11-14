@@ -31,11 +31,11 @@
             </tr>
             <tr>
                 <th>Marca</th>
-                <td>{{ producto.marca.nombre }}</td>
+                <td>{% if producto.marca %}{{ producto.marca.nombre }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Categoria</th>
-                <td>{{ producto.categoria.nombre }}</td>
+                <td>{% if producto.categoria %} {{ producto.categoria.nombre }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Precio</th>

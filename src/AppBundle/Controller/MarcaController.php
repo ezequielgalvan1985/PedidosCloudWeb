@@ -64,6 +64,11 @@ class MarcaController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if ($marca->getImagen()){
+                $file = $marca->getImagen();
+                $fileName = $fileUploader->upload($file);
+                $marca->setImagen($fileName);
+            }
             $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em->persist($marca);
             $em->flush();

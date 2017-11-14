@@ -37,8 +37,7 @@ class Cliente
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Tipodocumento")
-     * @ORM\JoinColumn(name="tipodocumento_id", referencedColumnName="id")
+     * @ORM\Column(name="tipodocumento_id", type="integer", length=2, nullable=true)
      */
     private $tipodocumento;
     
@@ -95,7 +94,7 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoexterno", type="string", length=50)
+     * @ORM\Column(name="codigoexterno", type="string", length=50, nullable=true)
      */
     private $codigoexterno;
     
@@ -123,7 +122,7 @@ class Cliente
     
     
     /**
-     * @ORM\Column(name="condicioniva", type="string", length=20)
+     * @ORM\Column(name="condicioniva", type="string", length=2,nullable=true)
      */
     private $condicioniva;
     

@@ -70,9 +70,11 @@ class CategoriaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $categoria->getImagen();
-            $fileName = $fileUploader->upload($file);
-            $categoria->setImagen($fileName);
+            if ($categoria->getImagen()){
+                $file = $categoria->getImagen();
+                $fileName = $fileUploader->upload($file);
+                $categoria->setImagen($fileName);
+            }
             //Obtener Empresa
             $categoria->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
             $em = $this->getDoctrine()->getManager();
