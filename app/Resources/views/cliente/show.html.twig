@@ -31,11 +31,11 @@
             </tr>
             <tr>
                 <th>Tipo Doc.</th>
-                <td>{{ tipodocumentos[cliente.tipodocumento] }}</td>
+                <td>{% if cliente.tipodocumento %}{{ tipodocumentos[cliente.tipodocumento] }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Condicion Iva </th>
-                <td>{{ condicioniva[cliente.condicioniva] }}</td>
+                <td>{% if cliente.condicioniva %} {{ condicioniva[cliente.condicioniva] }} {% endif %}</td>
             </tr>
             <tr>
                 <th>Num. doc</th>

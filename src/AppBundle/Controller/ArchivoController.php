@@ -84,7 +84,7 @@ class ArchivoController extends Controller
         
             foreach ($lines as $key => $value)
             {
-                $csv[$key] = str_getcsv($value);
+                $csv[$key] = str_getcsv($value,";");
             }
             $fileindex = 0; $header = 0; //Variable para identificar cabecera
             $error = 0 ;
@@ -125,7 +125,7 @@ class ArchivoController extends Controller
         
         foreach ($lines as $key => $value)
         {
-            $csv[$key] = str_getcsv($value);
+            $csv[$key] = str_getcsv($value,";");
         }
         $em = $this->getDoctrine()->getManager();
        
@@ -172,7 +172,7 @@ class ArchivoController extends Controller
         
             foreach ($lines as $key => $value)
             {
-                $csv[$key] = str_getcsv($value);
+                $csv[$key] = str_getcsv($value,";");
             }
             $fileindex = 0; $header = 0; //Variable para identificar cabecera
             $error = 0 ;
@@ -201,7 +201,7 @@ class ArchivoController extends Controller
         
             foreach ($lines as $key => $value)
             {
-                $csv[$key] = str_getcsv($value);
+                $csv[$key] = str_getcsv($value,";");
             }
             $fileindex = 0; $header = 0; //Variable para identificar cabecera
             $error = 0 ;
@@ -227,7 +227,7 @@ class ArchivoController extends Controller
         
             foreach ($lines as $key => $value)
             {
-                $csv[$key] = str_getcsv($value);
+                $csv[$key] = str_getcsv($value,";");
             }
             $fileindex = 0; $header = 0; //Variable para identificar cabecera
             $error = 0 ;
@@ -265,7 +265,7 @@ class ArchivoController extends Controller
         
         foreach ($lines as $key => $value)
         {
-            $csv[$key] = str_getcsv($value);
+            $csv[$key] = str_getcsv($value,";");
         }
         $em = $this->getDoctrine()->getManager();
         if ($archivo->getTipo() == GlobalValue::ARCHIVO_PRODUCTOS){
@@ -322,7 +322,7 @@ class ArchivoController extends Controller
         
         foreach ($lines as $key => $value)
         {
-            $csv[$key] = str_getcsv($value);
+            $csv[$key] = str_getcsv($value,";");
         }
         $em = $this->getDoctrine()->getManager();
         if ($archivo->getTipo() == GlobalValue::ARCHIVO_STOCKS){
@@ -374,7 +374,7 @@ class ArchivoController extends Controller
         
         foreach ($lines as $key => $value)
         {
-            $csv[$key] = str_getcsv($value);
+            $csv[$key] = str_getcsv($value,";");
         }
         $em = $this->getDoctrine()->getManager();
         if ($archivo->getTipo() == GlobalValue::ARCHIVO_LISTAPRECIOS){
