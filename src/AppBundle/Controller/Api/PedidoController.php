@@ -34,7 +34,7 @@ class PedidoController extends FOSRestController{
         //leer json
         
         $content = $request->getContent();
-        $code = '200'; $message='OK'; $result = "";
+        $code = Response::HTTP_OK; $message='OK'; $result = "";
         //parsear detalle
         $json = json_decode($content, true);
         $em = $this->getDoctrine()->getManager();
@@ -47,77 +47,74 @@ class PedidoController extends FOSRestController{
       
         $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
         if (!$empresa) {
-            $code = '500';
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
             $message = 'no se encontro empresa';
-            throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
+            //throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
         }
         $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
         if(!$user){
-            $code = '500';
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
             $message = 'no se encontro usuario';
-            throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
+            //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
         }
         
         
         $empleado = $this->getDoctrine()->getRepository(Empleado::class)->findOneByUser($user);
         if(!$empleado){
-            $code = '500';
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
             $message = 'no se encontro empleado';
-            throw $this->createNotFoundException('No se encuentra Empleado '.$user->getId());
+            //throw $this->createNotFoundException('No se encuentra Empleado '.$user->getId());
         }
 
         $cliente = $this->getDoctrine()->getRepository(Cliente::class)->find($cliente_id);
         if(!$cliente){
-            $code = '500';
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
             $message = 'no se encontro cliente';
-            throw $this->createNotFoundException('No se encuentra Cliente '.$cliente_id);
+            //throw $this->createNotFoundException('No se encuentra Cliente '.$cliente_id);
            
         }
-                
-        $pedido = new Pedido();
-        $pedido->setEmpresa($empresa);
-        $pedido->setFecha(new \DateTime($fecha));
-        $pedido->setEstadoId(2);
-        $pedido->setCliente($cliente);
-        $pedido->setEmpleado($empleado);
-        $pedido->setAndroid_id($android_id);
         
         
-        /* Leer detalle del pedido 
-         * 
-         *  
-         */
         
-        if ($json['pedido']['pedidodetalles']){
-            $detalles = $json['pedido']['pedidodetalles'];
-            foreach ($detalles as $item){
+        if ($code==Response::HTTP_OK){        
+            $pedido = new Pedido();
+            $pedido->setEmpresa($empresa);
+            $pedido->setFecha(new \DateTime($fecha));
+            $pedido->setEstadoId(2);
+            $pedido->setCliente($cliente);
+            $pedido->setEmpleado($empleado);
+            $pedido->setAndroid_id($android_id);
+        
+            if ($json['pedido']['pedidodetalles']){
+                $detalles = $json['pedido']['pedidodetalles'];
+                foreach ($detalles as $item){
 
-                $producto_id = $item['producto_id'];
-                $android_id = $item['android_id'];
-                $cantidad = $item['cantidad'];
-                //Validar que producto pertenezca a la Empresa
-                $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
-                if(!$producto){
-                    $code = '500';
-                    $message = 'no se encontro Producto';
-                    throw $this->createNotFoundException('No se encuentra producto '.$producto_id);
-                } 
-                $pd = new Pedidodetalle();
-                $pd->setProducto($producto);
-                $pd->setCantidad($cantidad);
-                //$pd->setAndroid($android_id);
+                    $producto_id = $item['producto_id'];
+                    $android_id = $item['android_id'];
+                    $cantidad = $item['cantidad'];
+                    //Validar que producto pertenezca a la Empresa
+                    $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
+                    if(!$producto){
+                        $code = Response::HTTP_PRECONDITION_REQUIRED;
+                        $message = 'no se encontro Producto';
+                        //throw $this->createNotFoundException('No se encuentra producto '.$producto_id);
+                    } 
+                    $pd = new Pedidodetalle();
+                    $pd->setProducto($producto);
+                    $pd->setCantidad($cantidad);
+                    //$pd->setAndroid($android_id);
 
-                $pedido->addPedidodetalle($pd);     
-            }
-        }         
-        $em->persist($pedido);
-        $em->flush();
-        
+                    $pedido->addPedidodetalle($pd);     
+                }
+            }         
+            $em->persist($pedido);
+            $em->flush();
+        }//Si paso validacion
 
 
         $result = $pedido;
         if ($result == null) {
-            $respuesta = array('code'=>Response::HTTP_OK,
+            $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,
                            'message'=>$message,
                            'data'=>''
                         );
