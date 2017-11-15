@@ -482,8 +482,8 @@ class ArchivoController extends Controller
                             }
 
                             $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-                            $em->persist($archivo);
-                            $em->flush();
+                            //$em->persist($archivo);
+                            //$em->flush();
 
                         }
                 }
@@ -501,7 +501,7 @@ class ArchivoController extends Controller
                     $this->procesarArchivoListaprecios($empresa, $archivo);
                 }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
-                return $this->redirectToRoute('archivo_show', array('id' => $archivo->getId()));
+                return $this->redirectToRoute('archivo_index');
             }catch(Exception $e){
                 $output->writeln("WARNING: ArchivoController." + $e->getMessage());
                   
