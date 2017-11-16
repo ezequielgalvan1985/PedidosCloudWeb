@@ -421,7 +421,7 @@ class ArchivoController extends Controller
         $archivo = new Archivo();
         $form = $this->createForm('AppBundle\Form\ArchivoType', $archivo);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             
             try{
@@ -503,7 +503,8 @@ class ArchivoController extends Controller
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_index');
             }catch(Exception $e){
-                $output->writeln("WARNING: ArchivoController." + $e->getMessage());
+                //$output->writeln("WARNING: ArchivoController." + $e->getMessage());
+                return Response("Error: "+$e->getMessage() );
                   
             }
             return $this->redirectToRoute('archivo_index');
