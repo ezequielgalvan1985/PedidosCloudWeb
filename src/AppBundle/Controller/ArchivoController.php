@@ -79,95 +79,8 @@ class ArchivoController extends Controller
     public function uploadArchivoProductos(Empresa $empresa, Archivo $archivo){
         
     }
-    //VALIDAR CLIENTES
-    public function validateArchivoClientes($lines){
-        
-            foreach ($lines as $key => $value)
-            {
-                $csv[$key] = str_getcsv($value,";");
-            }
-            $fileindex = 0; $header = 0; //Variable para identificar cabecera
-            $error = 0 ;
-            foreach ($csv as $record)
-            {
-                if ($fileindex > $header){
-                    try{
-                        $record[GlobalValue::CLIENTE_RAZONSOCIAL];
-                        $record[GlobalValue::CLIENTE_CONDICIONIVA];
-                        $record[GlobalValue::CLIENTE_DIRECCION];
-                        $record[GlobalValue::CLIENTE_NRODOC];
-                        $record[GlobalValue::CLIENTE_TELEFONO];
-                        $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
-                        $record[GlobalValue::CLIENTE_CONTACTO];
-                        
-                        $error = GlobalValue::ERROR_VALIDATEFILE;
-                    }catch(\Exception $e){
-                        return GlobalValue::ERROR_VALIDATEFILE;
-                    }
-                }
-                 $fileindex = $fileindex +1;
-            }
-          
-    }
-    public function procesarArchivoClientes(Empresa $empresa, Archivo $archivo)
-    {
-
-        $csv = array();
-        $path = $this->getParameter('archivos_clientes_path');
-        $pathfilename = $path . $archivo->getArchivo();
-        $lines = file($pathfilename, FILE_IGNORE_NEW_LINES);
-        
-        $error = $this->validateArchivoProducto($lines);
-        
-        if ( $error > 0 ){
-            return $error;
-        }
-        
-        foreach ($lines as $key => $value)
-        {
-            $csv[$key] = str_getcsv($value,";");
-        }
-        $em = $this->getDoctrine()->getManager();
-       
-            $fileindex = 0; $header = 0;//Variable para identificar cabecera
-            $em = $this->getDoctrine()->getManager();
-            foreach ($csv as $record)
-            {
-                if ($fileindex > $header){
-                    
-                    $registro = new Cliente();
-                    //validar si existe producto
-                    $codext = $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Cliente::class)
-                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
-                    //si existe se sobreescriben los datos
-                    if ($result){
-                        $registro = $result;
-                    }
-                    $registro->setCodigoexterno($codext);
-                    $registro->setRazonsocial($record[GlobalValue::CLIENTE_RAZONSOCIAL]);
-                    $registro->setCondicioniva($record[GlobalValue::CLIENTE_CONDICIONIVA]);
-                    $registro->setDireccion($record[GlobalValue::CLIENTE_DIRECCION]); 
-                    $registro->setNdoc($record[GlobalValue::CLIENTE_NRODOC]); 
-                    $registro->setTelefono($record[GlobalValue::CLIENTE_TELEFONO]); 
-                    $registro->setContacto($record[GlobalValue::CLIENTE_CONTACTO]); 
-                    $registro->setEmpresa($empresa);
-                    $em->persist($registro);
-                    $em->flush();
-                }
-                $fileindex = $fileindex +1;
-            }
-            
-            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-            $em->persist($archivo);
-            $em->flush();
-        
-        
-        
-        
-    }
     
-    //VALIDAR PRODUCTOS
+     //VALIDAR PRODUCTOS
     public function validateArchivoProducto($lines){
         
             foreach ($lines as $key => $value)
@@ -248,6 +161,86 @@ class ArchivoController extends Controller
             }
           
     }
+    //VALIDAR CLIENTES
+    public function validateArchivoClientes($lines){
+        
+            foreach ($lines as $key => $value)
+            {
+                $csv[$key] = str_getcsv($value,";");
+            }
+            $fileindex = 0; $header = 0; //Variable para identificar cabecera
+            $error = 0 ;
+            foreach ($csv as $record)
+            {
+                if ($fileindex > $header){
+                    try{
+                        $record[GlobalValue::CLIENTE_RAZONSOCIAL];
+                        $record[GlobalValue::CLIENTE_CONDICIONIVA];
+                        $record[GlobalValue::CLIENTE_DIRECCION];
+                        $record[GlobalValue::CLIENTE_NRODOC];
+                        $record[GlobalValue::CLIENTE_TELEFONO];
+                        $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
+                        $record[GlobalValue::CLIENTE_CONTACTO];
+                        
+                        $error = GlobalValue::ERROR_VALIDATEFILE;
+                    }catch(\Exception $e){
+                        return GlobalValue::ERROR_VALIDATEFILE;
+                    }
+                }
+                 $fileindex = $fileindex +1;
+            }
+          
+    }
+    public function procesarArchivoClientes(Empresa $empresa, Archivo $archivo)
+    {
+
+        $csv = array();
+        $lines = file($archivo->getArchivo(), FILE_IGNORE_NEW_LINES);
+        $error = $this->validateArchivoProducto($lines);
+        if ( $error > 0 ){
+            return $error;
+        }
+        
+        foreach ($lines as $key => $value)
+        {
+            $csv[$key] = str_getcsv($value,";");
+        }
+        $fileindex = 0; $header = 0;//Variable para identificar cabecera
+        $em = $this->getDoctrine()->getManager();
+        foreach ($csv as $record)
+        {
+            if ($fileindex > $header){
+
+                $registro = new Cliente();
+                //validar si existe producto
+                $codext = $record[GlobalValue::CLIENTE_CODIGOEXTERNO];
+                $result = $this->getDoctrine()->getRepository(Cliente::class)
+                        ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
+                //si existe se sobreescriben los datos
+                if ($result){
+                    $registro = $result;
+                }
+                $registro->setCodigoexterno(utf8_decode($codext));
+                $registro->setRazonsocial(utf8_decode($record[GlobalValue::CLIENTE_RAZONSOCIAL]));
+                $registro->setCondicioniva(utf8_decode($record[GlobalValue::CLIENTE_CONDICIONIVA]));
+                $registro->setDireccion(utf8_decode($record[GlobalValue::CLIENTE_DIRECCION])); 
+                $registro->setNdoc(utf8_decode($record[GlobalValue::CLIENTE_NRODOC])); 
+                $registro->setTelefono(utf8_decode($record[GlobalValue::CLIENTE_TELEFONO])); 
+                $registro->setContacto(utf8_decode($record[GlobalValue::CLIENTE_CONTACTO])); 
+                $registro->setEmpresa($empresa);
+                $em->persist($registro);
+                $em->flush();
+            }
+            $fileindex = $fileindex +1;
+        }
+
+        $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+        $em->persist($archivo);
+        $em->flush();
+        
+    }
+    
+   
     
     public function procesarArchivoProductos(Empresa $empresa, Archivo $archivo)
     {
@@ -263,38 +256,33 @@ class ArchivoController extends Controller
             $csv[$key] = str_getcsv($value,";");
         }
         $em = $this->getDoctrine()->getManager();
-        if ($archivo->getTipo() == GlobalValue::ARCHIVO_PRODUCTOS){
-            $fileindex = 0; $header = 0;//Variable para identificar cabecera
-            $em = $this->getDoctrine()->getManager();
-            foreach ($csv as $record)
-            {
-                if ($fileindex > $header){
+        $fileindex = 0; $header = 0;//Variable para identificar cabecera
+        $em = $this->getDoctrine()->getManager();
+        foreach ($csv as $record)
+        {
+            if ($fileindex > $header){
 
-                    $producto = new Producto();
-                    //validar si existe producto
-                    $codext = $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
-                    $result = $this->getDoctrine()->getRepository(Producto::class)
-                            ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
-                    //si existe se sobreescriben los datos
-                    if ($result){
-                        $producto = $result;
-                    }
-                    $producto->setCodigoexterno(utf8_decode($codext));
-                    $producto->setNombre(utf8_decode($record[GlobalValue::PRODUCTO_NOMBRE]));
-                    $producto->setDescripcion(utf8_decode($record[GlobalValue::PRODUCTO_DESCRIPCION]));
-                    $producto->setPrecio((float)$record[GlobalValue::PRODUCTO_PRECIO]); 
-                    $producto->setStock((float)$record[GlobalValue::PRODUCTO_STOCK]); 
-                    $producto->setEmpresa($empresa);
-                    $em->persist($producto);
-                    $em->flush();
+                $producto = new Producto();
+                //validar si existe producto
+                $codext = $record[GlobalValue::PRODUCTO_CODIGOEXTERNO];
+                $result = $this->getDoctrine()->getRepository(Producto::class)
+                        ->findOneBy(array('codigoexterno'=>$codext, 'empresa'=>$empresa) );
+                //si existe se sobreescriben los datos
+                if ($result){
+                    $producto = $result;
                 }
-                $fileindex = $fileindex +1;
+                $producto->setCodigoexterno(utf8_decode($codext));
+                $producto->setNombre(utf8_decode($record[GlobalValue::PRODUCTO_NOMBRE]));
+                $producto->setDescripcion(utf8_decode($record[GlobalValue::PRODUCTO_DESCRIPCION]));
+                $producto->setPrecio((float)$record[GlobalValue::PRODUCTO_PRECIO]); 
+                $producto->setStock((float)$record[GlobalValue::PRODUCTO_STOCK]); 
+                $producto->setEmpresa($empresa);
+                $em->persist($producto);
+                $em->flush();
             }
-
-            
+            $fileindex = $fileindex +1;
         }
-        
-        
+
     }
     
     
@@ -431,16 +419,16 @@ class ArchivoController extends Controller
                     $archivo->setArchivo($fileName);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_CLIENTES){
-                    $file->move($this->getParameter('archivos_clientes_path'), $fileName);
                     $this->procesarArchivoClientes($empresa, $archivo);
+                    $archivo->setArchivo($fileName);
                     
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_STOCK){
-                    $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                    
                     $this->procesarArchivoStocks($empresa, $archivo);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_LISTAPRECIOS){
-                    $file->move($this->getParameter('archivos_productos_path'), $fileName);
+                    
                     $this->procesarArchivoListaprecios($empresa, $archivo);
                 }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
