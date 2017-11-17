@@ -253,7 +253,6 @@ class ArchivoController extends Controller
     {
         $csv = array();
         $lines = file($archivo->getArchivo(), FILE_IGNORE_NEW_LINES);
-        $archivo->setArchivo($fileName);
         $error = $this->validateArchivoProducto($lines);
         if ( $error > 0 ){
             return $error;
@@ -292,9 +291,7 @@ class ArchivoController extends Controller
                 $fileindex = $fileindex +1;
             }
 
-            $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-            //$em->persist($archivo);
-            //$em->flush();
+            
         }
         
         
@@ -427,9 +424,11 @@ class ArchivoController extends Controller
                 $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
                 $archivo->setEmpresa($empresa);
                 $em = $this->getDoctrine()->getManager();
-                
+               
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_PRODUCTOS){
                     $this->procesarArchivoProductos($empresa, $archivo);
+                    $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+                    $archivo->setArchivo($fileName);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_CLIENTES){
                     $file->move($this->getParameter('archivos_clientes_path'), $fileName);
@@ -447,8 +446,9 @@ class ArchivoController extends Controller
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_index');
             }catch(Exception $e){
-                //$output->writeln("WARNING: ArchivoController." + $e->getMessage());
-                return Response("Error: "+$e->getMessage() );
+                $this->addFlash("success","Error: "+$e->getMessage());
+
+                return $this->redirectToRoute('archivo_index');
                   
             }
             return $this->redirectToRoute('archivo_index');
