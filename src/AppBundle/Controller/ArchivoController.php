@@ -279,9 +279,9 @@ class ArchivoController extends Controller
                     if ($result){
                         $producto = $result;
                     }
-                    $producto->setCodigoexterno($codext);
-                    $producto->setNombre($record[GlobalValue::PRODUCTO_NOMBRE]);
-                    $producto->setDescripcion($record[GlobalValue::PRODUCTO_DESCRIPCION]);
+                    $producto->setCodigoexterno(utf8_decode($codext));
+                    $producto->setNombre(utf8_decode($record[GlobalValue::PRODUCTO_NOMBRE]));
+                    $producto->setDescripcion(utf8_decode($record[GlobalValue::PRODUCTO_DESCRIPCION]));
                     $producto->setPrecio((float)$record[GlobalValue::PRODUCTO_PRECIO]); 
                     $producto->setStock((float)$record[GlobalValue::PRODUCTO_STOCK]); 
                     $producto->setEmpresa($empresa);
