@@ -234,9 +234,9 @@ class ArchivoController extends Controller
             $fileindex = $fileindex +1;
         }
 
-        $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-        $em->persist($archivo);
-        $em->flush();
+        //$archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
+        //$em->persist($archivo);
+        //$em->flush();
         
     }
     
@@ -432,7 +432,7 @@ class ArchivoController extends Controller
                     $this->procesarArchivoListaprecios($empresa, $archivo);
                 }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
-                return $this->redirectToRoute('archivo_index');
+                return $this->redirectToRoute('archivo_new');
             }catch(Exception $e){
                 $this->addFlash("success","Error: "+$e->getMessage());
 

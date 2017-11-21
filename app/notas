@@ -3,9 +3,13 @@ web bugs
 OK - add clientes: tipo de documento
 OK - add marcas: quitar back to list
 OK - add categorias: descripcion textarea
-proveedores: quitar momentaneamente
+* android Clientes - cuando no tiene todos los datos, no se descarga
+* nuevo pedido recibido, descuenta cantidad de stock
+* android, pedido enviar, actualizar el estado en pantalla
+* proveedores: quitar momentaneamente
 
-add clientes: android chequear si hay campos nulos
+* add clientes: android chequear si hay campos nulos
+* android, listado de productos, quitar toast al escribir filtro
 
 
 
