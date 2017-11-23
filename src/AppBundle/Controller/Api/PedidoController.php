@@ -105,7 +105,7 @@ class PedidoController extends FOSRestController{
                     //Generar movimiento de Stock
                     $mv = new Movimientostock();
                     $mv->setCantidad($cantidad);
-                    $mv->setFecha($fecha);
+                    $mv->setFecha(new \DateTime($fecha));
                     $mv->setEmpresa($empresa);
                     $mv->setNrocomprobante("Nro Android: " . $android_id );
                     $mv->setProducto($producto);
