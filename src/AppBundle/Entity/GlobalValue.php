@@ -159,6 +159,7 @@ class GlobalValue{
                         array(
                                 GlobalValue::INGRESO_DISPLAY =>GlobalValue::INGRESO ,
                                 GlobalValue::EGRESO_DISPLAY => GlobalValue::EGRESO ,  
+                                GlobalValue::INICIALIZACION_DISPLAY => GlobalValue::INICIALIZACION 
                         );
     
     //Tipos de Archivos

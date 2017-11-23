@@ -108,6 +108,49 @@ class Movimientostock
     }
     
 
+    
+    
+    private $codigoexterno;
+    public function setCodigoexterno($codigoexterno)
+    {
+        $this->codigoexterno = $codigoexterno;
+
+        return $this;
+    }
+
+    public function getCodigoexterno()
+    {
+        return $this->codigoexterno;
+    }
+    
+    
+    private $fechadesde;
+    public function setFechadesde($fechadesde)
+    {
+        $this->fechadesde = $fechadesde;
+
+        return $this;
+    }
+
+    public function getFechadesde()
+    {
+        return $this->fechadesde;
+    }
+    
+    private $fechahasta;
+    public function setFechahasta($fechahasta)
+    {
+        $this->fechahasta = $fechahasta;
+
+        return $this;
+    }
+    public function getFechahasta()
+    {
+        return $this->fechahasta;
+    }
+    
+    
+    
     /**
      * Get id
      *

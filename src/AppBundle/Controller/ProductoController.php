@@ -78,6 +78,10 @@ class ProductoController extends Controller
                 $queryBuilder->andWhere('bp.categoria = :categoria')
                              ->setParameter('categoria', $producto->getCategoria());
             }
+            if($producto->getCodigoexterno()){
+                $queryBuilder->andWhere('bp.codigoexterno LIKE :codigoexterno')
+                             ->setParameter('codigoexterno', '%'.$producto->getCodigoexterno(). '%');
+            }
         }
         $productos = $queryBuilder;
         

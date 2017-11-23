@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ProductoFilterType extends AbstractType
 {
@@ -17,7 +18,7 @@ class ProductoFilterType extends AbstractType
     {
         $builder->add('nombre')
                 ->add('codigoexterno')
-                ->add('descripcion')
+                ->add('descripcion', TextareaType::class)
                 ->add('categoria', EntityType::class, array(
                         'class' => 'AppBundle:Categoria',
                         'choice_label' => 'nombre',

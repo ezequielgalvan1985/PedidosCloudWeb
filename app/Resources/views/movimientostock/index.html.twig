@@ -14,12 +14,14 @@
         <div class="panel-body">
             <table class="table">
         <thead>
+             <strong>Total:{{ pagination.getTotalItemCount }}  </strong>
             <tr>
                 <th>Id</th>
                 <th>Fecha</th>
+                <th>Producto</th>
                 <th>Cantidad</th>
-                <th>Nrocomprobante</th>
-                <th>Tipomovimiento</th>
+                <th>Nro Comprobante</th>
+                <th>Tipo Movimiento</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,7 +29,8 @@
         {% for movimientostock in pagination %}
             <tr>
                 <td><a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}">{{ movimientostock.id }}</a></td>
-                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if movimientostock.fecha %}{{ movimientostock.fecha|date('d/m/Y') }}{% endif %}</td>
+                <td>{{ movimientostock.producto.nombre }}</td>
                 <td>{{ movimientostock.cantidad }}</td>
                 <td>{{ movimientostock.nrocomprobante }}</td>
                 
@@ -36,7 +39,7 @@
                   
                             <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}" class="btn btn-default">Ver</a>
                       
-                            <a href="{{ path('movimientostock_edit', { 'id': movimientostock.id }) }}" class="btn btn-primary">Editar</a>
+                            
                      
                 </td>
             </tr>

@@ -201,6 +201,9 @@ class Pedido
     {
         return $this->fechahasta;
     }
+    
+    
+    
     /**
      * Set estado
      *

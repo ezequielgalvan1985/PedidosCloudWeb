@@ -38,15 +38,27 @@ class MovimientostockController extends Controller
                   
         if ($form_filter->isSubmitted() && $form_filter->isValid()) {
            
-            if ($movimientostock->getNrocomprobante()){
-                $queryBuilder->andWhere('bp.nrocomprobante = :nrocomprobante')
-                             ->setParameter('nrocomprobante',  $movimientostock->getNrocomprobante());   
+            if($movimientostock->getFechadesde()){
+                $queryBuilder->andWhere('bp.fecha >= :fechadesde')
+                             ->setParameter('fechadesde',  $movimientostock->getFechadesde());
+            }
+            if($movimientostock->getFechahasta()){
+                $queryBuilder->andWhere('bp.fecha <= :fechahasta')
+                             ->setParameter('fechahasta',  $movimientostock->getFechaHasta());
             }
             if($movimientostock->getTipomovimiento()){
                 $queryBuilder->andWhere('bp.tipomovimiento = :tipomovimiento')
                              ->setParameter('tipomovimiento',  $movimientostock->getTipomovimiento());
             }
-             if($movimientostock->getProducto()){
+            /*
+            if($movimientostock->getCodigoexterno()){
+                $queryBuilder->andWhere('bp.producto[''] = :codigoexterno')
+                             ->setParameter('codigoexterno',  $movimientostock->getCodigoexterno());
+            }
+             * 
+             */
+            
+            if($movimientostock->getProducto()){
                 $queryBuilder->andWhere('bp.producto = :producto')
                              ->setParameter('producto',  $movimientostock->getProducto());
             }
@@ -55,7 +67,7 @@ class MovimientostockController extends Controller
           
         $registros = $queryBuilder;
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
+        $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),50);
         return $this->render('movimientostock/index.html.twig', array(
             'pagination' => $pagination,
             'form_filter'=> $form_filter->createView(),
@@ -111,83 +123,7 @@ class MovimientostockController extends Controller
 
     
     
-    /**
-     * Lists all movimientostock entities.
-     *
-     * @Route("/existencias/", name="movimientostock_existencias")
-     * @Method({"GET", "POST"})
-     */
-    public function existenciasAction(Request $request)
-    {
-        //Obtener empresa
-        $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-        $empresa = $currentuser->getEmpresa();
-        
-        //Crear formulario de filtro
-        $movimientostock = new Movimientostock();
-        $form_filter = $this->createForm('AppBundle\Form\MovimientostockFilterType', $movimientostock);
-        $form_filter->handleRequest($request);
-/*
-        $queryBuilder = $this->getDoctrine()
-                ->getRepository(Movimientostock::class)
-                ->createQueryBuilder('bp');
-        $queryBuilder->where('bp.empresa = :empresa')->setParameter('empresa', $empresa);
-                  
-        if ($form_filter->isSubmitted() && $form_filter->isValid()) {
-           
-            if ($movimientostock->getNrocomprobante()){
-                $queryBuilder->andWhere('bp.nrocomprobante = :nrocomprobante')
-                             ->setParameter('nrocomprobante',  $movimientostock->getNrocomprobante());   
-            }
-            if($movimientostock->getTipomovimiento()){
-                $queryBuilder->andWhere('bp.tipomovimiento = :tipomovimiento')
-                             ->setParameter('tipomovimiento',  $movimientostock->getTipomovimiento());
-            }
-             if($movimientostock->getProducto()){
-                $queryBuilder->andWhere('bp.producto = :producto')
-                             ->setParameter('producto',  $movimientostock->getProducto());
-            }
-           
-        }
-        * 
-        */
-        $registros = $this->getDoctrine()->getManager()
-                //->getRepository('AppBundle:Movimientostock')
-                //->createQueryBuilder('m')
-                ->createQuery("SELECT 
-                                p.nombre, 
-                                 (select sum(m1.cantidad) FROM AppBundle:Movimientostock m1 where m1.tipomovimiento = 1 and m1.producto = p) as ingreso ,
-                                 (select sum(m2.cantidad) FROM AppBundle:Movimientostock m2 where  m2.tipomovimiento = 2 and m2.producto = p) as egreso
-                                
-                                FROM AppBundle:Producto p
-                                WHERE p.empresa = :empresa
-                                ")
-                 
-                //->groupBy('m.producto')
-                ->setParameter('empresa', $empresa)
-                //->getQuery()
-                ->getResult();
-                
-                
-                /*
-                        . 'p.nombre as nombre, '
-                        . 'p.precio as precio, '
-                        . ' case m.tipomovimiento when 1 then sum(m.cantidad) else sum(m.cantidad *-1) end case as existencias '
-                        . 'FROM AppBundle:Movimientostock as m '
-                        . 'INNER JOIN AppBundle:Producto as p on m.producto_id = p.id '
-                        . 'WHERE m.empresa = '. $empresa
-                        . 'GROUP BY m.producto_id'); 
-        */
-                
-                
-        //$paginator  = $this->get('knp_paginator');
-        //$pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),8);
-        return $this->render('movimientostock/existencias.html.twig', array(
-            'pagination' => $registros,
-            'form_filter'=> $form_filter->createView(),
-            'tipomovimientos'=>GlobalValue::TIPOMOVIMIENTOS
-        ));
-    }
+    
     
     
     

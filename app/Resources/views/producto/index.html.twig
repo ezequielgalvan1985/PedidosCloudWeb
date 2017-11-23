@@ -16,13 +16,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <strong>Total: </strong>{{ pagination.getTotalItemCount }}
+                        <strong>Total:{{ pagination.getTotalItemCount }}  </strong>
                         <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
                         <th>Nombre</th>
                         <th>Codigo Externo</th>
-                        <th>Descripcion</th>
+                        <th>Stock</th>
                         <th>Precio</th>
-                        <th>Imagen</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -32,15 +31,11 @@
                         <td><a href="{{ path('producto_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
                         <td>{{ item.nombre }}</td>
                         <td>{{ item.codigoexterno }}</td>
-                        <td>{{ item.descripcion }}</td>
+                        <td>{{ item.stock }}</td>
                         <td>{{ item.precio }}</td>
-                        <td>{{ item.imagen }}</td>
                         <td>
-
                             <a href="{{ path('producto_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
-
                             <a href="{{ path('producto_edit', { 'id': item.id }) }}" class="btn btn-primary" >Editar</a>
-
                         </td>
                     </tr>
                 {% endfor %}
