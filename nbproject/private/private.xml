@@ -5,7 +5,6 @@
         <group>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Form/ProductoType.php</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Entity/Producto.php</file>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/Api/PedidoController.php</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Entity/Movimientostock.php</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/ProductoController.php</file>

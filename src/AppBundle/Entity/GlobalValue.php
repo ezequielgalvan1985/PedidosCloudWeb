@@ -143,13 +143,16 @@ class GlobalValue{
     //Tipo de Movimientos
     const INGRESO = 1;
     const EGRESO = 2;
+    const INICIALIZACION = 3;
   
     const INGRESO_DISPLAY = 'Ingreso';
     const EGRESO_DISPLAY = 'Egreso';
+    const INICIALIZACION_DISPLAY = 'Inicializacion';
     
     const TIPOMOVIMIENTOS = array(
                                 GlobalValue::INGRESO =>GlobalValue::INGRESO_DISPLAY,
                                 GlobalValue::EGRESO => GlobalValue::EGRESO_DISPLAY,
+                                GlobalValue::INICIALIZACION => GlobalValue::INICIALIZACION_DISPLAY,
                         );
     
     const TIPOMOVIMIENTOS_SELECT = 
