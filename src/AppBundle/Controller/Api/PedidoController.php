@@ -15,15 +15,12 @@ use AppBundle\Entity\Producto;
 use AppBundle\Entity\Cliente;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Pedidodetalle;
-
-
+use \AppBundle\Entity\Movimientostock;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use \FOS\RestBundle\Controller\FOSRestController;
-
 use FOS\RestBundle\Controller\Annotations as Rest;
-
+use AppBundle\Entity\GlobalValue;
 class PedidoController extends FOSRestController{
     
    
@@ -93,6 +90,7 @@ class PedidoController extends FOSRestController{
                     $android_id = $item['android_id'];
                     $cantidad = $item['cantidad'];
                     //Validar que producto pertenezca a la Empresa
+                    $producto = new Producto();
                     $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
                     if(!$producto){
                         $code = Response::HTTP_PRECONDITION_REQUIRED;
@@ -102,12 +100,27 @@ class PedidoController extends FOSRestController{
                     $pd = new Pedidodetalle();
                     $pd->setProducto($producto);
                     $pd->setCantidad($cantidad);
-                    //$pd->setAndroid($android_id);
-
                     $pedido->addPedidodetalle($pd);     
+                    
+                    //Generar movimiento de Stock
+                    $mv = new Movimientostock();
+                    $mv->setCantidad($cantidad);
+                    $mv->setFecha($fecha);
+                    $mv->setEmpresa($empresa);
+                    $mv->setNrocomprobante("Nro Android: " . $android_id );
+                    $mv->setProducto($producto);
+                    $mv->setTipomovimiento(GlobalValue::EGRESO);
+                    
+                    //En productos descontar el stock
+                    $stockactual = $producto->getStock();
+                    $stocknuevo = $stockactual - $cantidad;
+                    $producto->setStock($stocknuevo);
+                    
                 }
             }         
             $em->persist($pedido);
+            $em->persist($producto);
+            $em->persist($mv);
             $em->flush();
         }//Si paso validacion
 
