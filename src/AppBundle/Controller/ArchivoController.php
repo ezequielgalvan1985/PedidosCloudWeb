@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\FileUploader;
 use AppBundle\Entity\GlobalValue;
-
+use \AppBundle\Entity\Movimientostock;
 /**
  * Archivo controller.
  *
@@ -258,6 +258,7 @@ class ArchivoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fileindex = 0; $header = 0;//Variable para identificar cabecera
         $em = $this->getDoctrine()->getManager();
+        $hoy = date("Y-m-d");
         foreach ($csv as $record)
         {
             if ($fileindex > $header){
@@ -278,7 +279,21 @@ class ArchivoController extends Controller
                 $producto->setStock((float)$record[GlobalValue::PRODUCTO_STOCK]); 
                 $producto->setEmpresa($empresa);
                 $em->persist($producto);
+                
+                //generar movimiento de stock
+               
+                $mv = new Movimientostock();
+                $mv->setFecha(new \DateTime($hoy));
+                $mv->setCantidad($producto->getStock());
+                $mv->setEmpresa($empresa);
+                $mv->setNrocomprobante("Importacion de Archivo" );
+                $mv->setProducto($producto);
+                $mv->setTipomovimiento(GlobalValue::INICIALIZACION);
+                $em->persist($mv);
+                
                 $em->flush();
+                
+                
             }
             $fileindex = $fileindex +1;
         }
@@ -432,7 +447,7 @@ class ArchivoController extends Controller
                     $this->procesarArchivoListaprecios($empresa, $archivo);
                 }
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
-                return $this->redirectToRoute('archivo_new');
+                return $this->redirectToRoute('archivo_index');
             }catch(Exception $e){
                 $this->addFlash("success","Error: "+$e->getMessage());
 
