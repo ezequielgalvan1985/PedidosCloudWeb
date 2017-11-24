@@ -12,7 +12,10 @@
     <div class="panel panel-default">
         <div class="panel-heading">Listado de Movimientos</div>
         <div class="panel-body">
-            <table class="table">
+            <a href="{{ path('movimientostock_new') }}"  class="btn btn-primary"
+               data-toggle="tooltip" data-placement="top" title="Nuevo">
+                <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span></a>
+        <table class="table">
         <thead>
              <strong>Total:{{ pagination.getTotalItemCount }}  </strong>
             <tr>
@@ -37,7 +40,8 @@
                 <td>{{ tipomovimientos[movimientostock.tipomovimiento] }}</td>
                 <td>
                   
-                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}" class="btn btn-default">Ver</a>
+                            <a href="{{ path('movimientostock_show', { 'id': movimientostock.id }) }}" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Ver">
+                                <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span></a>
                       
                             
                      
@@ -50,7 +54,7 @@
         {{ knp_pagination_render(pagination) }}
     </div>
    
-    <a href="{{ path('movimientostock_new') }}">Nuevo</a>
+
     </div>
     </div>
     </div>  

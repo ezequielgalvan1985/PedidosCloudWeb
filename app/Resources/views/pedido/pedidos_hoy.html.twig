@@ -12,7 +12,10 @@
     <div class="panel panel-default">
         <div class="panel-heading">Listado de Pedidos {{hoy|date('d/m/Y')}}</div>
         <div class="panel-body">
-            <table class="table">
+        <a href="{{ path('pedido_new') }}" class="btn btn-primary"
+           data-toggle="tooltip" data-placement="top" title="Nuevo">
+            <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span></a>
+        <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -35,7 +38,8 @@
                 <td>{{ estados[pedido.estadoId] }}</td>
                 <td>{{ pedido.monto }}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default">Ver</a>
+                    <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default"
+                       data-toggle="tooltip" data-placement="top" title="Ver"><span class="glyphicon glyphicon glyphicon glyphicon-pencil"  aria-hidden="true"></span></a>
                 </td>
                 </td>
             </tr>

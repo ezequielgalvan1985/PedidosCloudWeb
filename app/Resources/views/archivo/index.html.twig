@@ -36,16 +36,18 @@
                         <td>{{ archivo_tipos[item.tipo] }}</td>
                         <td>{{ archivo_estados[item.estado] }}</td>
                         <td>
-                            <a href="{{ path('archivo_show', { 'id': item.id }) }}" class="btn btn-default">Ver</a>
-                            <a href="{{ path('archivo_reprocesar', { 'id': item.id }) }}" class="btn btn-default">RE-Procesar</a>
-                            
-                               
+                            <a href="{{ path('archivo_show', { 'id': item.id }) }}" class="btn btn-default"
+                               data-toggle="tooltip" data-placement="top" title="Ver">
+                                <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span></a>
+
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{{ path('archivo_new') }}" class="btn btn-primary">Nuevo</a>
+            <a href="{{ path('archivo_new') }}"
+               class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Nuevo">
+                <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span></a>
             <div class="navigation">
                 {{ knp_pagination_render(pagination) }}
             </div>

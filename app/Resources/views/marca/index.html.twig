@@ -12,7 +12,10 @@
     <div class="panel panel-default">
         <div class="panel-heading">Listado de Marcas</div>
         <div class="panel-body">
-            <table class="table">
+        <a href="{{ path('marcas_new') }}" class="btn btn-primary"
+           data-toggle="tooltip" data-placement="top" title="Nuevo">
+            <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span></a>
+        <table class="table">
         <thead>
             <tr>
                 <strong>Total: </strong>{{ pagination.getTotalItemCount }}
@@ -32,9 +35,13 @@
                 <td>{{ marca.imagen }}</td>
                 <td>
                     
-                <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default">Ver</a>
+                <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default"
+                   data-toggle="tooltip" data-placement="top" title="Ver">
+                    <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span>
 
-                <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary">Editar</a>
+                <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary"
+                   data-toggle="tooltip" data-placement="top" title="Editar">
+                    <span class="glyphicon glyphicon glyphicon glyphicon-pencil"  aria-hidden="true"></span>
                         
                 </td>
             </tr>
@@ -46,7 +53,7 @@
     </div>
     
         
-            <a href="{{ path('marcas_new') }}" class="btn btn-flat btn-primary">Nuevo</a>
+
      </div>
     </div>
     </div>

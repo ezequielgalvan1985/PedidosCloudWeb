@@ -13,6 +13,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">Listado de Pedidos</div>
         <div class="panel-body">
+            <a href="{{ path('pedido_new') }}" class="btn btn-primary"
+               data-toggle="tooltip" data-placement="top" title="Nuevo">
+                <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span></a>
             <table class="table">
                 <thead>
                 <tr>
@@ -36,7 +39,9 @@
                         <td>{{ estados[pedido.estadoId] }}</td>
                         <td>{{ pedido.monto }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default">Ver</a>
+                            <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}"
+                               class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Ver">
+                                <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span></a>
                         </td>
                         </td>
                     </tr>
@@ -47,7 +52,7 @@
         {{ knp_pagination_render(pagination) }}
     </div>
    
-    <a href="{{ path('pedido_new') }}" >Nuevo</a>
+
     </div>
     </div>
     </div>  

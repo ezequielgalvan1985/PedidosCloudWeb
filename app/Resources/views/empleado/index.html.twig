@@ -13,8 +13,11 @@
 
         <div class="panel-heading">Listado de Usuarios</div>
         <div class="panel-body">
-            
-            <table class="table">
+            <a href="{{ path('empleado_new') }}" class="btn btn-primary"
+               data-toggle="tooltip" data-placement="top" title="Nuevo">
+                <span class="glyphicon  glyphicon-floppy-saved"  aria-hidden="true"></span>
+            </a>
+        <table class="table">
         <thead>
             <tr>
                 <strong>Total: </strong>{{ pagination.getTotalItemCount }}
@@ -40,9 +43,11 @@
                 <td>{{ empleado.tipo }}</td>
                 <td>
                    
-                            <a href="{{ path('empleado_show', { 'id': empleado.id }) }}" class="btn btn-default">Ver</a>
+                            <a href="{{ path('empleado_show', { 'id': empleado.id }) }}" class="btn btn-default"  data-toggle="tooltip" data-placement="top" title="Ver">
+                                <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span>
                        
-                            <a href="{{ path('empleado_edit', { 'id': empleado.id }) }}" class="btn btn-primary" >Editar</a>
+                            <a href="{{ path('empleado_edit', { 'id': empleado.id }) }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar">
+                                <span class="glyphicon glyphicon glyphicon glyphicon-pencil"  aria-hidden="true"></span>
                        
                 </td>
             </tr>
@@ -53,7 +58,8 @@
         {{ knp_pagination_render(pagination) }}
     </div>
   
-    <a href="{{ path('empleado_new') }}">Nuevo</a>
+
+
       </div>
     </div>
     </div>  
