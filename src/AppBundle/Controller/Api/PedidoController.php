@@ -85,10 +85,10 @@ class PedidoController extends FOSRestController{
             if ($json['pedido']['pedidodetalles']){
                 $detalles = $json['pedido']['pedidodetalles'];
                 foreach ($detalles as $item){
-
                     $producto_id = $item['producto_id'];
                     $android_id = $item['android_id'];
                     $cantidad = $item['cantidad'];
+
                     //Validar que producto pertenezca a la Empresa
                     $producto = new Producto();
                     $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
@@ -110,16 +110,9 @@ class PedidoController extends FOSRestController{
                     $mv->setNrocomprobante("Nro Android: " . $android_id );
                     $mv->setProducto($producto);
                     $mv->setTipomovimiento(GlobalValue::EGRESO);
-                    
-                    //En productos descontar el stock
-                    $stockactual = $producto->getStock();
-                    $stocknuevo = $stockactual - $cantidad;
-                    $producto->setStock($stocknuevo);
-                    
                 }
             }         
             $em->persist($pedido);
-            $em->persist($producto);
             $em->persist($mv);
             $em->flush();
         }//Si paso validacion

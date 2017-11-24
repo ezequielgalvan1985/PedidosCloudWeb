@@ -29,7 +29,6 @@ class ProductoType extends AbstractType
                 ->add('descripcion', TextareaType::class)
                 ->add('codigoexterno', null, array('required'=>false))
                 ->add('precio',NumberType::class)
-                ->add('stock',NumberType::class, array('required'=>false))
                 ->add('imagen', FileType::class, array('data_class' => null, 'required'=>false));;
     }
     

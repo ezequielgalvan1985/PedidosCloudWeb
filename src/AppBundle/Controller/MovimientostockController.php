@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Movimientostock;
+use AppBundle\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -91,7 +92,23 @@ class MovimientostockController extends Controller
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa
             $movimientostock->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+
+            //Actualizar campo stock dentro de producto
+            $p = new Producto();
+            if ($movimientostock->getTipomovimiento()== GlobalValue::INGRESO){
+                $p = $movimientostock->getProducto();
+                $p->setStock($p->getStock() + $movimientostock->getCantidad());
+            }
+            if ($movimientostock->getTipomovimiento()== GlobalValue::EGRESO){
+                $p = $movimientostock->getProducto();
+                $p->setStock($p->getStock() - $movimientostock->getCantidad());
+            }
+            if ($movimientostock->getTipomovimiento()== GlobalValue::INICIALIZACION){
+                $p = $movimientostock->getProducto();
+                $p->setStock($movimientostock->getCantidad());
+            }
             $em->persist($movimientostock);
+            $em->persist($p);
             $em->flush();
             $this->addFlash(  'success','Guardado Correctamente!');
             return $this->redirectToRoute('movimientostock_show', array('id' => $movimientostock->getId()));
@@ -121,40 +138,6 @@ class MovimientostockController extends Controller
     }
     
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    /**
-     * Displays a form to edit an existing movimientostock entity.
-     *
-     * @Route("/{id}/edit", name="movimientostock_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Movimientostock $movimientostock)
-    {
-        $deleteForm = $this->createDeleteForm($movimientostock);
-        $editForm = $this->createForm('AppBundle\Form\MovimientostockType', $movimientostock);
-        $editForm->handleRequest($request);
-        
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
-            return $this->redirectToRoute('movimientostock_edit', array('id' => $movimientostock->getId()));
-        }
-
-        return $this->render('movimientostock/edit.html.twig', array(
-            'movimientostock' => $movimientostock,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
 
     /**
      * Deletes a movimientostock entity.

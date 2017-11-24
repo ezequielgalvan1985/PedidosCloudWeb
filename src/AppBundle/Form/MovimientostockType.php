@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\GlobalValue;
 
 class MovimientostockType extends AbstractType
 {
@@ -20,8 +21,8 @@ class MovimientostockType extends AbstractType
                 ->add('cantidad' )
                 ->add('nrocomprobante')
                 ->add('tipomovimiento', ChoiceType::class, array(
-                        'choices'   => array('Ingreso' => '1', 'Egreso' => '2'),
-                        'required'  => true))
+                    'choices'   => GlobalValue::TIPOMOVIMIENTOS_SELECT,
+                    'required'  => true))
                 ->add('proveedor', EntityType::class, array(
                         'class' => 'AppBundle:Proveedor',
                         'choice_label' => 'razonsocial',
