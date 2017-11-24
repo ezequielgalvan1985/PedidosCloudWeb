@@ -10,16 +10,17 @@
 <div class="row">    
     <div class="col-xs-12 col-sm-9 col-lg-9">
     <div class="panel panel-default">
-        <div class="panel-heading">Listado de Pedidos {{hoy}}</div>
+        <div class="panel-heading">Listado de Pedidos {{hoy|date('d/m/Y')}}</div>
         <div class="panel-body">
             <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Fecha</th>
+                <th>Cliente</th>
                 <th>Usuario</th>
                 <th>Estado</th>
-                <th>Subtotal</th>
+
                 <th>Monto</th>
                 <th>Actions</th>
             </tr>
@@ -28,18 +29,14 @@
         {% for pedido in pagination %}
             <tr>
                 <td><a href="{{ path('pedido_show', { 'id': pedido.id }) }}">{{ pedido.id }}</a></td>
-                 <td>{% if pedido.fecha %}{{ pedido.fecha|date('d/m/Y') }}  {% endif %}</td>
+                <td>{% if pedido.fecha %}{{ pedido.fecha|date('d/m/Y') }}  {% endif %}</td>
+                <td>{{ pedido.cliente.razonsocial}}</td>
                 <td>{{ pedido.empleado.getTextoCombo}}</td>
-                 <td>{{ estados[pedido.estadoId] }}</td>
-                
-                <td>{{ pedido.subtotal }}</td>
-                
+                <td>{{ estados[pedido.estadoId] }}</td>
                 <td>{{ pedido.monto }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('pedidodetalle_new', { 'pedido_id': pedido.id }) }}" class="btn btn-default">Ver</a>
-                    
                 </td>
-                    
                 </td>
             </tr>
         {% endfor %}
