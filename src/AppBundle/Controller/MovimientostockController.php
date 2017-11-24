@@ -65,7 +65,7 @@ class MovimientostockController extends Controller
             }
            
         }
-          
+        $queryBuilder->orderBy('bp.fecha', 'DESC');
         $registros = $queryBuilder;
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),50);
