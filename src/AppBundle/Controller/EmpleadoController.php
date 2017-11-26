@@ -3,10 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Empleado;
+use AppBundle\Entity\GlobalValue;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 use Symfony\Component\Security\Core\User\User;
 
@@ -59,7 +62,8 @@ class EmpleadoController extends Controller
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($registros, $request->query->getInt('page', 1),10);
         return $this->render('empleado/index.html.twig', array(
-            'pagination' => $pagination, 'form_filter'=>$form_filter->createView()
+            'pagination' => $pagination, 'form_filter'=>$form_filter->createView(),
+            'roles'=>GlobalValue::ROLES
         ));
     }
 
@@ -80,39 +84,47 @@ class EmpleadoController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            //Obtener Empresa
-            $currentuser = $this->get('security.token_storage')->getToken()->getUser();
-            $empresa = $currentuser->getEmpresa();
-             //Crea empleado
-            $username = $empleado->getEmail();//$empleado->getNombre() . $empleado->getApellido() . $empleado->getId() ;
-            
-            $empleado->setEmpresa($empresa);
-            $em->persist($empleado);
-            $em->flush();
-            
-            
-            //Crear usuario
-            $userManager = $this->get('fos_user.user_manager');
-            $user = $userManager->createUser();
-            
-            $user->setUsername($username);
-            $user->setEmail($empleado->getEmail());
-            $user->setEmailCanonical($empleado->getEmail());
-            $user->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
-            //$user->setApitoken            
-            // this method will encrypt the password with the default settings :)
-            $password = 12345678;
-            $user->setRoles(array($empleado->getTipo()));
-            $user->setPlainPassword($password);
-            $user->setEmpresa($empresa);
-            $userManager->updateUser($user);
-            
-            //Asoscia usuario a empleado
-            $empleado->setUser($user);
-             $em->persist($empleado);
-            $em->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
-            return $this->redirectToRoute('empleado_show', array('id' => $empleado->getId()));
+            try {
+
+                //Obtener Empresa
+                $currentuser = $this->get('security.token_storage')->getToken()->getUser();
+                $empresa = $currentuser->getEmpresa();
+                //Crea empleado
+                $username = $empleado->getEmail();
+
+                $empleado->setEmpresa($empresa);
+                $em->persist($empleado);
+
+
+                //Crear usuario
+                $userManager = $this->get('fos_user.user_manager');
+                $user = $userManager->createUser();
+
+                $user->setUsername($username);
+                $user->setEmail($empleado->getEmail());
+                $user->setEmailCanonical($empleado->getEmail());
+                $user->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
+                //$user->setApitoken
+                // this method will encrypt the password with the default settings :)
+                $password = 12345678;
+                $user->setRoles(array($empleado->getTipo()));
+                $user->setPlainPassword($password);
+                $user->setEmpresa($empresa);
+                $userManager->updateUser($user);
+
+                //Asoscia usuario a empleado
+                $empleado->setUser($user);
+                $em->persist($empleado);
+                $em->flush();
+                $this->addFlash('success', 'Guardado Correctamente!');
+                return $this->redirectToRoute('empleado_show', array('id' => $empleado->getId()));
+            }catch (UniqueConstraintViolationException $e) {
+                $this->addFlash('error', 'Error: No se pudo agregar Usuario. Nombre de Usuario o Email ya han sido utilizados, pruebe con otros.' );
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $this->addFlash('error', 'Error: No se pudo agregar Usuario, '. $e->getMessage() );
+            } catch (Exception $e) {
+                $this->addFlash('error', 'Error: No se pudo agregar Usuario'. $e->getMessage() );
+            }
         }
 
         return $this->render('empleado/new.html.twig', array(
@@ -134,6 +146,7 @@ class EmpleadoController extends Controller
         return $this->render('empleado/show.html.twig', array(
             'empleado' => $empleado,
             'delete_form' => $deleteForm->createView(),
+            'roles'=>GlobalValue::ROLES
         ));
     }
 
@@ -150,13 +163,27 @@ class EmpleadoController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $userManager = $this->get('fos_user.user_manager');
-            $user = $empleado->getUser();
-            //$user = $userManager->findUserBy(array('id'=>$user->getId()));
-            $user->setRoles(array($empleado->getTipo()));
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
-            return $this->redirectToRoute('empleado_edit', array('id' => $empleado->getId()));
+            try{
+                $userManager = $this->get('fos_user.user_manager');
+                $user = $empleado->getUser();
+                //$user = $userManager->findUserBy(array('id'=>$user->getId()));
+                $user->setRoles(array($empleado->getTipo()));
+                $user->setEmail($empleado->getEmail());
+                $user->setUsername($empleado->getEmail());
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($empleado);
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash(  'success','Guardado Correctamente!');
+                return $this->redirectToRoute('empleado_edit', array('id' => $empleado->getId()));
+            }catch (UniqueConstraintViolationException $e) {
+                $this->addFlash('error', 'Error: No se pudo Editar Usuario. Nombre de Usuario o Email ya han sido utilizados, pruebe con otros.' );
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $this->addFlash('error', 'Error: No se pudo Editar Usuario, error consistencia de datos: '. $e->getMessage() );
+            } catch (Exception $e) {
+                $this->addFlash('error', 'Error: No se pudo Editar Usuario, error externo: '. $e->getMessage() );
+            }
         }
 
         return $this->render('empleado/edit.html.twig', array(

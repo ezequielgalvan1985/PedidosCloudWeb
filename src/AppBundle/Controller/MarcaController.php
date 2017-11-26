@@ -78,7 +78,6 @@ class MarcaController extends Controller
                 return $this->redirectToRoute('marcas_show', array('id' => $marca->getId()));
             } catch (Exception $e) {
                 $this->addFlash('error', 'Error: No se pudo agregar Marca'. $e->getMessage() );
-                return false;
             }
 
         }
