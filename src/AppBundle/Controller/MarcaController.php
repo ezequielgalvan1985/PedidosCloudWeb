@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Marca;
 /**
@@ -63,17 +64,23 @@ class MarcaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            if ($marca->getImagen()){
-                $file = $marca->getImagen();
-                $fileName = $fileUploader->upload($file);
-                $marca->setImagen($fileName);
+            try{
+                $em = $this->getDoctrine()->getManager();
+                if ($marca->getImagen()){
+                    $file = $marca->getImagen();
+                    $fileName = $fileUploader->upload($file);
+                    $marca->setImagen($fileName);
+                }
+                $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                $em->persist($marca);
+                $em->flush();
+                $this->addFlash('success', 'Guardado Correctamente');
+                return $this->redirectToRoute('marcas_show', array('id' => $marca->getId()));
+            } catch (Exception $e) {
+                $this->addFlash('error', 'Error: No se pudo agregar Marca'. $e->getMessage() );
+                return false;
             }
-            $marca->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            $em->persist($marca);
-            $em->flush();
-            $this->addFlash('success', 'Guardado Correctamente');
-            return $this->redirectToRoute('marcas_show', array('id' => $marca->getId()));
+
         }
 
         return $this->render('marca/new.html.twig', array(

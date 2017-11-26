@@ -6,6 +6,7 @@ use AppBundle\Entity\Producto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
@@ -217,9 +218,13 @@ class ProductoController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($producto);
-            $em->flush();
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($producto);
+                $em->flush();
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $this->addFlash('error', 'Error: No se puede eliminar Producto, por estar relacionado con pedidos existentes ' );
+            }
         }
 
         return $this->redirectToRoute('producto_index');

@@ -176,16 +176,16 @@ class GlobalValue{
                         array(
                                 GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY =>GlobalValue::ARCHIVO_PRODUCTOS ,
                                 GlobalValue::ARCHIVO_CLIENTES_DISPLAY => GlobalValue::ARCHIVO_CLIENTES ,  
-                                GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY => GlobalValue::ARCHIVO_LISTAPRECIOS,
-                                GlobalValue::ARCHIVO_STOCK_DISPLAY => GlobalValue::ARCHIVO_STOCK  
+                                //GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY => GlobalValue::ARCHIVO_LISTAPRECIOS,
+                                //GlobalValue::ARCHIVO_STOCK_DISPLAY => GlobalValue::ARCHIVO_STOCK
                         );
     
     const ARCHIVO_TIPOS = 
                         array(
                                 GlobalValue::ARCHIVO_PRODUCTOS =>GlobalValue::ARCHIVO_PRODUCTOS_DISPLAY ,
                                 GlobalValue::ARCHIVO_CLIENTES => GlobalValue::ARCHIVO_CLIENTES_DISPLAY ,  
-                                GlobalValue::ARCHIVO_LISTAPRECIOS => GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY,  
-                                GlobalValue::ARCHIVO_STOCK => GlobalValue::ARCHIVO_STOCK_DISPLAY  
+                               // GlobalValue::ARCHIVO_LISTAPRECIOS => GlobalValue::ARCHIVO_LISTAPRECIOS_DISPLAY,
+                                //GlobalValue::ARCHIVO_STOCK => GlobalValue::ARCHIVO_STOCK_DISPLAY
                         );
     
     // Estado de Archivos

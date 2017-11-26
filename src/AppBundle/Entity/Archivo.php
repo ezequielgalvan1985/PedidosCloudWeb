@@ -147,7 +147,7 @@ class Archivo
     
     
      /**
-     * @ORM\Column(type="string",nullable=true)
+     *
      * @Assert\NotBlank(message="Please, upload the a Csv file.")
      * @Assert\File( maxSize = "100000000", mimeTypes= {"text/plain", "text/csv", "application/csv", "text/excel", "application/excel"}, mimeTypesMessage = "Please upload a valid CSV | exel file")
      */

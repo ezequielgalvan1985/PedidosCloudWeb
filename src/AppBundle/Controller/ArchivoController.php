@@ -60,7 +60,7 @@ class ArchivoController extends Controller
             }
             
         }
-        $archivos = $queryBuilder;
+        $archivos = $queryBuilder->orderBy('bp.fecha', 'DESC');
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate($archivos, $request->query->getInt('page', 1),8);
@@ -196,7 +196,7 @@ class ArchivoController extends Controller
 
         $csv = array();
         $lines = file($archivo->getArchivo(), FILE_IGNORE_NEW_LINES);
-        $error = $this->validateArchivoProducto($lines);
+        $error = $this->validateArchivoClientes($lines);
         if ( $error > 0 ){
             return $error;
         }
@@ -234,9 +234,7 @@ class ArchivoController extends Controller
             $fileindex = $fileindex +1;
         }
 
-        //$archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-        //$em->persist($archivo);
-        //$em->flush();
+
         
     }
     
@@ -290,11 +288,9 @@ class ArchivoController extends Controller
                 $mv->setProducto($producto);
                 $mv->setTipomovimiento(GlobalValue::INICIALIZACION);
                 $em->persist($mv);
-                
-                $em->flush();
-                
-                
+
             }
+            $em->flush();
             $fileindex = $fileindex +1;
         }
 
@@ -416,41 +412,43 @@ class ArchivoController extends Controller
         $archivo = new Archivo();
         $form = $this->createForm('AppBundle\Form\ArchivoType', $archivo);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             try{
                 $empresa = $this->get('security.token_storage')->getToken()->getUser()->getEmpresa();
-                
-                $file = $archivo->getArchivo();
-                $fileName = md5(uniqid()).'.csv';
                 $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_UPLOAD);
                 $archivo->setEmpresa($empresa);
+                $hoy = date("Y-m-d");
+                $archivo->setFecha(new \DateTime($hoy));
+
                 $em = $this->getDoctrine()->getManager();
-               
+
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_PRODUCTOS){
                     $this->procesarArchivoProductos($empresa, $archivo);
                     $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
-                    $archivo->setArchivo($fileName);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_CLIENTES){
                     $this->procesarArchivoClientes($empresa, $archivo);
-                    $archivo->setArchivo($fileName);
-                    
+                    $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_STOCK){
                     
                     $this->procesarArchivoStocks($empresa, $archivo);
+                    $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
                 }
                 if ($archivo->getTipo()==GlobalValue::ARCHIVO_LISTAPRECIOS){
                     
                     $this->procesarArchivoListaprecios($empresa, $archivo);
+                    $archivo->setEstado(GlobalValue::ARCHIVO_ESTADO_PROCESADO);
                 }
+                $em->persist($archivo);
+                $em->flush();
                 $this->addFlash(  'success','Guardado y Procesado Correctamente!');
                 return $this->redirectToRoute('archivo_index');
+
             }catch(Exception $e){
                 $this->addFlash("success","Error: "+$e->getMessage());
-
                 return $this->redirectToRoute('archivo_index');
                   
             }

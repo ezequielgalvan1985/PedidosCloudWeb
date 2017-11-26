@@ -94,11 +94,14 @@ class ClienteController extends FOSRestController
             $em = $this->getDoctrine()->getManager();
             //Obtener Empresa
             $cliente->setEmpresa($this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
-            
-            $em->persist($cliente);
-            $em->flush();
-            $this->addFlash(  'success','Guardado Correctamente!');
-            return $this->redirectToRoute('cliente_show', array('id' => $cliente->getId()));
+            try{
+                $em->persist($cliente);
+                $em->flush();
+                $this->addFlash(  'success','Guardado Correctamente!');
+                return $this->redirectToRoute('cliente_show', array('id' => $cliente->getId()));
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $this->addFlash('error', 'Error: No se pudo agregar Cliente'. $e->getMessage() );
+            }
         }
 
         return $this->render('cliente/new.html.twig', array(
@@ -162,11 +165,14 @@ class ClienteController extends FOSRestController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($cliente);
-            $em->flush();
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($cliente);
+                $em->flush();
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $this->addFlash('error', 'Error: No se puede eliminar Cliente, por estar relacionado con pedidos existentes ' );
+            }
         }
-
         return $this->redirectToRoute('cliente_index');
     }
 
