@@ -111,10 +111,12 @@ class PedidoController extends FOSRestController{
                     $mv->setProducto($producto);
                     $mv->setTipomovimiento(GlobalValue::EGRESO);
                     
-                    //Actualizar cantidad de producto en Maestro de Productos
+                    //Actualizar cantidad de producto en Maestro de Productos prueba
                     $stock = $producto->getStock();
-                    $stockActual = $stock - $cantidad;
-                    $producto->setStock($stockActual);
+                    $stockactual = $stock - $cantidad;
+                    $producto->setStock($stockactual);
+                    
+                    
                 }
             }         
             $em->persist($producto);
