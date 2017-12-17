@@ -110,8 +110,14 @@ class PedidoController extends FOSRestController{
                     $mv->setNrocomprobante("Nro Android: " . $android_id );
                     $mv->setProducto($producto);
                     $mv->setTipomovimiento(GlobalValue::EGRESO);
+                    
+                    //Actualizar cantidad de producto en Maestro de Productos
+                    $stock = $producto->getStock();
+                    $stockActual = $stock - $cantidad;
+                    $producto->setStock($stockActual);
                 }
             }         
+            $em->persist($producto);
             $em->persist($pedido);
             $em->persist($mv);
             $em->flush();
