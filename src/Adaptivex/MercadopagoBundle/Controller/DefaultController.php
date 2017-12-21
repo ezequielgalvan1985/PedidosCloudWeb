@@ -9,7 +9,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         
-        //$this->get('app.mercadopago')->
+        
         return $this->render('AdaptivexMercadopagoBundle:Default:index.html.twig');
     }
 }
