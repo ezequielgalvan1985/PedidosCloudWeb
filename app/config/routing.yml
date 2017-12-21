@@ -1,3 +1,7 @@
+adaptivex_mercadopago:
+    resource: "@AdaptivexMercadopagoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app_movimientostock:
     resource: "@AppBundle/Controller/MovimientostockController.php"
     type:     annotation

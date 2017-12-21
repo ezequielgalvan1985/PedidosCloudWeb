@@ -1,0 +1,3 @@
+adaptivex_mercadopago_homepage:
+    path:     /
+    defaults: { _controller: AdaptivexMercadopagoBundle:Default:index }

@@ -12,9 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/Api/MarcaController.php</file>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/MarcaController.php</file>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/MercadopagoController.php</file>
+            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/Adaptivex/MercadopagoBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/Adaptivex/MercadopagoBundle/Controller/DefaultController.php</file>
+            <file>file:/C:/xampp/htdocs/pedidoscloud_web/app/config/parameters.yml</file>
+            <file>file:/C:/xampp/htdocs/pedidoscloud_web/app/Resources/views/base.html.twig</file>
         </group>
     </open-files>
 </project-private>
