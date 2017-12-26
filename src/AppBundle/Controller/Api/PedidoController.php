@@ -23,7 +23,36 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use AppBundle\Entity\GlobalValue;
 class PedidoController extends FOSRestController{
     
-   
+    /**
+    * @Rest\Post("/api/pedidospreparados/")
+    */
+    public function postPedidospreparadosAction(Request $request){
+        $content = $request->getContent();
+        $code = Response::HTTP_OK; $message='OK'; $result = "";
+        $json = json_decode($content, true);
+        $em = $this->getDoctrine()->getManager();
+        $empresa_id = $json['pedido']['empresa_id'];
+        $user_id = $json['pedido']['user_id'];
+        $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
+        if (!$empresa) {
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
+            $message = 'no se encontro empresa';
+            //throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
+        }
+        $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
+        if(!$user){
+            $code = Response::HTTP_PRECONDITION_REQUIRED;
+            $message = 'no se encontro usuario';
+            //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
+        }
+        
+        $pedidos = $this->getDoctrine()->getRepository(Pedido::class)->findBy(array('estado'=>GlobalValue::PREPARADO, 'user'=> $user));
+        $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,
+                           'message'=>$message,
+                           'data'=>$pedidos
+                        );
+        
+    }
     /**
     * @Rest\Post("/api/pedido/add")
     */
@@ -48,6 +77,7 @@ class PedidoController extends FOSRestController{
             $message = 'no se encontro empresa';
             //throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
         }
+        
         $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
         if(!$user){
             $code = Response::HTTP_PRECONDITION_REQUIRED;
