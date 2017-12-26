@@ -15,9 +15,10 @@
                        <tr><th>Estado:</th><td>{{estados[pedido.estadoId]}}</td></tr>
                   
                    </table>
-                    <form action="/new" method="post">
+                    <form action="/cambiarestado" method="post">
                         <input type="hidden" value="{{pedido.id}}" name="pedido_id"></>   
-                        <input class="btn btn-warning" type="submit" value="Pasar Pedido a Entregado" />
+                        
+                        <input class="btn btn-success" type="submit" value="Pedido Preparado" />
                     </form>
                </div>
             </div>

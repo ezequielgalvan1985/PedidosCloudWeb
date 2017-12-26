@@ -1,7 +1,56 @@
 # Change Log
 
-## [2.1.0](https://github.com/schmittjoh/JMSSerializerBundle/tree/2.1.0) (2017-08-31)
+## [2.3.1](https://github.com/schmittjoh/JMSSerializerBundle/tree/2.3.1)
 
+**Closed issues:**
+
+- Move `symfony/stopwatch` to `require` instead of `require-dev` [\#624](https://github.com/schmittjoh/JMSSerializerBundle/issues/624)
+- Packagist Issue [\#623](https://github.com/schmittjoh/JMSSerializerBundle/issues/623)
+
+**Merged pull requests:**
+
+- Extension \> Remove stopwatch subscriber when Stopwatch class is not found [\#625](https://github.com/schmittjoh/JMSSerializerBundle/pull/625) ([ruudk](https://github.com/ruudk))
+
+## [2.3.0](https://github.com/schmittjoh/JMSSerializerBundle/tree/2.3.0) (2017-12-01)
+**Implemented enhancements:**
+
+- Cache warmup feature [\#615](https://github.com/schmittjoh/JMSSerializerBundle/pull/615) ([goetas](https://github.com/goetas))
+
+**Closed issues:**
+
+- Exclude property on serialization, but not on deserialization [\#619](https://github.com/schmittjoh/JMSSerializerBundle/issues/619)
+- Stopwatch Subscriber not found \(SF4\) [\#617](https://github.com/schmittjoh/JMSSerializerBundle/issues/617)
+- Problem deserialize xml with namespace: xmlns="http://www.w3.org/2000/09/xmldsig\#" in tag root [\#613](https://github.com/schmittjoh/JMSSerializerBundle/issues/613)
+- Add support for kernel.cache\_warmer [\#611](https://github.com/schmittjoh/JMSSerializerBundle/issues/611)
+- Symfony 4 - Class 'jms\_serializer.stopwatch\_subscriber' not found [\#610](https://github.com/schmittjoh/JMSSerializerBundle/issues/610)
+- v2.0.0: The "name" property of directories must be given - but must we specify directories? [\#607](https://github.com/schmittjoh/JMSSerializerBundle/issues/607)
+- Add symfony/translation to required bundles [\#606](https://github.com/schmittjoh/JMSSerializerBundle/issues/606)
+- Integrate schmittjoh/serializer\#22 [\#603](https://github.com/schmittjoh/JMSSerializerBundle/issues/603)
+
+**Merged pull requests:**
+
+- Update Packagist link [\#622](https://github.com/schmittjoh/JMSSerializerBundle/pull/622) ([thePanz](https://github.com/thePanz))
+- Use stable symfony [\#621](https://github.com/schmittjoh/JMSSerializerBundle/pull/621) ([goetas](https://github.com/goetas))
+- make it possible to decorate services [\#620](https://github.com/schmittjoh/JMSSerializerBundle/pull/620) ([xabbuh](https://github.com/xabbuh))
+- support lazily loaded event listeners and handlers [\#618](https://github.com/schmittjoh/JMSSerializerBundle/pull/618) ([xabbuh](https://github.com/xabbuh))
+- Symfony 4 issues with private aliases [\#616](https://github.com/schmittjoh/JMSSerializerBundle/pull/616) ([goetas](https://github.com/goetas))
+- Full Symfony 4 compatibility [\#605](https://github.com/schmittjoh/JMSSerializerBundle/pull/605) ([goetas](https://github.com/goetas))
+
+## [2.2.0](https://github.com/schmittjoh/JMSSerializerBundle/tree/2.2.0) (2017-09-29)
+**Implemented enhancements:**
+
+- Injected validator.translation\_domain to FormErrorHandler [\#580](https://github.com/schmittjoh/JMSSerializerBundle/pull/580) ([prosalov](https://github.com/prosalov))
+
+**Closed issues:**
+
+- The FormErrorHandler forces the translation domain to 'validators' [\#501](https://github.com/schmittjoh/JMSSerializerBundle/issues/501)
+- Documentation incorrectly states that a handler service can be private [\#260](https://github.com/schmittjoh/JMSSerializerBundle/issues/260)
+
+**Merged pull requests:**
+
+- Remove dependencies from translator and form handler [\#604](https://github.com/schmittjoh/JMSSerializerBundle/pull/604) ([goetas](https://github.com/goetas))
+
+## [2.1.0](https://github.com/schmittjoh/JMSSerializerBundle/tree/2.1.0) (2017-08-31)
 **Implemented enhancements:**
 
 - Allow event listener/susbcriber services to be private [\#593](https://github.com/schmittjoh/JMSSerializerBundle/issues/593)

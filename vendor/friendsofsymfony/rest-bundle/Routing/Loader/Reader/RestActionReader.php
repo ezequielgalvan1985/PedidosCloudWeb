@@ -106,6 +106,11 @@ class RestActionReader
     private $availableConventionalActions = ['new', 'edit', 'remove'];
 
     /**
+     * @var bool
+     */
+    private $hasMethodPrefix;
+
+    /**
      * Initializes controller reader.
      *
      * @param Reader               $annotationReader
@@ -113,14 +118,16 @@ class RestActionReader
      * @param InflectorInterface   $inflector
      * @param bool                 $includeFormat
      * @param array                $formats
+     * @param bool                 $hasMethodPrefix
      */
-    public function __construct(Reader $annotationReader, ParamReaderInterface $paramReader, InflectorInterface $inflector, $includeFormat, array $formats = [])
+    public function __construct(Reader $annotationReader, ParamReaderInterface $paramReader, InflectorInterface $inflector, $includeFormat, array $formats = [], $hasMethodPrefix = true)
     {
         $this->annotationReader = $annotationReader;
         $this->paramReader = $paramReader;
         $this->inflector = $inflector;
         $this->includeFormat = $includeFormat;
         $this->formats = $formats;
+        $this->hasMethodPrefix = $hasMethodPrefix;
     }
 
     /**
@@ -239,10 +246,7 @@ class RestActionReader
         // check that every route parent has non-empty singular name
         foreach ($this->parents as $parent) {
             if (empty($parent) || '/' === substr($parent, -1)) {
-                throw new \InvalidArgumentException(
-                    "Every parent controller must have `get{SINGULAR}Action(\$id)` method\n".
-                    'where {SINGULAR} is a singular form of associated object'
-                );
+                throw new \InvalidArgumentException('Every parent controller must have `get{SINGULAR}Action(\$id)` method where {SINGULAR} is a singular form of associated object');
             }
         }
 
@@ -311,7 +315,7 @@ class RestActionReader
                     $methods = $annoMethods;
                 }
 
-                $path = $annotation->getPath() !== null ? $this->routePrefix.$annotation->getPath() : $path;
+                $path = null !== $annotation->getPath() ? $this->routePrefix.$annotation->getPath() : $path;
                 $requirements = array_merge($requirements, $annoRequirements);
                 $options = array_merge($options, $annotation->getOptions());
                 $defaults = array_merge($defaults, $annotation->getDefaults());
@@ -379,7 +383,7 @@ class RestActionReader
      */
     private function includeFormatIfNeeded(&$path, &$requirements)
     {
-        if ($this->includeFormat === true) {
+        if (true === $this->includeFormat) {
             $path .= '.{_format}';
 
             if (!isset($requirements['_format']) && !empty($this->formats)) {
@@ -696,10 +700,10 @@ class RestActionReader
         if ($annotation && null !== $annotation->getName()) {
             $options = $annotation->getOptions();
 
-            if (isset($options['method_prefix']) && false === $options['method_prefix']) {
+            if (false === $this->hasMethodPrefix || (isset($options['method_prefix']) && false === $options['method_prefix'])) {
                 $routeName = $annotation->getName();
             } else {
-                $routeName = $routeName.$annotation->getName();
+                $routeName .= $annotation->getName();
             }
         }
 

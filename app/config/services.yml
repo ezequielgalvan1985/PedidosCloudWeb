@@ -44,7 +44,6 @@ services:
         arguments:
             $targetDir: '%images%'       
         
-    app.mercadopago:
-        class: MercadoPago
+    
         
 

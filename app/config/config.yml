@@ -15,10 +15,6 @@ parameters:
     images: '%kernel.project_dir%/web/uploads/images/'
     
     
-grunch_mercadopago:
-    client_id: 2207797945420831
-    client_secret: lZVQBryGrJ3wzcuFLBrxsWuETU4sm1IE
-    sandbox: true
     
     
 framework:

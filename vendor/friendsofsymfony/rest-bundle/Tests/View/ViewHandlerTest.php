@@ -13,6 +13,7 @@ namespace FOS\RestBundle\Tests\View;
 
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\View\ViewHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormView;
@@ -25,7 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Victor Berchet <victor@suumit.com>
  */
-class ViewHandlerTest extends \PHPUnit_Framework_TestCase
+class ViewHandlerTest extends TestCase
 {
     private $router;
     private $serializer;
@@ -447,6 +448,7 @@ class ViewHandlerTest extends \PHPUnit_Framework_TestCase
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')
             ->setMethods(['createView', 'getData'])
             ->disableOriginalConstructor()
+            ->disableOriginalClone()
             ->getMock();
         $form
             ->expects($this->once())

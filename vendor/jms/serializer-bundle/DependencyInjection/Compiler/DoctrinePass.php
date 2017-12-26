@@ -2,6 +2,7 @@
 
 namespace JMS\SerializerBundle\DependencyInjection\Compiler;
 
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -40,17 +41,17 @@ class DoctrinePass implements CompilerPassInterface
         $previousId = array();
         foreach ($serviceTemplates as $serviceName => $service) {
             $previousId[$serviceName] = sprintf($service['template'], $registry);
-            $container->setAlias($serviceName, $previousId[$serviceName]);
+            $container->setAlias($serviceName, new Alias($previousId[$serviceName], true));
         }
 
         foreach ($registries as $registry) {
             foreach ($serviceTemplates as $serviceName => $service) {
                 $id = sprintf($service['template'], $registry);
                 $container
-                    ->getDefinition($id)
+                    ->findDefinition($id)
                     ->replaceArgument($service['position'], new Reference($previousId[$serviceName]));
                 $previousId[$serviceName] = $id;
-                $container->setAlias($serviceName, $previousId[$serviceName]);
+                $container->setAlias($serviceName, new Alias($previousId[$serviceName], true));
             }
         }
     }

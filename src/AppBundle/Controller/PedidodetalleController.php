@@ -80,10 +80,39 @@ class PedidodetalleController extends Controller
             'pedidodetalles' => $pedidodetalles,
             'pedido'=>$pedido,
             'estados'=> GlobalValue::ESTADOS,
+            'preparado' => GlobalValue::PREPARADO_DISPLAY,
             'form' => $form->createView(),
         ));
     }
+    
+    
+    /**
+     * Creates a new pedidodetalle entity.
+     *
+     * @Route("/cambioestado", name="pedidodetalle_cambioestado")
+     * @Method({"POST"})
+     */
+    public function cambiarestadoAction(Request $request)
+    {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $this->getDoctrine()->getRepository(Pedido::class);
+            $pedido_id = $this->get('request')->request->get('pedido_id');
+            
+            $pedido = $repository->findOneById($pedido_id);
+            $pedido->setEstado(GlobalValue::PREPARADO);
+            
+            $em->persist($pedido);
+            $em->flush();
+            $this->addFlash(  'success','Pedido Preparado!');
+            return $this->redirectToRoute('pedidodetalle_new', array('pedido_id' => $pedido->getId()));
+        }
 
+        return $this->render('pedidodetalle/new.html.twig', array('pedido'=>$pedido));
+    }
+
+    
+    
     /**
      * Finds and displays a pedidodetalle entity.
      *

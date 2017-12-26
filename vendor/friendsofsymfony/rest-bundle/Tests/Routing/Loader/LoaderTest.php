@@ -17,6 +17,7 @@ use FOS\RestBundle\Request\ParamReader;
 use FOS\RestBundle\Routing\Loader\Reader\RestActionReader;
 use FOS\RestBundle\Routing\Loader\Reader\RestControllerReader;
 use FOS\RestBundle\Routing\Loader\RestRouteLoader;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
 
@@ -25,7 +26,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-abstract class LoaderTest extends \PHPUnit_Framework_TestCase
+abstract class LoaderTest extends TestCase
 {
     /**
      * @var ContainerBuilder
@@ -52,14 +53,15 @@ abstract class LoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * Builds a RestRouteLoader.
      *
-     * @param array $formats available resource formats
+     * @param array $formats         available resource formats
+     * @param bool  $hasMethodPrefix
      *
      * @return RestRouteLoader
      */
-    protected function getControllerLoader(array $formats = [])
+    protected function getControllerLoader(array $formats = [], $hasMethodPrefix = true)
     {
         // This check allows to override the container
-        if ($this->container === null) {
+        if (null === $this->container) {
             $this->container = $this->getMockBuilder(ContainerBuilder::class)
                 ->disableOriginalConstructor()
                 ->setMethods(['get', 'has'])
@@ -76,7 +78,7 @@ abstract class LoaderTest extends \PHPUnit_Framework_TestCase
         $paramReader = new ParamReader($annotationReader);
         $inflector = new DoctrineInflector();
 
-        $ar = new RestActionReader($annotationReader, $paramReader, $inflector, true, $formats);
+        $ar = new RestActionReader($annotationReader, $paramReader, $inflector, true, $formats, $hasMethodPrefix);
         $cr = new RestControllerReader($ar, $annotationReader);
 
         return new RestRouteLoader($this->container, $l, $p, $cr, 'html');

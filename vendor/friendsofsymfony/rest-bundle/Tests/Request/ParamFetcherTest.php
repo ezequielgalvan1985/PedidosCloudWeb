@@ -15,6 +15,7 @@ use Doctrine\Common\Util\ClassUtils;
 use FOS\RestBundle\Exception\InvalidParameterException;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Request\ParamReaderInterface;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -28,7 +29,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * @author Alexander <iam.asm89@gmail.com>
  * @author Boris Guéry <guery.b@gmail.com>
  */
-class ParamFetcherTest extends \PHPUnit_Framework_TestCase
+class ParamFetcherTest extends TestCase
 {
     /**
      * @var callable
@@ -464,7 +465,7 @@ class ParamFetcherTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getValue')
             ->with($this->request, $default)
-            ->will($value !== null ? $this->returnValue($value) : $this->returnArgument(1));
+            ->will(null !== $value ? $this->returnValue($value) : $this->returnArgument(1));
 
         return $param;
     }
