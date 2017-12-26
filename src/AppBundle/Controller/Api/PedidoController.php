@@ -24,7 +24,7 @@ use AppBundle\Entity\GlobalValue;
 class PedidoController extends FOSRestController{
     
     /**
-    * @Rest\Post("/api/pedidospreparados/")
+    * @Rest\Post("/api/pedido/pedidospreparados")
     */
     public function postPedidospreparadosAction(Request $request){
         $content = $request->getContent();
@@ -51,7 +51,7 @@ class PedidoController extends FOSRestController{
                            'message'=>$message,
                            'data'=>$pedidos
                         );
-        
+        return $respuesta;
     }
     /**
     * @Rest\Post("/api/pedido/add")
