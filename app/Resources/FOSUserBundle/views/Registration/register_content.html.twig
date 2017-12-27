@@ -33,11 +33,11 @@
     
     
     
-    {{ form_row(form.username, {'label':'Username:'}) }}
+    {{ form_row(form.username, {'label':'Username:'  }) }}
     {{ form_row(form.email, {'label':'Email:'}) }}
     {{ form_row(form.plainPassword.first, {'label':'Contraseña:'}) }}
     {{ form_row(form.plainPassword.second, {'label':'Repetir Contraseña:'}) }}
-
+    
         <button type="submit" class="btn btn-flat btn-primary">Crear Cuenta!</button>
          <a class="d-block small mt-3" href="/"> <i class="fa fa-arrow-left"></i> Volver</a>
     {{ form_end(form) }}

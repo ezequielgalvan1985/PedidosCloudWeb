@@ -30,7 +30,7 @@ class EmpleadoFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Empleado'
+            'data_class' => 'AppBundle\Entity\User'
         ));
     }
 
@@ -39,7 +39,7 @@ class EmpleadoFilterType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_categoria';
+        return 'appbundle_user';
     }
 
 

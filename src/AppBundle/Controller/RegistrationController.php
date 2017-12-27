@@ -29,20 +29,17 @@ class RegistrationController extends BaseController
         $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher EventDispatcherInterface */
         $dispatcher = $this->get('event_dispatcher');
-
         $user = $userManager->createUser();
         $user->setEnabled(true);
-
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
-
+        $user->setUsername($user->getEmail());
+        
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
-
         $form = $formFactory->createForm();
         $form->setData($user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -51,16 +48,9 @@ class RegistrationController extends BaseController
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
                 $userManager->updateUser($user);
-
-                /*****************************************************
-                 * Add new functionality (e.g. log the registration) *
-                 *****************************************************/
-
                //validar si existe empresa con mismo mail
                 $empresa = new Empresa();
                 $em = $this->getDoctrine()->getManager();
-                
-                
                 
                 $empresa->setDireccion('');
                 $empresa->setNombre('');

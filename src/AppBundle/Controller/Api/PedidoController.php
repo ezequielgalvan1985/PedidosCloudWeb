@@ -31,8 +31,8 @@ class PedidoController extends FOSRestController{
         $code = Response::HTTP_OK; $message='OK'; $result = "";
         $json = json_decode($content, true);
         $em = $this->getDoctrine()->getManager();
-        $empresa_id = $json['pedido']['empresa_id'];
-        $user_id = $json['pedido']['user_id'];
+        $empresa_id = $json['empresa_id'];
+        $user_id = $json['user_id'];
         $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
         if (!$empresa) {
             $code = Response::HTTP_PRECONDITION_REQUIRED;
@@ -46,11 +46,12 @@ class PedidoController extends FOSRestController{
             //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
         }
         
-        $pedidos = $this->getDoctrine()->getRepository(Pedido::class)->findBy(array('estado'=>GlobalValue::PREPARADO, 'user'=> $user));
+        $pedidos = $this->getDoctrine()->getRepository(Pedido::class)->findBy(array('estadoId'=>GlobalValue::PREPARADO, 'user'=> $user));
         $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,
                            'message'=>$message,
                            'data'=>$pedidos
                         );
+        
         return $respuesta;
     }
     /**

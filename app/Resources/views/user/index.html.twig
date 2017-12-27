@@ -40,7 +40,7 @@
 
                 <td>{{ empleado.email }}</td>
                 <td>{{ empleado.telefono }}</td>
-                <td>{{ roles[empleado.tipo] }}</td>
+                <td>{% if empleado.tipo %} {{ roles[empleado.tipo] }} {% endif %}</td>
                 <td>
                    
                             <a href="{{ path('empleado_show', { 'id': empleado.id }) }}" class="btn btn-default"  data-toggle="tooltip" data-placement="top" title="Ver">

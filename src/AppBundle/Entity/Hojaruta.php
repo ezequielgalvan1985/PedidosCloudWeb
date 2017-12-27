@@ -77,19 +77,19 @@ class Hojaruta
     }
     
      /**
-     * @ORM\ManyToOne(targetEntity="Empleado")
-     * @ORM\JoinColumn(name="empleado_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $empleado;
+    private $user;
     
-    public function getEmpleado()
+    public function getUser()
     {
-        return $this->empleado;
+        return $this->user;
     }
     
-    public function setEmpleado($empleado)
+    public function setUser($user)
     {
-        $this->empleado = $empleado;
+        $this->user = $user;
         return $this;
     }
     
