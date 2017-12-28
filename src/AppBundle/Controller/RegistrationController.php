@@ -61,6 +61,7 @@ class RegistrationController extends BaseController
                 
                 
                 $user->setRoles(array('ROLE_EMPRESA'));
+                
                 $user->setEmpresa($empresa);
                 $em->persist($user);
                 $em->flush();

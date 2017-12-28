@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 class GlobalValue{
     /*Roles*/
+    const ROLE_EMPRESA_ID = 1;
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_EMPRESA = 'ROLE_EMPRESA';
     const ROLE_VENDEDOR = 'ROLE_VENDEDOR';

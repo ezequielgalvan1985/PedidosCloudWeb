@@ -178,12 +178,7 @@ class User extends BaseUser
      */
     private $telefono;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="tipo", type="string", length=30,nullable=true)
-     */
-    private $tipo;
+    
     
     
     /**
@@ -306,29 +301,7 @@ class User extends BaseUser
         return $this->telefono;
     }
 
-    /**
-     * Set tipo
-     *
-     * @param integer $tipo
-     *
-     * @return Empleado
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return int
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
+    
     
     
    

@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 use AppBundle\Entity\GlobalValue;
 
@@ -41,7 +42,7 @@ class UserController extends Controller
     $dispatcher = $this->get('event_dispatcher');
 
     $event = new GetResponseUserEvent($user, $request);
-    $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE,            $event);
+    $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE,    $event);
 
     if (null !== $event->getResponse()) {
         return $event->getResponse();
@@ -189,7 +190,7 @@ class UserController extends Controller
         }
 
         return $this->render('user/new.html.twig', array(
-            'empleado' => $empleado,
+            'empleado' => $userform,
             'form' => $form->createView(),
         ));
     }
@@ -210,7 +211,36 @@ class UserController extends Controller
             'roles'=>GlobalValue::ROLES
         ));
     }
+    
+    
+     /**
+     * Deletes a pedido entity.
+     *
+     * @Route("/{id}", name="user_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, User $user)
+    {
+        try{
+            $form = $this->createDeleteForm($user);
+            $form->handleRequest($request);
 
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($user);
+                    $em->flush();
+
+            }
+        }catch(ForeignKeyConstraintViolationException $e){
+                $this->addFlash('error', 'Error: No se puede eliminar el usuario porque hay datos asociados al mismo que antes deben ser eliminados'  );
+                
+        }catch(Excepcion $e){
+            $this->addFlash('error', 'Error: .' . $e->getMessage());
+        }
+
+        return $this->redirectToRoute('user_index');
+    }
     
     
     /**
@@ -246,6 +276,20 @@ class UserController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+    
+     /**
+   
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(User $user)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
     
     

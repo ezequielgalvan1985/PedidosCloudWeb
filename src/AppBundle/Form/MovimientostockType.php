@@ -22,16 +22,7 @@ class MovimientostockType extends AbstractType
                 ->add('nrocomprobante')
                 ->add('tipomovimiento', ChoiceType::class, array(
                     'choices'   => GlobalValue::TIPOMOVIMIENTOS_SELECT,
-                    'required'  => true))
-                ->add('proveedor', EntityType::class, array(
-                        'class' => 'AppBundle:Proveedor',
-                        'choice_label' => 'razonsocial',
-                    ))
-                ->add('producto', EntityType::class, array(
-                        'class' => 'AppBundle:Producto',
-                        'choice_label' => 'nombre',
-                    ))
-                ;
+                    'required'  => true));
     }
     
     /**

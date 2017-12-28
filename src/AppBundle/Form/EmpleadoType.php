@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Entity\GlobalValue;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EmpleadoType extends AbstractType
 {
@@ -17,18 +18,14 @@ class EmpleadoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nombre')->add('apellido')
+        $builder->add('username', null, ['label'=>'Login/Username'])
+                ->add('nombre')
+                ->add('apellido')
                 ->add('email', EmailType::class )
-                ->add('ndoc')->add('direccion')
-                ->add('telefono')
-                ->add('tipo',ChoiceType::class, array(
-                        'choices' => array(
-                            GlobalValue::ROLE_VENDEDOR_DISPLAY=> GlobalValue::ROLE_VENDEDOR,
-                            GlobalValue::ROLE_CARGADATOS_DISPLAY => GlobalValue::ROLE_CARGADATOS,
-                            GlobalValue::ROLE_DEPOSITO_DISPLAY=> GlobalValue::ROLE_DEPOSITO
-                            )
-                        )
-                    );
+                ->add('ndoc',IntegerType::class,array('label'=>'Nro. Documento'))
+                ->add('direccion')
+                ->add('telefono');
+                
     }
     
     /**
@@ -37,7 +34,7 @@ class EmpleadoType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Empleado'
+            'data_class' => 'AppBundle\Entity\User'
         ));
     }
 
@@ -46,7 +43,7 @@ class EmpleadoType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_empleado';
+        return 'appbundle_user';
     }
 
 

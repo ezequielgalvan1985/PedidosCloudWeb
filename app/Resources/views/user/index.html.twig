@@ -22,12 +22,13 @@
             <tr>
                 <strong>Total: </strong>{{ pagination.getTotalItemCount }}
                 <th>{{ knp_pagination_sortable(pagination, 'Id', 'm.id') }}</th>
+                <th>Login/Username</th>
+                <th>Email</th>
+                <th>Tipo</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Email</th>
-               
                 <th>Telefono</th>
-                <th>Tipo</th>
+                
                 <th>Actions</th>
             </tr>
         </thead>
@@ -35,12 +36,19 @@
         {% for empleado in pagination %}
             <tr>
                 <td><a href="{{ path('empleado_show', { 'id': empleado.id }) }}">{{ empleado.id }}</a></td>
+                <td>{{ empleado.username }}</td>
+                <td>{{ empleado.email }}</td>
+                <td>
+                    {% for r in empleado.roles %} 
+                       {{ roles[r] }}
+                    {% endfor %}
+                </td>
+                
                 <td>{{ empleado.nombre }}</td>
                 <td>{{ empleado.apellido }}</td>
-
-                <td>{{ empleado.email }}</td>
+                
                 <td>{{ empleado.telefono }}</td>
-                <td>{% if empleado.tipo %} {{ roles[empleado.tipo] }} {% endif %}</td>
+                
                 <td>
                    
                             <a href="{{ path('empleado_show', { 'id': empleado.id }) }}" class="btn btn-default"  data-toggle="tooltip" data-placement="top" title="Ver">

@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\GlobalValue;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Movimientostock controller.
@@ -32,6 +34,17 @@ class MovimientostockController extends Controller
         //Crear formulario de filtro
         $movimientostock = new Movimientostock();
         $form_filter = $this->createForm('AppBundle\Form\MovimientostockFilterType', $movimientostock);
+        $form_filter->add('producto', EntityType::class, array(
+                        'class' => 'AppBundle:Producto', 
+                        'required'=>false,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'));
+                        
         $form_filter->handleRequest($request);
 
         $queryBuilder = $this->getDoctrine()->getRepository(Movimientostock::class)->createQueryBuilder('bp');
@@ -86,6 +99,17 @@ class MovimientostockController extends Controller
     {
         $movimientostock = new Movimientostock();
         $form = $this->createForm('AppBundle\Form\MovimientostockType', $movimientostock);
+        $form->add('producto', EntityType::class, array(
+                        'class' => 'AppBundle:Producto', 
+                        'required'=>true,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->where('c.empresa = :empresa')
+                                ->orderBy('c.nombre', 'DESC')
+                                ->setParameter('empresa', $this->get('security.token_storage')->getToken()->getUser()->getEmpresa());
+                        },
+                        'choice_label' => 'nombre'));
+                    
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

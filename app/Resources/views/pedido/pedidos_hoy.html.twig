@@ -34,7 +34,7 @@
                 <td><a href="{{ path('pedido_show', { 'id': pedido.id }) }}">{{ pedido.id }}</a></td>
                 <td>{% if pedido.fecha %}{{ pedido.fecha|date('d/m/Y') }}  {% endif %}</td>
                 <td>{{ pedido.cliente.razonsocial}}</td>
-                <td>{{ pedido.empleado.getTextoCombo}}</td>
+                <td>{{ pedido.user.getTextoCombo}}</td>
                 <td>{{ estados[pedido.estadoId] }}</td>
                 <td>{{ pedido.monto }}</td>
                 <td>

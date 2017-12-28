@@ -53,6 +53,8 @@ class PedidodetalleController extends Controller
         $pedido = $repository->findOneById($pedido_id);
         $pedidodetalles = $pedido->getPedidodetalles();
         //Fin consulta de datos
+        $formchangestatus = $this->createChangeStatusForm($pedido);
+        
         
         $form = $this->createForm('AppBundle\Form\PedidodetalleType', $pedidodetalle);
         $form->add('producto', EntityType::class, array(
@@ -82,8 +84,43 @@ class PedidodetalleController extends Controller
             'estados'=> GlobalValue::ESTADOS,
             'preparado' => GlobalValue::PREPARADO_DISPLAY,
             'form' => $form->createView(),
+            'formchangestatus'=> $formchangestatus->createView()
         ));
     }
+    
+    
+    private function createChangeStatusForm(Pedido $pedido)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('pedido_change', array('id' => $pedido->getId())))
+            ->setMethod('POST')
+            ->getForm()
+        ;
+    }
+    
+    /**
+     * Deletes a pedido entity.
+     *
+     * @Route("/{id}", name="pedido_change")
+     * @Method("POST")
+     */
+    public function changeStatusAction(Request $request, Pedido $pedido)
+    {
+        $form = $this->createChangeStatusForm($pedido);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $pedido->setEstadoId(GlobalValue::PREPARADO);
+            $em->persist($pedido);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('pedido_index');
+    }
+    
+    
+    
     
     
     /**

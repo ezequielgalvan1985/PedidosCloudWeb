@@ -46,8 +46,24 @@ class PedidoController extends FOSRestController{
             //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
         }
         
-        $pedidos = $this->getDoctrine()->getRepository(Pedido::class)->findBy(array('estadoId'=>GlobalValue::PREPARADO, 'user'=> $user));
-        $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,
+        $pedidos = $this->getDoctrine()
+                ->getRepository(Pedido::class)
+                ->findBy(array(
+                                'estadoId'=>GlobalValue::PREPARADO, 
+                                'user'=> $user,
+                                'empresa'=> $empresa
+                        ));
+        /*
+        $em = $this->getDoctrine()->getEntityManager();
+        $dql = "select p from AppBundle:Pedido p where p.empresa= :empresa and p.user = :user and p.estadoId = :estado" ;
+        $query = $em->createQuery($dql);
+        $query->setParameter('empresa', $empresa);
+        $query->setParameter('user', $user);
+        $query->setParameter('estado', GlobalValue::PREPARADO);
+        $pedidos = $query->getResult();
+        */
+        
+        $respuesta = array('code'=>$code,
                            'message'=>$message,
                            'data'=>$pedidos
                         );

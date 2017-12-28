@@ -22,6 +22,24 @@
                 <td>{{ empleado.id }}</td>
             </tr>
             <tr>
+                <th>Login/Username</th>
+                <td>{{ empleado.username }}</td>
+            </tr>
+           <tr>
+                <th>Email</th>
+                <td>{{ empleado.email }}</td>
+            </tr>
+            
+            <tr>
+                <th>Tipo</th>
+                <td>
+                    {% for r in empleado.roles %} 
+                       {{ roles[r] }}
+                    {% endfor %}
+                </td>
+            </tr>
+            
+            <tr>
                 <th>Nombre</th>
                 <td>{{ empleado.nombre }}</td>
             </tr>
@@ -41,28 +59,20 @@
                 <th>Telefono</th>
                 <td>{{ empleado.telefono }}</td>
             </tr>
-            <tr>
-                <th>Tipo</th>
-                <td>{{ roles[empleado.tipo] }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ empleado.email }}</td>
-            </tr>
+            
+             
             
         </tbody>
     </table>
 
    
-            
-       
-            
             {{ form_start(delete_form) }}
-                <input type="submit" value="Eliminar" class="btn btn-flat btn-danger">
-                <a href="{{ path('empleado_edit', { 'id': empleado.id }) }}" class="btn btn-flat btn-primary">Editar</a>
-        
+                <input type="submit" value="Delete" class="btn btn-flat btn-danger">
             {{ form_end(delete_form) }}
        
+           
+          
+            
              </div>
     </div>
     </div>

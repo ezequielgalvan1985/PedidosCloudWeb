@@ -109,7 +109,7 @@ class PedidoController extends Controller
         //Crear formulario de filtro
         $pedido = new Pedido();
         $form_filter = $this->createForm('AppBundle\Form\PedidoHoyFilterType', $pedido);
-        $form_filter->add('empleado', EntityType::class, array(
+        $form_filter->add('user', EntityType::class, array(
                         'class' => 'AppBundle:User', 
                         'required'=>false,
                         'query_builder' => function (EntityRepository $er) {
@@ -162,7 +162,8 @@ class PedidoController extends Controller
         $pedido = new Pedido();
         /* Crea Formulario */
         $form = $this->createForm('AppBundle\Form\PedidoType', $pedido);
-        $form->add('empleado', EntityType::class, array(
+        $form->add('user', EntityType::class, array(
+                        'label'=>'Login/Username',
                         'class' => 'AppBundle:User',
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('c')
@@ -279,4 +280,9 @@ class PedidoController extends Controller
             ->getForm()
         ;
     }
+    
+    
+    
+
+    
 }

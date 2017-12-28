@@ -324,7 +324,7 @@ class Cliente
     }
     
     public function getTextoCombo(){
-         return $this->contacto ;
+         return $this->razonsocial . " - " . $this->contacto ;
     }
 }
 
