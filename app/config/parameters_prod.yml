@@ -2,9 +2,9 @@
 parameters:
     database_host: localhost
     database_port: 3306
-    database_name: symfony
-    database_user: root
-    database_password: null
+    database_name: symfony_pedidoscloud
+    database_user: user_pedidoscloud
+    database_password: ezegal23
     mailer_transport: gmail
     mailer_host: smtp.gmail.com
     mailer_user: ezgatrabajo@gmail.com
