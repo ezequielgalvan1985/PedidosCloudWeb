@@ -30,6 +30,9 @@ class UserController extends FOSRestController
     $user_manager = $this->get('fos_user.user_manager');
     $factory = $this->get('security.encoder_factory');
     $user = $user_manager->findUserByUsername($username);
+    if (!$user){
+        $user = $user_manager->findUserByEmail($username);    
+    }
     if ($user){
         $encoder = $factory->getEncoder($user);  
         $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());
