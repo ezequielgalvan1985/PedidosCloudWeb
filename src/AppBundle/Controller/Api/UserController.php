@@ -33,6 +33,7 @@ class UserController extends FOSRestController
     if (!$user){
         $user = $user_manager->findUserByEmail($username);    
     }
+    
     if ($user){
         $encoder = $factory->getEncoder($user);  
         $bool = $encoder->isPasswordValid($user->getPassword(),$password,$user->getSalt());

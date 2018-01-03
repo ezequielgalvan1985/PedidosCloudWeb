@@ -24,7 +24,7 @@ class DefaultController extends Controller
         ]);
     }
     /**
-     * @Route("/downloadapk", name="downloadapk")
+     * @Route("/download", name="download")
      */
     public function downloadapkAction()
     {       
