@@ -52,7 +52,7 @@ class Producto
     /**
      * @var 
      *
-     * @ORM\Column(name="stock", type="decimal", precision=7, scale=2, nullable=true)
+     * @ORM\Column(name="stock", type="decimal", precision=7, scale=2, options={"default" : 0})
      */
     private $stock;
     
@@ -241,11 +241,11 @@ class Producto
     
     
     /**
-     * Set precio
+     * Set stock
      *
      * @param string 
      *
-     * @return Producto
+     * @return decimal
      */
     public function setStock($stock)
     {
@@ -255,9 +255,9 @@ class Producto
     }
 
     /**
-     * Get 
+     * Get stock
      *
-     * @return string
+     * @return decimal
      */
     public function getStock()
     {

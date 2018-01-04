@@ -9,7 +9,6 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Pedido;
-use AppBundle\Entity\Empleado;
 use AppBundle\Entity\Empresa;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Cliente;
@@ -20,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use \FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use AppBundle\Entity\GlobalValue;
 class PedidoController extends FOSRestController{
     
@@ -77,7 +77,10 @@ class PedidoController extends FOSRestController{
         //leer json
         
         $content = $request->getContent();
-        $code = Response::HTTP_OK; $message='OK'; $result = "";
+        $pedido = new Pedido();
+        $code = Response::HTTP_OK; 
+        $message='OK'; 
+        $result = "";
         //parsear detalle
         $json = json_decode($content, true);
         $em = $this->getDoctrine()->getManager();
@@ -90,43 +93,30 @@ class PedidoController extends FOSRestController{
       
         $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
         if (!$empresa) {
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro empresa';
-            //throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
+            
+            $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,  'message'=>'No se encontro empresa', 'data'=>$result);
+            return $respuesta;
         }
         
         $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
         if(!$user){
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro usuario';
-            //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
+            $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,  'message'=>'No se encontro usuario', 'data'=>$result);
+            return $respuesta;
         }
-        
-        
-        $empleado = $this->getDoctrine()->getRepository(Empleado::class)->findOneByUser($user);
-        if(!$empleado){
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro empleado';
-            //throw $this->createNotFoundException('No se encuentra Empleado '.$user->getId());
-        }
-
+       
         $cliente = $this->getDoctrine()->getRepository(Cliente::class)->find($cliente_id);
         if(!$cliente){
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro cliente';
-            //throw $this->createNotFoundException('No se encuentra Cliente '.$cliente_id);
-           
+            $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,  'message'=>'No se encontro cliente', 'data'=>$result);
+            return $respuesta;
         }
-        
         
         
         if ($code==Response::HTTP_OK){        
-            $pedido = new Pedido();
             $pedido->setEmpresa($empresa);
             $pedido->setFecha(new \DateTime($fecha));
-            $pedido->setEstadoId(2);
+            $pedido->setEstadoId(GlobalValue::ENVIADO);
             $pedido->setCliente($cliente);
-            $pedido->setEmpleado($empleado);
+            //$pedido->setEmpleado($empleado);
             $pedido->setAndroid_id($android_id);
         
             if ($json['pedido']['pedidodetalles']){
@@ -140,9 +130,9 @@ class PedidoController extends FOSRestController{
                     $producto = new Producto();
                     $producto = $this->getDoctrine()->getRepository(Producto::class)->find($producto_id);
                     if(!$producto){
-                        $code = Response::HTTP_PRECONDITION_REQUIRED;
-                        $message = 'no se encontro Producto';
-                        //throw $this->createNotFoundException('No se encuentra producto '.$producto_id);
+                        $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,  'message'=>'No se encontro Producto', 'data'=>$result);
+                        return $respuesta;
+                         
                     } 
                     $pd = new Pedidodetalle();
                     $pd->setProducto($producto);
@@ -172,20 +162,10 @@ class PedidoController extends FOSRestController{
             $em->flush();
         }//Si paso validacion
 
-
-        $result = $pedido;
-        if ($result == null) {
-            $respuesta = array('code'=>Response::HTTP_PRECONDITION_REQUIRED,
+        $respuesta = array('code'=>$code,
                            'message'=>$message,
-                           'data'=>''
+                           'data'=>$pedido
                         );
-        }else{
-            $respuesta = array('code'=>$code,
-                           'message'=>$message,
-                           'data'=>$result
-                        );
-        
-        }
         return $respuesta;
     }
     
