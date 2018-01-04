@@ -70,10 +70,86 @@ class PedidoController extends FOSRestController{
         
         return $respuesta;
     }
+    
+    
+    /**
+    * @Rest\Post("/api/pedidos")
+    */
+    public function postPedidosListAction(Request $request){
+        try{
+            
+        
+            $content = $request->getContent();
+            $code = Response::HTTP_OK; 
+            $message='OK'; 
+            $result = "";
+            //Preparar parametros
+            /*
+             * Fecha desde
+             * Fecha Hasta 
+             * Empresa Id
+             * User Id
+             * Cliente Id
+             * Estado Id
+             *  
+             * */
+            $json = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            $empresa_id = $json['empresa_id'];
+            $user_id    = $json['user_id'];
+            $cliente_id = $json['cliente_id'];
+            $fechadesde = $json['fechadesde'];
+            $fechahasta = $json['fechahasta'];
+            $estado_id  = $json['estado_id'];
+
+            $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
+            if (!$empresa) {
+                $code = Response::HTTP_PRECONDITION_REQUIRED;
+                $message = 'no se encontro empresa';
+
+            }
+            $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
+            if(!$user){
+                $code = Response::HTTP_PRECONDITION_REQUIRED;
+                $message = 'no se encontro usuario';
+
+            }
+
+            $pedidos = $this->getDoctrine()
+                    ->getRepository(Pedido::class)
+                    ->findBy(array(
+                                    'estadoId'=>GlobalValue::PREPARADO, 
+                                    'user'=> $user,
+                                    'empresa'=> $empresa
+                            ));
+            /*
+            $em = $this->getDoctrine()->getEntityManager();
+            $dql = "select p from AppBundle:Pedido p where p.empresa= :empresa and p.user = :user and p.estadoId = :estado" ;
+            $query = $em->createQuery($dql);
+            $query->setParameter('empresa', $empresa);
+            $query->setParameter('user', $user);
+            $query->setParameter('estado', GlobalValue::PREPARADO);
+            $pedidos = $query->getResult();
+            */
+
+            $respuesta = array('code'=>$code,
+                               'message'=>$message,
+                               'data'=>$pedidos
+                            );
+
+            return $respuesta;
+        }catch(Exception $e){
+            return $respuesta;
+        }
+    }
+    
+    
+    
+    
     /**
     * @Rest\Post("/api/pedido/add")
     */
-    public function postPedidosAction(Request $request){
+    public function postPedidosAddAction(Request $request){
         //leer json
         
         $content = $request->getContent();
