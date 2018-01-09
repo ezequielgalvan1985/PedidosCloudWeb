@@ -37,9 +37,10 @@ class PedidodetalleController extends FOSRestController{
             $message='OK'; 
             $result = "";
             $json     = json_decode($content, true);
-            $id       = $json['pedidodetalle']['id'];
-            $cantidad = $json['pedidodetalle']['cantidad'];
+            $id       = $json['id'];
+            $cantidad = $json['cantidad'];
             
+            debug('debug1');
             //calcular valores de monto
             $em = $this->getDoctrine()->getManager();
             $item = $this->getDoctrine()

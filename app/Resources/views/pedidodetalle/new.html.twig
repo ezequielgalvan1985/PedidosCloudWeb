@@ -98,10 +98,9 @@
                     var select = "input[data-id=" + id + "][name='cantidad']";
                     var cantidad = $(select).val();
                     var json_item = {
-                            "pedidodetalle":{
                                     "id": id,
                                     "cantidad": cantidad
-                                }};
+                                    };
                         
                         $.ajax({
                             method: "POST",
