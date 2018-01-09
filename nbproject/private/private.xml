@@ -13,9 +13,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/DefaultController.php</file>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/RegistrationController.php</file>
+            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/ClienteController.php</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/Api/PedidoController.php</file>
-            <file>file:/C:/xampp/htdocs/pedidoscloud_web/src/AppBundle/Controller/UserController.php</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/app/Resources/views/principal.html.twig</file>
             <file>file:/C:/xampp/htdocs/pedidoscloud_web/app/notas</file>
         </group>

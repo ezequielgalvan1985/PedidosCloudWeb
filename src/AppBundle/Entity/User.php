@@ -309,7 +309,7 @@ class User extends BaseUser
     
     public function getTextoCombo()
     {
-        return $this->nombre . ' '. $this->apellido . ' ' . $this->ndoc;
+        return strval ($this->nombre) . ' '. strval ($this->apellido) . ' ' . strval ($this->ndoc);
     }
     
     

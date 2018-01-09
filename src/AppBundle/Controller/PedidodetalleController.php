@@ -38,6 +38,9 @@ class PedidodetalleController extends Controller
     }
     
     
+    
+    
+    
 
     /**
      * Creates a new pedidodetalle entity.

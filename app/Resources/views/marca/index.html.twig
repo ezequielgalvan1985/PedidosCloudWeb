@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         {% for marca in pagination %}
-            <tr>
+            <tr data-id="{{marca.id}}">
                 <td><a href="{{ path('marcas_show', { 'id': marca.id }) }}">{{ marca.id }}</a></td>
                 <td>{{ marca.nombre }}</td>
                 <td>{{ marca.descripcion }}</td>

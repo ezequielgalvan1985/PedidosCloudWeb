@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+ 
+{% block body %}
+
+    <div id="containerPosts"></div>
+    
+    
+{% endblock %}
+ 
+{% block javascripts %}
+    <script>
+        jQuery(document).ready(function($)
+        {
+            $.ajax({
+                method: "GET",
+                url: "{{ url('ajax_pedidos') }}",
+                dataType: 'json',
+                success: function(data)
+                {
+                    if(data.hasOwnProperty("response") && data.response === "success")
+                    {
+                        if(data.hasOwnProperty("pedidos"))
+                        {
+                                var posts = data.posts;
+                                if(posts.length > 0)
+                                {
+                                    var html = "";
+                                    for(d in posts)
+                                    {
+                                        html += "<p>" + JSON.stringify(posts[d]) + "</p>";
+                                    }
+                                    $("#containerPosts").append(html);
+                                }  
+                        }
+                        else
+                        {
+                            console.log("POSTS NOT FOUND");
+                        }
+                    }
+                },
+                error: function(jqXHR, exception)
+                {
+                    if(jqXHR.status === 405)
+                    {
+                        console.error("METHOD NOT ALLOWED!");
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

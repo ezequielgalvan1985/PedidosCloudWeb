@@ -1,0 +1,9 @@
+{# empty Twig template #}
+ <form data-id="{{item.id}}" action="{{ url('ajax_pedidodetalleedit') }}">
+    <td>{{item.id}}</td>
+    <td>{{item.producto.nombre}}</td>
+    <td>{{item.preciounitario }}</td>
+    <td><input name="cantidad" data-id="{{item.id}}" value="{{item.cantidad }}"><button  class="btn btn-xs btn-default">Actualizar </></td>
+    <td>{{item.monto }}</td>
+    <td><a href="{{ path('pedidodetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
+</form>

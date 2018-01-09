@@ -20,7 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use \FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\GlobalValue;
+
+
 class PedidoController extends FOSRestController{
     
     /**
@@ -72,8 +75,11 @@ class PedidoController extends FOSRestController{
     }
     
     
+    
+    
     /**
-    * @Rest\Post("/api/pedidos")
+    * @Rest\Get("/api/pedidos")
+    * @Route("/api/pedidos", name="ajax_pedidos")
     */
     public function postPedidosListAction(Request $request){
         try{
@@ -93,51 +99,21 @@ class PedidoController extends FOSRestController{
              * Estado Id
              *  
              * */
-            $json = json_decode($content, true);
-            $em = $this->getDoctrine()->getManager();
-            $empresa_id = $json['empresa_id'];
-            $user_id    = $json['user_id'];
-            $cliente_id = $json['cliente_id'];
-            $fechadesde = $json['fechadesde'];
-            $fechahasta = $json['fechahasta'];
-            $estado_id  = $json['estado_id'];
-
-            $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
-            if (!$empresa) {
-                $code = Response::HTTP_PRECONDITION_REQUIRED;
-                $message = 'no se encontro empresa';
-
-            }
-            $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
-            if(!$user){
-                $code = Response::HTTP_PRECONDITION_REQUIRED;
-                $message = 'no se encontro usuario';
-
-            }
-
-            $pedidos = $this->getDoctrine()
-                    ->getRepository(Pedido::class)
-                    ->findBy(array(
-                                    'estadoId'=>GlobalValue::PREPARADO, 
-                                    'user'=> $user,
-                                    'empresa'=> $empresa
-                            ));
-            /*
-            $em = $this->getDoctrine()->getEntityManager();
-            $dql = "select p from AppBundle:Pedido p where p.empresa= :empresa and p.user = :user and p.estadoId = :estado" ;
-            $query = $em->createQuery($dql);
-            $query->setParameter('empresa', $empresa);
-            $query->setParameter('user', $user);
-            $query->setParameter('estado', GlobalValue::PREPARADO);
-            $pedidos = $query->getResult();
-            */
+            
+           $pedidos = $this->getDoctrine()
+                ->getRepository(Pedido::class)
+                ->findBy(array(
+                                'estadoId'=>GlobalValue::PREPARADO
+                        ));
 
             $respuesta = array('code'=>$code,
                                'message'=>$message,
-                               'data'=>$pedidos
+                               'pedidos'=>$pedidos,
+                               'response' => 'success',
                             );
 
             return $respuesta;
+            
         }catch(Exception $e){
             return $respuesta;
         }
