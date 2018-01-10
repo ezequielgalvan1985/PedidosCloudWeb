@@ -50,7 +50,7 @@ class PedidodetalleController extends FOSRestController{
             $item->setCantidad($cantidad);
             $monto = $cantidad * $item->getPrecio();
             $item->setMonto($monto);
-            $em->persist($item);
+            //$em->persist($item);
             
             
             $respuesta = array('code'=>$code,

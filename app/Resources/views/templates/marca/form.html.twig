@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{form_widget(form)}}
+    
+    <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary" >Editar</a>
+    <input type="button" value="Delete" class="btn btn-flat btn-danger" onClick="return confirm('Esta Seguro?')">
+    
+{{ form_end(form) }}

@@ -38,11 +38,14 @@
                 <a href="{{ path('marcas_show', { 'id': marca.id }) }}" class="btn btn-flat btn-default"
                    data-toggle="tooltip" data-placement="top" title="Ver">
                     <span class="glyphicon glyphicon glyphicon glyphicon-search"  aria-hidden="true"></span>
+                </a>  
 
                 <a href="{{ path('marcas_edit', { 'id': marca.id }) }}" class="btn btn-flat btn-primary"
                    data-toggle="tooltip" data-placement="top" title="Editar">
                     <span class="glyphicon glyphicon glyphicon glyphicon-pencil"  aria-hidden="true"></span>
-                        
+                </a>    
+            
+            
                 </td>
             </tr>
         {% endfor %}
