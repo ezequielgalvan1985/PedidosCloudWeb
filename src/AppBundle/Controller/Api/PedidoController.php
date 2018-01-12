@@ -258,7 +258,13 @@ class PedidoController extends FOSRestController{
             }
             $pd->setCantidad($cantidad);
             
+            //Generar movimiento de Stock
+            
+            
+            
             $em->persist($pd);
+            
+            
             $em->flush();
 
             $response = array('code'=>$code,
