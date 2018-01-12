@@ -48,14 +48,27 @@
     <div class="panel-heading"> <b>Listado de Productos en Pedido:</b></div>
     <div class="panel-body">
     <div class="row">
-        
+            <div class="row">
+               <div class="col-xs-12"> 
+               
+               <div name="alert" class="alert alert-success alert-dismissable" style="display:none">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                       Cantidad Actualizada Correctamente
+               </div>
+               </div>
+            </div>
+               
+               
             <table class="table">
+                            
                 <thead>
                     <th>ID</th>
                     <th>Producto</th>
                     <th>Precio Unitario</th>
                     <th>Cantidad</th>
                     <th>Monto</th>
+                    <th>Actions</th>
+                    
                 </thead>
                 <tbody>
                     
@@ -63,12 +76,16 @@
                     <tr>
                         <form>
                             <td>{{item.id}}</td>
-                            <td>{{item.producto.nombre}}</td>
-                            <td>{{item.preciounitario }}</td>
-                            <td><input name="cantidad" data-id="{{item.id}}" value="{{item.cantidad }}">
+                            <td >{{item.producto.nombre}}</td>
+                            <td class="col-md-2">{{item.preciounitario }}</td>
+                            <td class="col-md-2">
+                                <input name="cantidad" class="form-control" data-id="{{item.id}}" value="{{item.cantidad }}">
                                 <div class="btn btn-xs btn-default actualizaritempedido" data-id="{{item.id}}">Actualizar </div>
+
                             </td>
-                            <td>{{item.monto }}</td>
+                           
+                            
+                            <td class="col-md-2" data-id="{{item.id}}" name="monto">{{item.monto }}</td>
                             <td><a href="{{ path('pedidodetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
                         </form>
                     </tr>
@@ -111,7 +128,11 @@
                             {
                                 if(data.hasOwnProperty("code") && data.code === 200)
                                 {
-                                    
+                                    alert("Cantidad Actualizada Correctamente...");
+                                    //var msg = $("div[name='alert']");
+                                    var monto = $("td[data-id=" + id + "][name='monto']");
+                                    importe = data.data.cantidad * data.data.preciounitario;
+                                    monto.html(importe);
                                 }
                             },
                             error: function(jqXHR, exception)
