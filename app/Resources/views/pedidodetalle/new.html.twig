@@ -104,31 +104,14 @@
                         
                         $.ajax({
                             method: "POST",
-                            url: "{{ url('ajax_pedidodetalleedit') }}",
+                            url: "/api/pedidodetalle/edit",
                             dataType: 'json',
                             data: JSON.stringify( json_item ),
                             success: function(data)
                             {
-                                if(data.hasOwnProperty("response") && data.response === "success")
+                                if(data.hasOwnProperty("code") && data.code === 200)
                                 {
-                                    if(data.hasOwnProperty("item"))
-                                    {
-                                            var posts = data.item;
-                                            if(posts.length > 0)
-                                            {
-                                                var html = "";
-                                                for(d in posts)
-                                                {
-                                                    html += "<p>" + JSON.stringify(posts[d]) + "</p>";
-                                                }
-                                                $("#containerPosts").append(html);
-                                            }
-
-                                    }
-                                    else
-                                    {
-                                        console.log("POSTS NOT FOUND");
-                                    }
+                                    
                                 }
                             },
                             error: function(jqXHR, exception)

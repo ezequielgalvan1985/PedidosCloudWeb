@@ -9,9 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\User;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\GlobalValue;
+
 
 /**
  * Pedidodetalle controller.
@@ -20,6 +23,10 @@ use AppBundle\Entity\GlobalValue;
  */
 class PedidodetalleController extends Controller
 {
+    
+    
+    
+    
     /**
      * Lists all pedidodetalle entities.
      *

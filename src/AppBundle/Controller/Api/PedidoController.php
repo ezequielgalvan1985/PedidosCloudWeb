@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\GlobalValue;
 
 
+
 class PedidoController extends FOSRestController{
     
     /**
@@ -118,6 +119,9 @@ class PedidoController extends FOSRestController{
             return $respuesta;
         }
     }
+    
+    
+    
     
     
     
@@ -219,6 +223,57 @@ class PedidoController extends FOSRestController{
                            'data'=>$pedido
                         );
         return $respuesta;
+    }
+    
+    
+    
+    
+    /**
+    * @Rest\Post("/api/pedidodetalle/edit")
+    */
+    public function postPedidodetalleeditAction(Request $request){
+        //leer json
+        try{
+           
+            $pedido = new Pedido();
+            $code = Response::HTTP_OK; 
+            $message='OK'; 
+            $result = "";
+            //parsear detalle
+            $content = $request->getContent();
+            $json = json_decode($content, true);
+            $em = $this->getDoctrine()->getManager();
+            //Leer Pedido
+
+            $id = $json['id'];
+            $cantidad = $json['cantidad'];
+
+
+            $pd = new Pedidodetalle();
+            $pd = $this->getDoctrine()->getRepository(Pedidodetalle::class)->find($id);
+            if (!$pd) {
+                throw $this->createNotFoundException(
+                    'No Pedidodetalle found for id '.$id
+                );
+            }
+            $pd->setCantidad($cantidad);
+            
+            $em->persist($pd);
+            $em->flush();
+
+            $response = array('code'=>$code,
+                               'message'=>$message,
+                               'data'=>$pd
+                            );
+            return $response;
+            }catch(Exception $e){
+                $response = array('code'=>Response::HTTP_CONFLICT,
+                               'message'=>$e->getMessage(),
+                               'data'=>null
+                            );
+                return $response;
+                
+            }
     }
     
     /**
