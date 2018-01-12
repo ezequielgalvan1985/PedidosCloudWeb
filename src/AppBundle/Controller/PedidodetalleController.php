@@ -93,6 +93,7 @@ class PedidodetalleController extends Controller
             'pedido'=>$pedido,
             'estados'=> GlobalValue::ESTADOS,
             'preparado' => GlobalValue::PREPARADO_DISPLAY,
+            'preparadoid' => GlobalValue::PREPARADO,
             'form' => $form->createView(),
             'formchangestatus'=> $formchangestatus->createView()
         ));

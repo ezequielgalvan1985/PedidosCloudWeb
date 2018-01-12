@@ -27,60 +27,11 @@ use AppBundle\Entity\GlobalValue;
 
 class PedidoController extends FOSRestController{
     
-    /**
-    * @Rest\Post("/api/pedido/pedidospreparados")
-    */
-    public function postPedidospreparadosAction(Request $request){
-        $content = $request->getContent();
-        $code = Response::HTTP_OK; $message='OK'; $result = "";
-        $json = json_decode($content, true);
-        $em = $this->getDoctrine()->getManager();
-        $empresa_id = $json['empresa_id'];
-        $user_id = $json['user_id'];
-        $empresa = $this->getDoctrine()->getRepository(Empresa::class)->find($empresa_id);
-        if (!$empresa) {
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro empresa';
-            //throw $this->createNotFoundException('No se encuentra Empresa '.$empresa_id);
-        }
-        $user = $this->getDoctrine()->getRepository(User::class)->find($user_id);
-        if(!$user){
-            $code = Response::HTTP_PRECONDITION_REQUIRED;
-            $message = 'no se encontro usuario';
-            //throw $this->createNotFoundException('No se encuentra Usuario '.$user_id);
-        }
-        
-        $pedidos = $this->getDoctrine()
-                ->getRepository(Pedido::class)
-                ->findBy(array(
-                                'estadoId'=>GlobalValue::PREPARADO, 
-                                'user'=> $user,
-                                'empresa'=> $empresa
-                        ));
-        /*
-        $em = $this->getDoctrine()->getEntityManager();
-        $dql = "select p from AppBundle:Pedido p where p.empresa= :empresa and p.user = :user and p.estadoId = :estado" ;
-        $query = $em->createQuery($dql);
-        $query->setParameter('empresa', $empresa);
-        $query->setParameter('user', $user);
-        $query->setParameter('estado', GlobalValue::PREPARADO);
-        $pedidos = $query->getResult();
-        */
-        
-        $respuesta = array('code'=>$code,
-                           'message'=>$message,
-                           'data'=>$pedidos
-                        );
-        
-        return $respuesta;
-    }
-    
     
     
     
     /**
-    * @Rest\Get("/api/pedidos")
-    * @Route("/api/pedidos", name="ajax_pedidos")
+    * @Rest\Post("/api/pedidos")
     */
     public function postPedidosListAction(Request $request){
         try{

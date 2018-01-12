@@ -17,10 +17,15 @@
                    </table>
                     
                         
-                        
-                    {{ form_start(formchangestatus) }}
-                            <input type="submit" value="Pasar a Preparado" class="btn btn-flat btn-success">
-                    {{ form_end(formchangestatus) }}
+                    {% if pedido.estadoId == preparadoid%}
+                        {{ form_start(formchangestatus) }}
+                                <input type="submit" value="Pasar a Preparado" disabled class="btn btn-flat btn-success">
+                        {{ form_end(formchangestatus) }}
+                    {% else %}
+                        {{ form_start(formchangestatus) }}
+                                <input type="submit" value="Pasar a Preparado" class="btn btn-flat btn-success">
+                        {{ form_end(formchangestatus) }}
+                    {% endif %}
                </div>
             </div>
         </div>
@@ -77,15 +82,14 @@
                         <form>
                             <td>{{item.id}}</td>
                             <td >{{item.producto.nombre}}</td>
-                            <td class="col-md-2">{{item.preciounitario }}</td>
+                            <td class="col-md-2">{{item.preciounitario|number_format(3, '.', ',') }}</td>
                             <td class="col-md-2">
                                 <input name="cantidad" class="form-control" data-id="{{item.id}}" value="{{item.cantidad }}">
                                 <div class="btn btn-xs btn-default actualizaritempedido" data-id="{{item.id}}">Actualizar </div>
-
                             </td>
                            
                             
-                            <td class="col-md-2" data-id="{{item.id}}" name="monto">{{item.monto }}</td>
+                            <td class="col-md-2" data-id="{{item.id}}" name="monto">{{(item.cantidad * item.preciounitario)|number_format(3, '.', ',')  }}</td>
                             <td><a href="{{ path('pedidodetalle_delete', {'id':item.id}) }}" class="btn btn-xs btn-danger">Eliminar</a></td>
                         </form>
                     </tr>
