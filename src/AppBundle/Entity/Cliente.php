@@ -37,7 +37,7 @@ class Cliente
     
     
     /**
-     * @ORM\Column(name="tipodocumento_id", type="integer", length=2, nullable=true)
+     * @ORM\Column(name="tipodocumento_id", type="integer", length=2, nullable=true,options={"default" : 1})
      */
     private $tipodocumento;
     
@@ -56,7 +56,7 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="ndoc", type="string", length=20, nullable=false, options={"default" : 99999999})
+     * @ORM\Column(name="ndoc", type="string", length=20, nullable=true, options={"default" : 99999999})
      */
     private $ndoc;
 
@@ -64,21 +64,21 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono", type="string", length=50, nullable=false, options={"default" : 0})
+     * @ORM\Column(name="telefono", type="string", length=50, nullable=true, options={"default" : 1})
      */
     private $telefono;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=50, nullable=false, options={"default" : ""})
+     * @ORM\Column(name="email", type="string", length=50, nullable=true, options={"default" : "email@gmail.com"})
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string", length=255, nullable=false, options={"default" : ""})
+     * @ORM\Column(name="direccion", type="string", length=255, nullable=false, options={"default" : "0000"})
      */
     private $direccion;
     
@@ -86,7 +86,7 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="web", type="string", length=50, nullable=false,options={"default" : ""})
+     * @ORM\Column(name="web", type="string", length=50, nullable=true,options={"default" : "www.web.com"})
      */
     private $web;
     
@@ -94,7 +94,7 @@ class Cliente
     /**
      * @var string
      *
-     * @ORM\Column(name="codigoexterno", type="string", length=50, nullable=false, options={"default" : "0000"})
+     * @ORM\Column(name="codigoexterno", type="string", length=50, nullable=true, options={"default" : "0000"})
      */
     private $codigoexterno;
     
