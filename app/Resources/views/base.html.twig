@@ -97,7 +97,7 @@
      
     
     
-        {% if is_granted("ROLE_DEPOSITO") %}
+        {% if is_granted("ROLE_EMPRESA") %}
          
         <ul class="nav navbar-nav">    
         <li class="dropdown">
@@ -111,8 +111,9 @@
           
         </li>
         </ul> 
-          
-          
+        {% endif %}  
+        
+        {% if is_granted("ROLE_DEPOSITO") %}
         <ul class="nav navbar-nav">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" 

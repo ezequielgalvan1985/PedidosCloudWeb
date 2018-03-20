@@ -17,6 +17,12 @@ class GlobalValue{
     const ROLE_CARGADATOS = 'ROLE_CARGADATOS';
     const ROLE_DEPOSITO = 'ROLE_DEPOSITO';
     
+    const ROLE_ADMIN_CODE = 1;
+    const ROLE_EMPRESA_CODE = 2;
+    const ROLE_VENDEDOR_CODE = 3;
+    const ROLE_CARGADATOS_CODE = 4;
+    const ROLE_DEPOSITO_CODE = 5;
+    
     const ROLE_ADMIN_DISPLAY = 'Administrador';
     const ROLE_EMPRESA_DISPLAY = 'Empresa';
     const ROLE_VENDEDOR_DISPLAY = 'Vendedor';
@@ -32,6 +38,22 @@ class GlobalValue{
                     GlobalValue::ROLE_DEPOSITO => GlobalValue::ROLE_DEPOSITO_DISPLAY
                 );
     
+    const ROLES_SELECT = 
+            array(
+                    GlobalValue::ROLE_VENDEDOR_DISPLAY => GlobalValue::ROLE_VENDEDOR_CODE,
+                    GlobalValue::ROLE_CARGADATOS_DISPLAY => GlobalValue::ROLE_CARGADATOS_CODE,
+                    GlobalValue::ROLE_DEPOSITO_DISPLAY => GlobalValue::ROLE_DEPOSITO_CODE
+                );
+    
+    //tiene que tener el mismo orden
+    const ROLES_FOR_DB = 
+            array(
+                    GlobalValue::ROLE_ADMIN,
+                    GlobalValue::ROLE_EMPRESA,
+                    GlobalValue::ROLE_VENDEDOR ,
+                    GlobalValue::ROLE_CARGADATOS ,
+                    GlobalValue::ROLE_DEPOSITO
+                );
     
     
     

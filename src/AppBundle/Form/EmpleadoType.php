@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Entity\GlobalValue;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EmpleadoType extends AbstractType
@@ -19,6 +18,12 @@ class EmpleadoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('username', null, ['label'=>'Login/Username'])
+                ->add('rol', ChoiceType::class, array(
+                        'choices' => GlobalValue::ROLES_SELECT,
+                        'label'=>'Tipo de Usuario',
+                        'required'=>true
+                        )
+                    )
                 ->add('nombre')
                 ->add('apellido')
                 ->add('email', EmailType::class )

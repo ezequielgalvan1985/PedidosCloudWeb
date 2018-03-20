@@ -53,6 +53,26 @@ class User extends BaseUser
     protected $groups;
     
     
+     /**
+     * @ORM\Column(name="roltemp", type="string", length=20,nullable=true)
+     */
+    private $rol;
+    
+    public function getRol()
+    {
+        return $this->rol;
+    }
+    
+    public function setRol($rol)
+    {
+        $this->rol = $rol;
+        return $this;
+    }
+  
+   
+
+
+
     protected $roles = array();
     public function getRoles()
     {

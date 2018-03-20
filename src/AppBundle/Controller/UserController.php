@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use AppBundle\Entity\GlobalValue;
 
 use AppBundle\Entity\User;
@@ -148,6 +148,7 @@ class UserController extends Controller
     {
         $userform = new User();
         $form = $this->createForm('AppBundle\Form\EmpleadoType', $userform);
+        
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -157,19 +158,18 @@ class UserController extends Controller
                 //setear empresa y establecer usuario igual a email
                 $currentuser = $this->get('security.token_storage')->getToken()->getUser();
                 $empresa = $currentuser->getEmpresa();
-                $username = $userform->getEmail();
-
+    
                 //Crear usuario
                 $userManager = $this->get('fos_user.user_manager');
                 $usernew = $userManager->createUser();
                 
-                $userform->setUsername($username);
                 $userform->setEmailCanonical($userform->getEmail());
                 $userform->setEnabled(1); // enable the user or enable it later with a confirmation token in the email
                 //$user->setApitoken
                 // this method will encrypt the password with the default settings :)
                 $password = 12345678;
-                $userform->setRoles(array($userform->getTipo()));
+                $rol_str = GlobalValue::ROLES_FOR_DB[$userform->getRol()-1];
+                $userform->setRoles(array($rol_str));
                 $userform->setPlainPassword($password);
                 $userform->setEmpresa($empresa);
                 $userManager->updateUser($userform);
