@@ -11,3 +11,8 @@ select * from  hojarutadetalle;
 use symfony_pedidoscloud01;
 
 update fos_user set enabled = 1 where id = 1;
+
+
+select * from fos_user;
+
+
